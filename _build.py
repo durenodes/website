@@ -54,13 +54,13 @@ CONTENT = {
     lang="en", other="ko", other_label="한국어", other_href="/ko/",
     title="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Published Costs",
     desc="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes fee income alongside infrastructure cost, and never deletes an incident record.",
-    og_desc="Shared work, settled fairly. Each chain's minimum commission, costs published, incidents never deleted.",
-    kicker="SHARED WORK, SETTLED FAIRLY · 함께 짓고, 낸 만큼 나눈다",
+    og_desc="Each chain's minimum commission. Fee income published alongside infrastructure cost. Incidents never deleted.",
+    kicker="CELESTIA MAINNET · COSMOS HUB TESTNET · VALIDATOR",
     h1="One chain at a time, run properly",
-    lede=('We started a Celestia mainnet validator on 31 July 2026. That is not long. '
-          'So what we can show you is not a track record but <b>how we keep one</b> — '
-          'uptime and outages written down as they happen, and public services announced '
-          'with the order and dates before they open. Everything we open is '
+    lede=('We started a Celestia mainnet validator on 31 July 2026 — not long enough to have '
+          'a record worth showing. What we can do is write down uptime and outages as they '
+          'happen, publish the order and dates of public services before they open, and charge '
+          '<b>each chain\'s minimum commission</b>. Everything we open is '
           '<a href="#services">free to use</a>.'),
     nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
     stat_networks="NETWORKS", stat_uptime="UPTIME · LAST 10K BLOCKS",
@@ -91,7 +91,7 @@ CONTENT = {
           '<br><br><b>Fee income and infrastructure cost are not published yet.</b> We have not been '
           'running long enough for a settlement period worth showing. As soon as the first one closes '
           'we will put income and cost side by side, and leave the breakdown in the repository. '
-          'Not inventing numbers is the operating principle of this page.'),
+          'We do not put up a number we cannot point at.'),
     foot_meta=["MIN = the lowest commission the chain allows",
                "MISSED = within the last 10,000-block window",
                "no jail history · no slashing"],
@@ -100,39 +100,39 @@ CONTENT = {
     log_empty_p=("Since we started on 31 July 2026 there has been no jail and no slashing. "
                  "That is not a boast — it means the time has been short. Outages happen eventually, "
                  "and when they do the cause and the fix go here. We do not delete them."),
-    sec_delegate="Delegation · what you put in comes back in proportion",
+    sec_delegate="Delegation",
     val_label="CELESTIA VALOPER",
     val_min="· NETWORK MINIMUM",
     val_since="SINCE",
     btn_keplr="Delegate with Keplr",
     story=('<b>DURE (두레, doo-reh)</b> was a village labour commons in Joseon-era Korea. '
-           'No one owned it. A ledger recorded how many days each household put in, and at the '
-           'settlement each was paid back in proportion. A village had kept by custom the structure '
-           'that blockchains now try to write in code — so we took the name as it is.'),
-    copy="© 2026 DURE · Shared work, settled fairly",
+           'No one owned it, a ledger recorded how many days each household worked, and the '
+           'harvest was split in the same proportion. That is how stake and rewards work here, '
+           'so we took the name as it is.'),
+    copy="© 2026 DURE",
     links=dict(github="GITHUB", x="X", telegram="TELEGRAM", contact="CONTACT", security="SECURITY"),
 ),
 "ko": dict(
-    lang="ko", other="en", other_label="English", other_href="/",
+    lang="ko", other="en", other_label="English", other_href="/?lang=en",
     title="DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 비용 공개",
     desc="DURE(두레)는 셀레스티아와 코스모스 허브 밸리데이터를 각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개하며, 장애 기록을 지우지 않습니다.",
-    og_desc="함께 짓고, 낸 만큼 나눈다 · 각 체인이 허용하는 최소 수수료로 운영하고, 수입과 비용을 함께 공개합니다.",
-    kicker="함께 짓고, 낸 만큼 나눈다 · SHARED WORK, SETTLED FAIRLY",
+    og_desc="각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개합니다.",
+    kicker="셀레스티아 메인넷 · 코스모스 허브 테스트넷 · 밸리데이터",
     h1="체인 하나부터 제대로 운영합니다",
-    lede=('2026년 7월 31일 셀레스티아 메인넷 밸리데이터를 시작했습니다. 아직 짧습니다. '
-          '그래서 지금 보여드릴 수 있는 건 성과가 아니라 <b>기록하는 방식</b>입니다. '
-          '가동률도 장애도 있는 그대로 적고, 퍼블릭 서비스는 여는 순서와 시점을 미리 공개합니다. '
-          '열린 서비스는 <a href="#services">모두 무료</a>로 씁니다.'),
+    lede=('2026년 7월 31일 셀레스티아 메인넷 밸리데이터를 시작했습니다. 아직 짧아서 '
+          '내세울 실적이 없습니다. 대신 가동률과 장애를 있는 그대로 적고, 공개 서비스는 '
+          '여는 순서와 시점을 미리 알립니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
+          '받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.'),
     nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
     stat_networks="NETWORKS", stat_uptime="UPTIME · 최근 10K 블록",
-    stat_slashing="SLASHING · JAIL", stat_services="PUBLIC SERVICES · 제공 중",
+    stat_slashing="SLASHING · JAIL", stat_services="공개 서비스 · 제공 중",
     cta_delegate="DELEGATE", cta_services="서비스 공개 일정", cta_status="STATUS",
     sec_networks="지금 운영하는 네트워크",
     net_mainnet="메인넷", net_testnet="테스트넷",
     net_stake="위임", net_uptime="가동률", net_validator="밸리데이터", net_running="운영 중",
     net_next="다음 네트워크", net_planned="예정",
     net_next_desc="지금 맡은 네트워크가 안정된 뒤에 늘립니다",
-    sec_services="여는 순서와 시점을 그대로 공개합니다 · 모두 무료",
+    sec_services="여는 순서와 시점을 미리 알립니다 · 모두 무료",
     svc=dict(rpc=("Public RPC","요청 제한 없는 공개 RPC"),
              snapshot=("Snapshot","6시간마다 갱신하는 프룬 스냅샷"),
              guide=("설치 가이드","노드 구축 스크립트와 설명서"),
@@ -152,8 +152,8 @@ CONTENT = {
           '온체인에서 그대로 확인할 수 있습니다.'
           '<br><br><b>수수료 수입과 인프라 비용은 아직 공개하지 않습니다.</b> 운영을 시작한 지 '
           '얼마 되지 않아 공개할 만한 정산 주기가 쌓이지 않았습니다. 첫 정산이 끝나는 대로 수입과 '
-          '비용을 나란히 올리고, 명세는 저장소에 그대로 둡니다. 없는 숫자를 지어내지 않는 것이 '
-          '이 페이지의 원칙입니다.'),
+          '비용을 나란히 올리고, 명세는 저장소에 그대로 둡니다. '
+          '가리킬 수 없는 숫자는 올리지 않습니다.'),
     foot_meta=["MIN = 해당 체인이 허용하는 최소 수수료",
                "MISSED = 최근 10,000블록 윈도우 기준",
                "jail 이력 없음 · 슬래싱 없음"],
@@ -162,15 +162,15 @@ CONTENT = {
     log_empty_p=("운영을 시작한 2026년 7월 31일 이후 jail되거나 슬래싱된 이력이 없습니다. "
                  "다만 이건 자랑이 아니라 아직 시간이 짧다는 뜻입니다. 장애는 결국 생기고, "
                  "생기면 원인과 조치를 여기에 그대로 적습니다. 지우지 않습니다."),
-    sec_delegate="위임 안내 · 기여한 만큼 그대로 돌아갑니다",
+    sec_delegate="위임 안내",
     val_label="CELESTIA VALOPER",
     val_min="· 네트워크 최소",
     val_since="SINCE",
     btn_keplr="Keplr로 위임",
     story=('<b>DURE(두레)</b>는 조선 시대 마을 단위의 공동 노동 조직입니다. 주인이 따로 없었고, '
-           '누가 며칠을 냈는지 장부에 적었고, 낸 만큼 돌려받았습니다. 블록체인이 코드로 만들려는 '
-           '구조를 마을이 이미 관습으로 지켜온 셈이라, 그 이름을 그대로 가져왔습니다.'),
-    copy="© 2026 DURE · 함께 짓고, 낸 만큼 나눈다",
+           '누가 며칠 일했는지 장부에 적어 그만큼 나눴습니다. 지분만큼 보상이 돌아가는 지금 구조와 '
+           '같아서 이름을 그대로 가져왔습니다.'),
+    copy="© 2026 DURE",
     links=dict(github="GITHUB", x="X", telegram="TELEGRAM", contact="CONTACT", security="SECURITY"),
 ),
 }
