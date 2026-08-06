@@ -46,7 +46,3 @@ Every number on this page comes from on-chain state and is meant to be verifiabl
 
 Nothing is filled in with plausible-looking placeholder data. Where we don't have a figure
 yet, the page says so.
-
----
-
-함께 짓고, 낸 만큼 나눈다 · Shared work, settled fairly
