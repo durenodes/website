@@ -9,13 +9,17 @@ _style.css 와 아래 CONTENT 를 단일 원본으로 삼아 index.html(EN) 과 
 
 수정할 때: 문구는 CONTENT, 스타일은 _style.css. HTML 을 직접 고치지 마세요. 덮어써집니다.
 """
-import os, re, json, pathlib
+import os, re, json, pathlib, sys, datetime, urllib.request, concurrent.futures as _cf
 
 HERE = pathlib.Path(__file__).parent
 SITE = "https://durenodes.com"
 
 # ── 실측 데이터 ────────────────────────────────────────────────────────────────
-# 온체인에서 확인한 값만 씁니다. 갱신 시 출처를 함께 확인하세요.
+# 아래 값은 **빌드 시점에 온체인에서 다시 읽어 덮어씁니다** (fetch_onchain 참고).
+# 여기 적힌 것은 조회가 실패했을 때 쓰는 마지막 확인값입니다.
+#
+# 직접 고치지 마세요. 값을 갱신하려면 `python3 _build.py` 를 실행하면 됩니다.
+# 자동 갱신: .github/workflows/refresh.yml 이 매일 실행합니다.
 DATA = dict(
     as_of="2026-08-07",
     networks="3",
@@ -35,6 +39,90 @@ DATA = dict(
     celenium="https://celenium.io/validator/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
     keplr="https://wallet.keplr.app/chains/celestia?modal=validator&chain=celestia&validator_address=celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
 )
+
+# ── 온체인 조회 ────────────────────────────────────────────────────────────────
+# 페이지가 "온체인에서 그대로 확인할 수 있는 값만 적는다"고 말하므로,
+# 실제로 그렇게 되도록 빌드 때마다 다시 읽습니다.
+#
+# 실패해도 빌드는 계속됩니다. 다만 그 경우 위 DATA 의 옛 값이 그대로 나가므로
+# 종료 코드 1 을 돌려주고, 워크플로가 이를 감지해 커밋하지 않습니다.
+# 낡은 값을 새 값인 척 배포하는 것보다 배포를 건너뛰는 편이 낫습니다.
+
+CHAINS = [
+    dict(key="tia",   window=10000,
+         api=["https://celestia-rest.publicnode.com", "https://celestia-api.polkachu.com"],
+         valoper="celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
+         valcons="celestiavalcons10ph5dmuk55rp3lr7x3am2esmdxyclusdqvn5tn"),
+    dict(key="mocha", window=10000,
+         api=["https://celestia-testnet-api.polkachu.com"],
+         valoper="celestiavaloper1f9894lzpzav48h2cf07500nlf5dandzxg337eq",
+         valcons="celestiavalcons1eclzq8qmrqrq9ttgur2490ymka2k4duwuvucx7"),
+    dict(key="atom",  window=10000,
+         api=["https://rest.provider-sentry-01.hub-testnet.polypore.xyz",
+              "https://rest.provider-sentry-02.hub-testnet.polypore.xyz"],
+         valoper="cosmosvaloper169my69d97z05nd4kq3ztqs0kl6mn5xfn8m8mq6",
+         valcons="cosmosvalcons1xzr5nr4pwhvupwx32z3s8s77znrtqrq4z2jsaq"),
+]
+
+
+def _get(url, timeout=12):
+    req = urllib.request.Request(url, headers={"User-Agent": "durenodes-site-build"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.load(r)
+
+
+def _first(apis, path):
+    """엔드포인트를 순서대로 시도합니다. 하나가 죽어도 빌드가 멈추지 않게."""
+    last = None
+    for base in apis:
+        try:
+            return _get(base + path)
+        except Exception as e:      # noqa: BLE001 — 어떤 실패든 다음 엔드포인트로
+            last = e
+    raise RuntimeError(f"모든 엔드포인트 실패: {path} ({last})")
+
+
+def _one(c):
+    v = _first(c["api"], f"/cosmos/staking/v1beta1/validators/{c['valoper']}")["validator"]
+    si = _first(c["api"], f"/cosmos/slashing/v1beta1/signing_infos/{c['valcons']}")["val_signing_info"]
+    missed = int(si["missed_blocks_counter"])
+    return c["key"], dict(
+        stake=f"{int(v['tokens']) / 1e6:,.2f}",
+        comm=f"{float(v['commission']['commission_rates']['rate']) * 100:.2f}",
+        missed=missed,
+        window=c["window"],
+        bonded=(v["status"] == "BOND_STATUS_BONDED"),
+        jailed=bool(v.get("jailed", False)),
+    )
+
+
+def fetch_onchain():
+    """DATA 를 온체인 현재값으로 갱신합니다. 성공하면 True."""
+    try:
+        with _cf.ThreadPoolExecutor(len(CHAINS)) as ex:
+            got = dict(ex.map(_one, CHAINS))
+    except Exception as e:          # noqa: BLE001
+        print(f"  온체인 조회 실패 — 기존 값을 유지합니다: {e}", file=sys.stderr)
+        return False
+
+    for k, r in got.items():
+        DATA[f"{k}_stake"] = r["stake"]
+        DATA[f"{k}_comm"] = r["comm"]
+        DATA[f"{k}_missed"] = f"{r['missed']:,} / {r['window']:,}"
+        if r["jailed"] or not r["bonded"]:
+            print(f"  경고: {k} 가 BONDED 가 아닙니다 (jailed={r['jailed']})", file=sys.stderr)
+
+    # 대표 가동률은 메인넷 기준입니다. 테스트넷 수치를 섞지 않습니다.
+    tia = got["tia"]
+    DATA["uptime"] = f"{(1 - tia['missed'] / tia['window']) * 100:.2f}"
+    DATA["as_of"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+
+    print("  온체인 조회 완료")
+    for k in ("tia", "mocha", "atom"):
+        print(f"    {k:<6} {DATA[f'{k}_stake']:>16} · 커미션 {DATA[f'{k}_comm']}% · 미스 {DATA[f'{k}_missed']}")
+    print(f"    uptime {DATA['uptime']}% · as_of {DATA['as_of']}")
+    return True
+
 
 SERVICES = [
     ("Public RPC",       "rpc",      "2026 Q4"),
@@ -424,6 +512,23 @@ def build(key):
 
 
 def main():
+    # --skip-fetch: 문구·스타일만 고칠 때. 네트워크 없이 기존 DATA 로 생성합니다.
+    skip = "--skip-fetch" in sys.argv
+    if skip:
+        print(
+            f"  ⚠ --skip-fetch — 수치가 {DATA['as_of']} 기준으로 고정됩니다.\n"
+            "    페이지의 'as of' 표기도 그 날짜로 남으므로 표시 자체는 정직하지만,\n"
+            "    이 상태로 커밋하면 낡은 값이 배포됩니다.\n"
+            "    커밋 전에 네트워크를 연결하고 `python3 _build.py` 를 다시 실행하세요.",
+            file=sys.stderr)
+
+    if not skip and not fetch_onchain():
+        # 조회에 실패했으면 **아무것도 쓰지 않고** 끝냅니다.
+        # 여기서 생성하면 옛 값이 새로 쓰인 것처럼 파일에 남아,
+        # 다음 커밋에 낡은 수치가 그대로 배포됩니다.
+        print("  생성을 건너뜁니다. 기존 파일은 그대로 둡니다.", file=sys.stderr)
+        return 1
+
     (HERE / "index.html").write_text(build("en"), encoding="utf-8")
     (HERE / "ko").mkdir(exist_ok=True)
     (HERE / "ko" / "index.html").write_text(build("ko"), encoding="utf-8")
@@ -454,6 +559,8 @@ def main():
     for f in ("index.html", "ko/index.html", "robots.txt", "sitemap.xml"):
         print(f"  {f:<20} {os.path.getsize(HERE / f):>7,} bytes")
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
