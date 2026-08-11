@@ -112,7 +112,11 @@ def fetch_onchain():
         if r["jailed"] or not r["bonded"]:
             print(f"  경고: {k} 가 BONDED 가 아닙니다 (jailed={r['jailed']})", file=sys.stderr)
 
-    # 대표 가동률은 메인넷 기준입니다. 테스트넷 수치를 섞지 않습니다.
+    # 가동률은 **페이지에 싣지 않습니다.** missed_blocks_counter 는 누적이 아니라
+    # 최근 10,000블록(약 7.6시간) 롤링 윈도라, 이걸 "가동률"로 내걸면
+    # 방문자는 전체 기간 수치로 읽고 값은 하루에도 크게 출렁입니다.
+    # 대신 STATUS 표에 "미스 / 윈도" 를 그대로 적어 해석의 여지를 없앴습니다.
+    # 아래 값은 빌드 로그에서 운영자가 추이를 보기 위한 용도입니다.
     tia = got["tia"]
     DATA["uptime"] = f"{(1 - tia['missed'] / tia['window']) * 100:.2f}"
     DATA["as_of"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
@@ -151,12 +155,12 @@ CONTENT = {
           '<b>each chain\'s minimum commission</b>. Everything we open is '
           '<a href="#services">free to use</a>.'),
     nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
-    stat_networks="NETWORKS", stat_uptime="UPTIME · LAST 10K BLOCKS",
+    stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="PUBLIC SERVICES · LIVE",
     cta_delegate="DELEGATE", cta_services="Service schedule", cta_status="STATUS",
     sec_networks="Networks we run today",
     net_mainnet="MAINNET", net_testnet="TESTNET",
-    net_stake="stake", net_uptime="uptime", net_validator="validator", net_running="running",
+    net_stake="stake", net_comm="commission", net_validator="validator", net_running="running",
     net_next="Next network", net_planned="PLANNED",
     net_next_desc="We add one only after the network we already hold is stable",
     sec_services="The order and dates, published before they open · all free",
@@ -212,12 +216,12 @@ CONTENT = {
           '여는 순서와 시점을 미리 알립니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
           '받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.'),
     nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
-    stat_networks="NETWORKS", stat_uptime="UPTIME · 최근 10K 블록",
+    stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="공개 서비스 · 제공 중",
     cta_delegate="DELEGATE", cta_services="서비스 공개 일정", cta_status="STATUS",
     sec_networks="지금 운영하는 네트워크",
     net_mainnet="메인넷", net_testnet="테스트넷",
-    net_stake="위임", net_uptime="가동률", net_validator="밸리데이터", net_running="운영 중",
+    net_stake="위임", net_comm="커미션", net_validator="밸리데이터", net_running="운영 중",
     net_next="다음 네트워크", net_planned="예정",
     net_next_desc="지금 맡은 네트워크가 안정된 뒤에 늘립니다",
     sec_services="여는 순서와 시점을 미리 알립니다 · 모두 무료",
@@ -379,7 +383,6 @@ def build(key):
 
       <div class="stats">
         <div class="stat"><div class="stat-n">{d["networks"]}</div><div class="stat-l">{c["stat_networks"]}</div></div>
-        <div class="stat"><div class="stat-n">{d["uptime"]}<small>%</small></div><div class="stat-l">{c["stat_uptime"]}</div></div>
         <div class="stat"><div class="stat-n">{d["slashing"]}</div><div class="stat-l">{c["stat_slashing"]}</div></div>
         <div class="stat"><div class="stat-n">{d["services_live"]}<small> / {d["services_total"]}</small></div><div class="stat-l">{c["stat_services"]}</div></div>
       </div>
@@ -399,17 +402,17 @@ def build(key):
         <div class="net live">
           <div class="net-top"><span class="tick">TIA</span><span class="net-name">Celestia</span>
             <span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>{c["net_mainnet"]}</span><span>{c["net_stake"]} <b>{d["tia_stake"]} TIA</b></span><span>{c["net_uptime"]} <b>{d["uptime"]}%</b></span></div>
+          <div class="net-meta"><span>{c["net_mainnet"]}</span><span>{c["net_stake"]} <b>{d["tia_stake"]} TIA</b></span><span>{c["net_comm"]} <b>{d["tia_comm"]}%</b></span></div>
         </div>
         <div class="net test">
           <div class="net-top"><span class="tick">MCH</span><span class="net-name">Celestia Mocha</span>
             <span class="tag warn">{c["net_testnet"]}</span></div>
-          <div class="net-meta"><span>MOCHA-4</span><span>{c["net_validator"]} <b>{c["net_running"]}</b></span></div>
+          <div class="net-meta"><span>MOCHA-4</span><span>{c["net_stake"]} <b>{d["mocha_stake"]} TIA</b></span><span>{c["net_comm"]} <b>{d["mocha_comm"]}%</b></span></div>
         </div>
         <div class="net test">
           <div class="net-top"><span class="tick">ATOM</span><span class="net-name">Cosmos Hub</span>
             <span class="tag warn">{c["net_testnet"]}</span></div>
-          <div class="net-meta"><span>PROVIDER</span><span>{c["net_validator"]} <b>{c["net_running"]}</b></span></div>
+          <div class="net-meta"><span>PROVIDER</span><span>{c["net_stake"]} <b>{d["atom_stake"]} ATOM</b></span><span>{c["net_comm"]} <b>{d["atom_comm"]}%</b></span></div>
         </div>
         <div class="net next">
           <div class="net-top"><span class="tick">—</span><span class="net-name" style="color:var(--muted)">{c["net_next"]}</span>
@@ -447,7 +450,7 @@ def build(key):
             <tr><td>celestia-mainnet</td><td class="ok">BONDED</td><td class="num">{d["tia_stake"]} TIA</td>
                 <td class="num">{d["tia_comm"]}%<span class="min-badge">MIN</span></td><td class="num">{d["tia_missed"]}</td><td class="num">{d["tia_since"]}</td></tr>
             <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">{d["mocha_stake"]} TIA</td>
-                <td class="num">{d["mocha_comm"]}%<span class="min-badge">MIN</span></td><td class="num">—</td><td class="num">{d["mocha_since"]}</td></tr>
+                <td class="num">{d["mocha_comm"]}%<span class="min-badge">MIN</span></td><td class="num">{d["mocha_missed"]}</td><td class="num">{d["mocha_since"]}</td></tr>
             <tr><td>cosmoshub-provider</td><td class="ok">BONDED</td><td class="num">{d["atom_stake"]} ATOM</td>
                 <td class="num">{d["atom_comm"]}%<span class="min-badge">MIN</span></td><td class="num">{d["atom_missed"]}</td><td class="num">{d["atom_since"]}</td></tr>
           </tbody>
