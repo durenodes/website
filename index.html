@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Published Costs</title>
-<meta name="description" content="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes fee income alongside infrastructure cost, and never deletes an incident record.">
+<title>DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures</title>
+<meta name="description" content="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes only figures you can verify on-chain, and never deletes an incident record.">
 <link rel="canonical" href="https://durenodes.com/">
 <link rel="alternate" hreflang="en" href="https://durenodes.com/">
 <link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/">
@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="DURE">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://durenodes.com/">
-<meta property="og:title" content="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Published Costs">
-<meta property="og:description" content="Each chain's minimum commission. Fee income published alongside infrastructure cost. Incidents never deleted.">
+<meta property="og:title" content="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures">
+<meta property="og:description" content="Each chain's minimum commission. Only figures you can check on-chain. Incidents never deleted.">
 <meta property="og:image" content="https://durenodes.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
-<meta name="twitter:title" content="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Published Costs">
-<meta name="twitter:description" content="Each chain's minimum commission. Fee income published alongside infrastructure cost. Incidents never deleted.">
+<meta name="twitter:title" content="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures">
+<meta name="twitter:description" content="Each chain's minimum commission. Only figures you can check on-chain. Incidents never deleted.">
 <meta name="twitter:image" content="https://durenodes.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +40,7 @@
   ],
   "url": "https://durenodes.com/",
   "logo": "https://durenodes.com/icon-256.png",
-  "description": "DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes fee income alongside infrastructure cost, and never deletes an incident record.",
+  "description": "DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes only figures you can verify on-chain, and never deletes an incident record.",
   "sameAs": [
     "https://github.com/durenodes",
     "https://x.com/durenodes",
@@ -429,14 +429,14 @@ footer { border-top: 1px solid var(--line); }
             <th class="num">SINCE</th>
           </tr></thead>
           <tbody>
-            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">63 / 10,000</td><td class="num">98 / 100</td><td class="num">2026-07-31</td></tr>
+            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">71 / 10,000</td><td class="num">98 / 100</td><td class="num">2026-07-31</td></tr>
             <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">172 / 180</td><td class="num">2026-08-11</td></tr>
-            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,102.43 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">15 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
+            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,102.43 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">13 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
             <tr><td>provider</td><td class="ok">BONDED</td><td class="num">2.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">173 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="note"><b>We charge each chain's minimum commission.</b> Celestia enforces a 20% floor at the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ because the rules differ, not the policy — and every value above can be verified on-chain.<br><br><b>RANK is the part we would rather not show.</b> Celestia keeps 100 validators in its active set and the Cosmos Hub keeps 180. A validator that slips past those cuts stops earning, and on the Hub it stops signing while still reading as bonded. We are closer to those edges than we would like, so the number stays on the page.<br><br><b>Fee income and infrastructure cost are not published yet.</b> We have not been running long enough for a settlement period worth showing. As soon as the first one closes we will put income and cost side by side, and leave the breakdown in the repository. We do not put up a number we cannot point at.</div>
+      <div class="note"><b>We charge each chain's minimum commission.</b> Celestia enforces a 20% floor at the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ because the rules differ, not the policy — and every value above can be verified on-chain.<br><br><b>RANK is the part we would rather not show.</b> Celestia caps its active set at 100 and the Cosmos Hub at 180 of its 200 bonded. A validator that slips past those cuts stops earning, and on the Hub it stops signing while still reading as bonded. We are closer to those edges than we would like, so the number stays on the page.<br><br><b>We do not put up a number you cannot check.</b> Every figure on this page resolves to a query against the chain, and the addresses to run it against are below. If a value here disagrees with the chain, the chain is right.</div>
       <div class="foot-meta"><span>MIN = the lowest commission the chain allows</span><span>MISSED = within the last 10,000-block window</span><span>RANK = position in the active set</span><span>testnet tokens have no value</span></div>
     </div>
   </section>

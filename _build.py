@@ -382,9 +382,9 @@ SERVICES = [
 CONTENT = {
 "en": dict(
     lang="en", other="ko", other_label="한국어", other_href="/ko/",
-    title="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Published Costs",
-    desc="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes fee income alongside infrastructure cost, and never deletes an incident record.",
-    og_desc="Each chain's minimum commission. Fee income published alongside infrastructure cost. Incidents never deleted.",
+    title="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures",
+    desc="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes only figures you can verify on-chain, and never deletes an incident record.",
+    og_desc="Each chain's minimum commission. Only figures you can check on-chain. Incidents never deleted.",
     kicker="CELESTIA · COSMOS HUB · MAINNET VALIDATOR",
     h1="One chain at a time, run properly",
     lede=('We started on Celestia mainnet on 31 July 2026 and joined the Cosmos Hub active set '
@@ -420,14 +420,13 @@ CONTENT = {
     note=('<b>We charge each chain\'s minimum commission.</b> Celestia enforces a 20% floor at '
           'the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ '
           'because the rules differ, not the policy — and every value above can be verified on-chain.'
-          '<br><br><b>RANK is the part we would rather not show.</b> Celestia keeps 100 validators '
-          'in its active set and the Cosmos Hub keeps 180. A validator that slips past those cuts '
+          '<br><br><b>RANK is the part we would rather not show.</b> Celestia caps its active set at '
+          '100 and the Cosmos Hub at 180 of its 200 bonded. A validator that slips past those cuts '
           'stops earning, and on the Hub it stops signing while still reading as bonded. We are '
           'closer to those edges than we would like, so the number stays on the page.'
-          '<br><br><b>Fee income and infrastructure cost are not published yet.</b> We have not been '
-          'running long enough for a settlement period worth showing. As soon as the first one closes '
-          'we will put income and cost side by side, and leave the breakdown in the repository. '
-          'We do not put up a number we cannot point at.'),
+          '<br><br><b>We do not put up a number you cannot check.</b> Every figure on this page '
+          'resolves to a query against the chain, and the addresses to run it against are below. '
+          'If a value here disagrees with the chain, the chain is right.'),
     foot_meta=["MIN = the lowest commission the chain allows",
                "MISSED = within the last 10,000-block window",
                "RANK = position in the active set",
@@ -470,9 +469,9 @@ CONTENT = {
 ),
 "ko": dict(
     lang="ko", other="en", other_label="English", other_href="/?lang=en",
-    title="DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 비용 공개",
-    desc="DURE(두레)는 셀레스티아와 코스모스 허브 밸리데이터를 각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개하며, 장애 기록을 지우지 않습니다.",
-    og_desc="각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개합니다.",
+    title="DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 검증 가능한 값",
+    desc="DURE(두레)는 셀레스티아와 코스모스 허브 밸리데이터를 각 체인이 허용하는 최소 수수료로 운영하고, 온체인에서 확인 가능한 값만 올리며, 장애 기록을 지우지 않습니다.",
+    og_desc="각 체인이 허용하는 최소 수수료로 운영하고, 온체인에서 확인 가능한 값만 올립니다.",
     kicker="셀레스티아 · 코스모스 허브 · 메인넷 밸리데이터",
     h1="체인 하나부터 제대로 운영합니다",
     lede=('2026년 7월 31일 셀레스티아 메인넷에서 시작했고, 8월 11일 코스모스 허브 액티브 셋에 '
@@ -508,14 +507,13 @@ CONTENT = {
           '최소로 강제하고, 코스모스 허브는 5%입니다. 두 곳 모두 그 하한에 맞춰 두었습니다. '
           '체인마다 숫자가 다른 건 정책이 달라서가 아니라 규칙이 다르기 때문이고, 위 표의 값은 '
           '온체인에서 그대로 확인할 수 있습니다.'
-          '<br><br><b>RANK 는 사실 감추고 싶은 숫자입니다.</b> 셀레스티아는 액티브 셋이 100곳, '
-          '코스모스 허브는 180곳입니다. 이 선 밖으로 밀리면 보상이 끊기고, 허브에서는 '
+          '<br><br><b>RANK 는 사실 감추고 싶은 숫자입니다.</b> 셀레스티아는 액티브 셋 상한이 100곳, '
+          '코스모스 허브는 본딩 200곳 중 180곳입니다. 이 선 밖으로 밀리면 보상이 끊기고, 허브에서는 '
           '본딩 상태 그대로 블록 서명만 멈춥니다. 지금 우리는 그 경계에 가까운 편이고, '
           '그래서 더더욱 이 숫자를 페이지에 남겨둡니다.'
-          '<br><br><b>수수료 수입과 인프라 비용은 아직 공개하지 않습니다.</b> 운영을 시작한 지 '
-          '얼마 되지 않아 공개할 만한 정산 주기가 쌓이지 않았습니다. 첫 정산이 끝나는 대로 수입과 '
-          '비용을 나란히 올리고, 명세는 저장소에 그대로 둡니다. '
-          '가리킬 수 없는 숫자는 올리지 않습니다.'),
+          '<br><br><b>확인할 수 없는 숫자는 올리지 않습니다.</b> 이 페이지의 모든 값은 체인에 '
+          '질의하면 그대로 나오고, 질의할 주소는 아래에 적혀 있습니다. 여기 적힌 값이 체인과 '
+          '다르면 체인이 맞습니다.'),
     foot_meta=["MIN = 해당 체인이 허용하는 최소 수수료",
                "MISSED = 최근 10,000블록 윈도우 기준",
                "RANK = 액티브 셋 내 순위",

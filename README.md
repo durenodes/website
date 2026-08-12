@@ -3,8 +3,8 @@
 Landing page for **DURE** (doo-reh) — a validator and public infrastructure operator.
 
 DURE is named after 두레, a Korean village labor commons. Work together, keep the ledger,
-settle by days worked. We run the same way: each chain's minimum commission, costs published
-alongside fee income, and incident records we don't delete.
+settle by days worked. We run the same way: each chain's minimum commission, only figures a
+reader can verify against the chain, and incident records we don't delete.
 
 ## Structure
 
