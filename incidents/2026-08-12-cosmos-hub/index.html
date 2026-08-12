@@ -1,6 +1,30 @@
-/* DURE — 공통 스타일. 각 HTML 의 <style> 에 인라인으로 복사됩니다.
-   빌드 과정이 없으므로 이 파일은 원본 보관용입니다. 수정 시 두 HTML 에 모두 반영하세요. */
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>254 gas — a Cosmos Hub outage postmortem | DURE</title>
+<meta name="description" content="Our Cosmos Hub validator stopped signing for nine and a half hours because we built the binary ourselves for the wrong architecture. What happened, what we got wrong, and what we changed.">
+<link rel="canonical" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/">
+<link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/">
+<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/2026-08-12-cosmos-hub/">
+<link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/icon-256.png">
+<meta name="theme-color" content="#0D0F0C">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DURE">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://durenodes.com/incidents/2026-08-12-cosmos-hub/">
+<meta property="og:title" content="254 gas — a Cosmos Hub outage postmortem | DURE">
+<meta property="og:description" content="Our Cosmos Hub validator stopped signing for nine and a half hours because we built the binary ourselves for the wrong architecture. What happened, what we got wrong, and what we changed.">
+<meta property="og:image" content="https://durenodes.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@durenodes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
 :root {
   --bg: #0D0F0C;
   --panel: #141713;
@@ -35,7 +59,7 @@ img, svg { max-width: 100%; }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 22px; }
 .mono { font-family: var(--mono); }
 
-/* ---------- header ---------- */
+
 .hdr {
   position: sticky; top: 0; z-index: 30;
   background: rgba(13,15,12,.92); backdrop-filter: blur(8px);
@@ -55,7 +79,7 @@ img, svg { max-width: 100%; }
 }
 .lang:hover { color: var(--fg); border-color: var(--muted); }
 
-/* ---------- hero ---------- */
+
 .hero { border-bottom: 1px solid var(--line); padding: 64px 0 44px; }
 .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--brass); margin-bottom: 20px; }
 h1 { font-size: clamp(24px, 4.2vw, 36px); line-height: 1.42; font-weight: 600; margin: 0 0 14px; letter-spacing: -.01em; max-width: 26ch; }
@@ -81,14 +105,14 @@ h1 { font-size: clamp(24px, 4.2vw, 36px); line-height: 1.42; font-weight: 600; m
 .btn-solid:hover { background: #fff; color: var(--bg); }
 .dot { width: 7px; height: 7px; background: var(--green); display: block; flex: none; }
 
-/* ---------- sections ---------- */
+
 section { padding: 52px 0; }
 .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
 h2 { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; font-weight: 600; margin: 0; }
 .sec-sub { font-size: 13px; color: var(--muted); }
 .rule { height: 7px; border-top: 1px solid var(--line); background-image: repeating-linear-gradient(90deg, var(--line-2) 0 1px, transparent 1px 22px); background-size: 100% 4px; background-repeat: no-repeat; }
 
-/* networks */
+
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .net { background: var(--panel); padding: 18px; display: flex; flex-direction: column; gap: 11px; min-height: 118px; border-left: 2px solid var(--line-2); }
 .net.live { border-left-color: #5C8A4A; }
@@ -105,14 +129,14 @@ h2 { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; font-weig
 .net-meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: auto; }
 .net-meta b { color: var(--fg); font-weight: 500; }
 
-/* services */
+
 .grid-svc { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .svc { background: var(--panel-2); padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; min-height: 106px; }
 .svc-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .svc-d { font-size: 12px; color: var(--muted); line-height: 1.55; }
 .svc-s { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--brass); margin-top: auto; }
 
-/* table */
+
 .tbl-wrap { border: 1px solid var(--line); overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; min-width: 620px; }
 thead tr { background: var(--panel); font-size: 10.5px; letter-spacing: .12em; color: var(--muted); }
@@ -127,7 +151,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .note b { color: var(--fg); font-weight: 500; }
 .foot-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); }
 
-/* incident */
+
 .empty { border: 1px solid var(--line); background: var(--panel); padding: 26px 20px; text-align: center; }
 .empty-t { font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; color: var(--green); margin-bottom: 10px; }
 .empty p { margin: 0 auto; font-size: 13.5px; color: var(--muted); line-height: 1.8; max-width: 60ch; }
@@ -144,9 +168,9 @@ tbody tr:last-child td { border-bottom: 0; }
 .inc-meta b { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted);
   font-weight: 500; margin-right: 8px; }
 
-/* delegate */
+
 .val-card { border: 1px solid var(--line); background: var(--panel); padding: 14px 16px; margin-bottom: 16px; }
-/* 체인마다 카드 + 버튼 한 벌이 반복됩니다. 벌 사이는 띄우고 마지막은 붙입니다. */
+
 #delegate .cta { margin-bottom: 30px; }
 #delegate .cta:last-child { margin-bottom: 0; }
 .val-label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--brass); font-weight: 500; margin-bottom: 7px; }
@@ -154,7 +178,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .val-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); }
 .val-meta b { color: var(--green); font-weight: 500; }
 
-/* footer */
+
 footer { border-top: 1px solid var(--line); }
 .foot { padding: 34px 0 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
 .foot-story { max-width: 48ch; font-size: 12.5px; color: var(--muted); line-height: 1.8; }
@@ -163,7 +187,7 @@ footer { border-top: 1px solid var(--line); }
 .foot-links { margin-left: auto; display: flex; flex-direction: column; gap: 7px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; color: var(--muted); text-align: right; }
 .foot-links a:hover { color: var(--fg); }
 
-/* ---------- responsive ---------- */
+
 @media (max-width: 760px) {
   .wrap { padding: 0 16px; }
   .hdr-in { height: 52px; gap: 10px; }
@@ -180,8 +204,7 @@ footer { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 560px) {
-  /* 섹션 링크를 다 넣으면 헤더가 잘린다. 단일 페이지라 스크롤로 이동 가능하므로
-     전환 동선(DELEGATE)과 언어 전환만 남긴다. */
+  
   .nav a:not(.nav-key) { display: none; }
 }
 
@@ -202,7 +225,7 @@ footer { border-top: 1px solid var(--line); }
   letter-spacing: .1em; color: var(--brass); border-bottom: 1px solid rgba(180,147,78,.35); padding-bottom: 2px; }
 .inc-more:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
-/* postmortem */
+
 .pm-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 1px; margin-top: 34px; background: var(--line); border: 1px solid var(--line); }
 .pm-m { background: var(--panel); padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; }
 .pm-m b { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); font-weight: 400; }
@@ -219,3 +242,96 @@ footer { border-top: 1px solid var(--line); }
 .post a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
 .post a:hover { color: var(--fg); }
 .pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="/" aria-label="DURE">
+      <svg width="19" height="26" viewBox="52 32 133 184" aria-hidden="true" style="display:block">
+          <rect x="55" y="36" width="22" height="22" fill="#2BB673"></rect>
+          <rect x="58" y="58" width="16" height="154" fill="#E7E3D6"></rect>
+          <path d="M74,68 L182,68 L158,108 L182,148 L74,148 Z" fill="#E7E3D6"></path>
+          <g fill="#0D0F0C"><rect x="92" y="84" width="18" height="48"></rect><rect x="128" y="84" width="18" height="48"></rect></g>
+        </svg>
+      <b>DURE</b>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="/#status">STATUS</a>
+      <a href="/#log">LOG</a>
+      <a href="/#delegate" class="nav-key">DELEGATE</a>
+    </nav>
+    <a class="lang" href="/ko/incidents/2026-08-12-cosmos-hub/" hreflang="ko" rel="alternate">한국어</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">POSTMORTEM · 12 AUGUST 2026</div>
+      <h1>254 gas</h1>
+      <p class="lede">Our Cosmos Hub validator stopped signing at 02:00 KST and did not sign again until 11:29. It was never jailed and never slashed, but it came within 37% of the line. The cause was a single number: 254 gas.</p>
+      <div class="pm-meta"><div class="pm-m"><b>CHAIN</b><span>cosmoshub-4</span></div><div class="pm-m"><b>DURATION</b><span>9h 29m</span></div><div class="pm-m"><b>IMPACT</b><span>no jail · no slashing</span></div><div class="pm-m"><b>PEAK MISSED</b><span>5,989 / 9,500</span></div></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap post">
+      <h2>What broke</h2>
+      <p>We ran the node from an image we built ourselves, and that build came out <code>linux/arm64</code>. The official Cosmos Hub release is published for <code>linux/amd64</code> only, and that is what every other validator on the network runs.</p>
+      <p>For three hours this made no difference. Then block 32,454,059 arrived carrying a transaction that our build metered differently:</p>
+      <pre>panic recovered in runTx
+  err="out of gas in location: WritePerByte;
+       gasWanted: 259076, gasUsed: 259330: out of gas"</pre>
+      <p>Two hundred and fifty-four gas over the limit. On every other node the transaction fit and succeeded. On ours it ran out and failed, and a failed transaction changes no state. From that block onward our application state was a different thing from the chain's.</p>
+      <pre>CONSENSUS FAILURE!!! wrong Block.Header.AppHash
+  Expected D018907A...   ← what our node computed
+  got      56826755...   ← what the network agreed on</pre>
+      <p>Consensus asks for byte-identical results. Running "the same version" is not the same thing as running the same binary.</p>
+      <h2>Why it took six hours to notice, and three more to diagnose</h2>
+      <p>Once the state diverged, our node treated every correct block it received as invalid — and disconnected the peer that sent it.</p>
+      <pre>Stopping peer for error
+  err="reactor validation error: wrong Block.Header.AppHash"</pre>
+      <p>Ninety-nine percent of the log was peers connecting and dropping. The symptom read as <em>the network is rejecting us</em>. We were rejecting the network.</p>
+      <p>The node also reported <code>catching_up: false</code> the whole time. The block-sync reactor had already exited, so as far as it knew there was nothing to catch up on. It was four thousand blocks behind and frozen.</p>
+      <p>One command would have shown the panic immediately:</p>
+      <pre>docker logs --tail 400 &lt;container&gt; 2>&amp;1 | grep -v 'module=p2p' | tail -40</pre>
+      <p>That is now the first thing we run on any node incident.</p>
+      <h2>Two things we got wrong on the way</h2>
+      <p><b>We blamed memory.</b> The host showed 31 of 32 GB used and heavy swapping, so we capped the container limits. Three healthy containers restarted for nothing. Measured properly, the containers were using 15.6 of 20 GiB and the Cosmos node 3.1 of 8. The host figure was page cache from blockchain disk I/O — something we had already written down elsewhere and did not think to reread.</p>
+      <p><b>Then we blamed peers.</b> We replaced a working peer list with twenty addresses harvested from public RPC nodes. Many were sentries that drop unknown connections on sight, and because persistent peers are retried forever, they occupied the dial slots and starved normal peer discovery. The original list was never the problem.</p>
+      <p>Both detours came from reading symptoms instead of reading the log.</p>
+      <h2>What actually fixed it</h2>
+      <p>State sync stalled three times — once mid-transfer, twice on light-client verification. A 43 GB snapshot download was prepared and never needed.</p>
+      <p>What worked was copying the data directory from another machine already running the official amd64 image, after stopping it so the database was consistent. Copying a running node's database gives you a torn snapshot and reproduces exactly the mismatch you are trying to escape.</p>
+      <p>The first copy still failed. We swapped the data but left the arm64 binary in place, and it replayed 233 blocks and diverged again at the same transaction. <b>The binary has to change first, then the data.</b></p>
+      <p>Swapping to the official image needed two overrides — its entrypoint is <code>["gaiad", "start"]</code> where ours was <code>["gaiad"]</code>, and it runs as a non-root user against a root-owned data directory. After that, <code>uname -m</code> reporting <code>x86_64</code> was the check that mattered.</p>
+      <h2>What changed</h2>
+      <p><b>Mainnet nodes run official release images. No self-built binaries.</b> Where the host architecture differs from the release, we run the official build under emulation — slower, and worth it. A slow node signs late; a wrong node cannot sign at all. Our Celestia nodes were never affected because they had used the official image from the start.</p>
+      <p><b>Our monitoring alerted 65 minutes in, then went quiet for six hours.</b> Every rule fired as written — the rules were wrong. Alerting once per condition keeps people from muting notifications, but it meant the loudest moment of the incident was the quietest. Missed blocks went from 689 to 5,989 during that silence.</p>
+      <p>So a halted node is now distinguished from one merely missing blocks: compare the rise in missed blocks against how far the chain moved. A ratio at or above 0.9 means we are signing nothing, and it lands in a single poll rather than waiting for a counter to look alarming. That alert repeats every poll for as long as the halt lasts, and a ladder at 25/50/75% of the jail threshold fires alongside it. Every alert now carries the projected jail time.</p>
+      <p>The monitor is public: <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">github.com/durenodes/monitor</a>.</p>
+      <p class="pm-back"><a href="/">← Back to durenodes.com</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-story">
+      <b>DURE (두레, doo-reh)</b> was a village labour commons in Joseon-era Korea. No one owned it, a ledger recorded how many days each household worked, and the harvest was split in the same proportion. That is how stake and rewards work here, so we took the name as it is.
+      <div class="copy">© 2026 DURE</div>
+    </div>
+    <div class="foot-links">
+        <a href="https://github.com/durenodes" rel="me noopener" target="_blank">GITHUB</a>
+        <a href="https://x.com/durenodes" rel="me noopener" target="_blank">X</a>
+        <a href="https://t.me/durenodes" rel="me noopener" target="_blank">TELEGRAM</a>
+        <a href="mailto:contact@durenodes.com">CONTACT</a>
+        <a href="mailto:security@durenodes.com">SECURITY</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

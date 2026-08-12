@@ -21,23 +21,15 @@ SITE = "https://durenodes.com"
 # 직접 고치지 마세요. 값을 갱신하려면 `python3 _build.py` 를 실행하면 됩니다.
 # 자동 갱신: .github/workflows/refresh.yml 이 매일 실행합니다.
 DATA = dict(
-    as_of="2026-08-07",
-    networks="3",
-    uptime="99.82",
+    as_of="2026-08-12",
     slashing="0",
     services_live="0", services_total="10",
-    tia_stake="195.00", tia_comm="20.00", tia_missed="18 / 10,000", tia_since="2026-07-31",
-    mocha_stake="2.95", mocha_comm="20.00", mocha_since="2026-07-31",
-    atom_stake="1.00", atom_comm="5.00", atom_missed="0", atom_since="2026-08-05",
-    valoper="celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
     contact="contact@durenodes.com",
     security="security@durenodes.com",
     github="https://github.com/durenodes",
     x="https://x.com/durenodes",
     telegram="https://t.me/durenodes",
-    mintscan="https://www.mintscan.io/celestia/validators/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
-    celenium="https://celenium.io/validator/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
-    keplr="https://wallet.keplr.app/chains/celestia?modal=validator&chain=celestia&validator_address=celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
+    monitor="https://github.com/durenodes/monitor",
 )
 
 # ── 온체인 조회 ────────────────────────────────────────────────────────────────
@@ -48,21 +40,243 @@ DATA = dict(
 # 종료 코드 1 을 돌려주고, 워크플로가 이를 감지해 커밋하지 않습니다.
 # 낡은 값을 새 값인 척 배포하는 것보다 배포를 건너뛰는 편이 낫습니다.
 
+# 체인 하나의 정의가 네트워크 카드·상태표·통계·위임 카드를 **모두** 만듭니다.
+# 예전에는 네 곳을 따로 고쳐야 했고, 그래서 코스모스 허브 메인넷이 어디에도
+# 들어가지 않은 채로 배포돼 있었습니다. 추가할 곳이 하나면 빠뜨릴 수 없습니다.
+#
+#   cap  — 합의에 참여하는 상한. 셀레스티아 100, 코스모스 허브 180 (본딩은 200).
+#          순위가 이 값에 가까우면 밀려날 위험이 있다는 뜻이라 그대로 보여줍니다.
 CHAINS = [
-    dict(key="tia",   window=10000,
+    dict(key="tia", cid="celestia", label="Celestia", tick="TIA", denom="TIA",
+         kind="mainnet", window=10000, since="2026-07-31", cap=100, rank=True,
          api=["https://celestia-rest.publicnode.com", "https://celestia-api.polkachu.com"],
          valoper="celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
-         valcons="celestiavalcons10ph5dmuk55rp3lr7x3am2esmdxyclusdqvn5tn"),
-    dict(key="mocha", window=10000,
-         api=["https://celestia-testnet-api.polkachu.com"],
+         valcons="celestiavalcons10ph5dmuk55rp3lr7x3am2esmdxyclusdqvn5tn",
+         keplr="https://wallet.keplr.app/chains/celestia?modal=validator&chain=celestia"
+               "&validator_address=celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
+         explorers=[("Mintscan", "https://www.mintscan.io/celestia/validators/"
+                                 "celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq"),
+                    ("Celenium", "https://celenium.io/validator/"
+                                 "celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq")]),
+    dict(key="hub", cid="cosmoshub-4", label="Cosmos Hub", tick="ATOM", denom="ATOM",
+         kind="mainnet", window=10000, since="2026-08-11", cap=180, rank=True,
+         api=["https://cosmos-api.polkachu.com", "https://cosmos-rest.publicnode.com"],
+         valoper="cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm",
+         valcons="cosmosvalcons1p790seryrdhytu2yv68h0an52lcy0jhwdmc6xe",
+         keplr="https://wallet.keplr.app/chains/cosmos-hub?modal=validator&chain=cosmoshub-4"
+               "&validator_address=cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm",
+         explorers=[("Mintscan", "https://www.mintscan.io/cosmos/validators/"
+                                 "cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm")]),
+    dict(key="mocha", cid="mocha-4", label="Celestia Mocha", tick="MCH", denom="TIA",
+         kind="testnet", window=10000, since="2026-07-31", cap=None, rank=False,
+         api=["https://celestia-testnet-api.polkachu.com", "https://api-mocha.pops.one"],
          valoper="celestiavaloper1f9894lzpzav48h2cf07500nlf5dandzxg337eq",
          valcons="celestiavalcons1eclzq8qmrqrq9ttgur2490ymka2k4duwuvucx7"),
-    dict(key="atom",  window=10000,
+    dict(key="prov", cid="provider", label="Cosmos Hub Provider", tick="PROV", denom="ATOM",
+         kind="testnet", window=10000, since="2026-08-05", cap=None, rank=False,
          api=["https://rest.provider-sentry-01.hub-testnet.polypore.xyz",
               "https://rest.provider-sentry-02.hub-testnet.polypore.xyz"],
          valoper="cosmosvaloper169my69d97z05nd4kq3ztqs0kl6mn5xfn8m8mq6",
          valcons="cosmosvalcons1xzr5nr4pwhvupwx32z3s8s77znrtqrq4z2jsaq"),
 ]
+
+# 장애 기록. **지우지 않습니다.** 새 항목은 위에 붙입니다.
+# 원인을 모르면 모른다고 적습니다 — 빈 칸이나 그럴듯한 추정으로 채우지 마세요.
+INCIDENTS = [
+    dict(id="2026-08-12-hub", date="2026-08-12", time="02:00 KST",
+         chain="cosmoshub-4", dur="9h 29m", kind="outage", cause="arch", jailed=False, slashed=False),
+]
+
+POSTMORTEMS = [dict(
+    slug="2026-08-12-cosmos-hub",
+    date="2026-08-12",
+    en=dict(
+        title="254 gas — a Cosmos Hub outage postmortem | DURE",
+        h1="254 gas",
+        desc="Our Cosmos Hub validator stopped signing for nine and a half hours because we built "
+             "the binary ourselves for the wrong architecture. What happened, what we got wrong, "
+             "and what we changed.",
+        kicker="POSTMORTEM · 12 AUGUST 2026",
+        lede="Our Cosmos Hub validator stopped signing at 02:00 KST and did not sign again until "
+             "11:29. It was never jailed and never slashed, but it came within 37% of the line. "
+             "The cause was a single number: 254 gas.",
+        meta=[("CHAIN", "cosmoshub-4"), ("DURATION", "9h 29m"),
+              ("IMPACT", "no jail · no slashing"), ("PEAK MISSED", "5,989 / 9,500")],
+        sections=[
+            ("What broke", [
+                "<p>We ran the node from an image we built ourselves, and that build came out "
+                "<code>linux/arm64</code>. The official Cosmos Hub release is published for "
+                "<code>linux/amd64</code> only, and that is what every other validator on the "
+                "network runs.</p>",
+                "<p>For three hours this made no difference. Then block 32,454,059 arrived carrying "
+                "a transaction that our build metered differently:</p>",
+                "<pre>panic recovered in runTx\n  err=\"out of gas in location: WritePerByte;\n"
+                "       gasWanted: 259076, gasUsed: 259330: out of gas\"</pre>",
+                "<p>Two hundred and fifty-four gas over the limit. On every other node the "
+                "transaction fit and succeeded. On ours it ran out and failed, and a failed "
+                "transaction changes no state. From that block onward our application state was "
+                "a different thing from the chain's.</p>",
+                "<pre>CONSENSUS FAILURE!!! wrong Block.Header.AppHash\n"
+                "  Expected D018907A...   ← what our node computed\n"
+                "  got      56826755...   ← what the network agreed on</pre>",
+                "<p>Consensus asks for byte-identical results. Running \"the same version\" is not "
+                "the same thing as running the same binary.</p>",
+            ]),
+            ("Why it took six hours to notice, and three more to diagnose", [
+                "<p>Once the state diverged, our node treated every correct block it received as "
+                "invalid — and disconnected the peer that sent it.</p>",
+                "<pre>Stopping peer for error\n  err=\"reactor validation error: wrong Block.Header.AppHash\"</pre>",
+                "<p>Ninety-nine percent of the log was peers connecting and dropping. The symptom "
+                "read as <em>the network is rejecting us</em>. We were rejecting the network.</p>",
+                "<p>The node also reported <code>catching_up: false</code> the whole time. The "
+                "block-sync reactor had already exited, so as far as it knew there was nothing to "
+                "catch up on. It was four thousand blocks behind and frozen.</p>",
+                "<p>One command would have shown the panic immediately:</p>",
+                "<pre>docker logs --tail 400 &lt;container&gt; 2>&amp;1 | grep -v 'module=p2p' | tail -40</pre>",
+                "<p>That is now the first thing we run on any node incident.</p>",
+            ]),
+            ("Two things we got wrong on the way", [
+                "<p><b>We blamed memory.</b> The host showed 31 of 32 GB used and heavy swapping, so "
+                "we capped the container limits. Three healthy containers restarted for nothing. "
+                "Measured properly, the containers were using 15.6 of 20 GiB and the Cosmos node "
+                "3.1 of 8. The host figure was page cache from blockchain disk I/O — something we "
+                "had already written down elsewhere and did not think to reread.</p>",
+                "<p><b>Then we blamed peers.</b> We replaced a working peer list with twenty "
+                "addresses harvested from public RPC nodes. Many were sentries that drop unknown "
+                "connections on sight, and because persistent peers are retried forever, they "
+                "occupied the dial slots and starved normal peer discovery. The original list was "
+                "never the problem.</p>",
+                "<p>Both detours came from reading symptoms instead of reading the log.</p>",
+            ]),
+            ("What actually fixed it", [
+                "<p>State sync stalled three times — once mid-transfer, twice on light-client "
+                "verification. A 43 GB snapshot download was prepared and never needed.</p>",
+                "<p>What worked was copying the data directory from another machine already running "
+                "the official amd64 image, after stopping it so the database was consistent. "
+                "Copying a running node's database gives you a torn snapshot and reproduces exactly "
+                "the mismatch you are trying to escape.</p>",
+                "<p>The first copy still failed. We swapped the data but left the arm64 binary in "
+                "place, and it replayed 233 blocks and diverged again at the same transaction. "
+                "<b>The binary has to change first, then the data.</b></p>",
+                "<p>Swapping to the official image needed two overrides — its entrypoint is "
+                "<code>[\"gaiad\", \"start\"]</code> where ours was <code>[\"gaiad\"]</code>, and it "
+                "runs as a non-root user against a root-owned data directory. After that, "
+                "<code>uname -m</code> reporting <code>x86_64</code> was the check that mattered.</p>",
+            ]),
+            ("What changed", [
+                "<p><b>Mainnet nodes run official release images. No self-built binaries.</b> Where "
+                "the host architecture differs from the release, we run the official build under "
+                "emulation — slower, and worth it. A slow node signs late; a wrong node cannot sign "
+                "at all. Our Celestia nodes were never affected because they had used the official "
+                "image from the start.</p>",
+                "<p><b>Our monitoring alerted 65 minutes in, then went quiet for six hours.</b> "
+                "Every rule fired as written — the rules were wrong. Alerting once per condition "
+                "keeps people from muting notifications, but it meant the loudest moment of the "
+                "incident was the quietest. Missed blocks went from 689 to 5,989 during that "
+                "silence.</p>",
+                "<p>So a halted node is now distinguished from one merely missing blocks: compare "
+                "the rise in missed blocks against how far the chain moved. A ratio at or above 0.9 "
+                "means we are signing nothing, and it lands in a single poll rather than waiting "
+                "for a counter to look alarming. That alert repeats every poll for as long as the "
+                "halt lasts, and a ladder at 25/50/75% of the jail threshold fires alongside it. "
+                "Every alert now carries the projected jail time.</p>",
+                "<p>The monitor is public: "
+                "<a href=\"https://github.com/durenodes/monitor\" rel=\"noopener\" target=\"_blank\">"
+                "github.com/durenodes/monitor</a>.</p>",
+            ]),
+        ],
+        back="← Back to durenodes.com",
+    ),
+    ko=dict(
+        title="가스 254 — 코스모스 허브 장애 기록 | DURE",
+        h1="가스 254",
+        desc="코스모스 허브 밸리데이터가 9시간 반 동안 서명을 멈췄습니다. 바이너리를 직접 빌드하면서 "
+             "아키텍처가 어긋난 것이 원인이었습니다. 무슨 일이 있었고, 무엇을 잘못 짚었고, 무엇을 바꿨는지.",
+        kicker="장애 기록 · 2026년 8월 12일",
+        lede="코스모스 허브 밸리데이터가 02:00 에 서명을 멈췄고 11:29 에 재개했습니다. jail 되지도 "
+             "슬래싱되지도 않았지만 임계까지 37% 를 남긴 상태였습니다. 원인은 숫자 하나였습니다 — 가스 254.",
+        meta=[("체인", "cosmoshub-4"), ("길이", "9시간 29분"),
+              ("영향", "jail 없음 · 슬래싱 없음"), ("최고 미스", "5,989 / 9,500")],
+        sections=[
+            ("무엇이 깨졌나", [
+                "<p>노드를 직접 빌드한 이미지로 돌리고 있었고, 그 빌드가 <code>linux/arm64</code> 로 "
+                "나왔습니다. 코스모스 허브 공식 릴리스는 <code>linux/amd64</code> 전용이고, "
+                "네트워크의 다른 밸리데이터는 전부 그것으로 돕니다.</p>",
+                "<p>세 시간 동안은 아무 차이가 없었습니다. 그러다 32,454,059 번 블록에 우리 빌드에서만 "
+                "다르게 계량되는 트랜잭션이 실려 왔습니다.</p>",
+                "<pre>panic recovered in runTx\n  err=\"out of gas in location: WritePerByte;\n"
+                "       gasWanted: 259076, gasUsed: 259330: out of gas\"</pre>",
+                "<p>한도를 254 가스 넘겼습니다. 다른 모든 노드에서는 한도 안에 들어와 성공한 "
+                "트랜잭션이 우리 노드에서만 실패했고, <b>실패한 트랜잭션은 상태를 바꾸지 않습니다.</b> "
+                "그 블록부터 우리 앱 상태는 체인의 것과 다른 물건이 되었습니다.</p>",
+                "<pre>CONSENSUS FAILURE!!! wrong Block.Header.AppHash\n"
+                "  Expected D018907A...   ← 우리 노드가 계산한 값\n"
+                "  got      56826755...   ← 네트워크가 합의한 값</pre>",
+                "<p>합의는 바이트 단위로 같은 결과를 요구합니다. \"같은 버전\"을 돌리는 것과 "
+                "같은 바이너리를 돌리는 것은 다릅니다.</p>",
+            ]),
+            ("왜 여섯 시간을 몰랐고, 세 시간을 더 헤맸나", [
+                "<p>상태가 갈라진 뒤로 우리 노드는 받은 정상 블록을 전부 잘못된 블록으로 판단하고, "
+                "그것을 보내준 피어를 끊었습니다.</p>",
+                "<pre>Stopping peer for error\n  err=\"reactor validation error: wrong Block.Header.AppHash\"</pre>",
+                "<p>로그의 99% 가 피어 연결과 해제였습니다. 겉보기 증상은 <em>네트워크가 우리를 "
+                "거부한다</em> 였습니다. 실제로는 우리가 네트워크를 거부하고 있었습니다.</p>",
+                "<p>노드는 그동안 내내 <code>catching_up: false</code> 를 보고했습니다. "
+                "블록 동기화 리액터가 이미 종료된 뒤라 스스로는 따라잡을 게 없다고 믿었습니다. "
+                "실제로는 4,000 블록 뒤에서 멈춰 있었습니다.</p>",
+                "<p>명령 한 줄이면 panic 이 바로 보였습니다.</p>",
+                "<pre>docker logs --tail 400 &lt;컨테이너&gt; 2>&amp;1 | grep -v 'module=p2p' | tail -40</pre>",
+                "<p>이제 노드 장애에서 가장 먼저 하는 일입니다.</p>",
+            ]),
+            ("가는 길에 두 번 잘못 짚었습니다", [
+                "<p><b>메모리 탓이라고 봤습니다.</b> 호스트가 32GB 중 31GB 사용에 스왑이 심해 "
+                "컨테이너 상한을 걸었고, 멀쩡한 컨테이너 셋이 이유 없이 재시작됐습니다. 제대로 재보니 "
+                "컨테이너 합계는 20 GiB 중 15.6, 코스모스 노드는 8 중 3.1 이었습니다. 호스트 수치는 "
+                "블록체인 디스크 I/O 의 페이지 캐시였고, <b>이미 우리 문서에 적어둔 내용</b>인데 "
+                "다시 읽어볼 생각을 못 했습니다.</p>",
+                "<p><b>다음엔 피어 탓이라고 봤습니다.</b> 멀쩡히 돌던 피어 목록을 공개 RPC 에서 긁은 "
+                "주소 20개로 바꿨습니다. 상당수가 모르는 연결을 즉시 끊는 센트리였고, "
+                "persistent peer 는 무한 재시도라 다이얼 슬롯을 점유해 정상적인 피어 탐색까지 "
+                "막았습니다. 원래 목록은 처음부터 문제가 아니었습니다.</p>",
+                "<p>두 번의 우회 모두 로그가 아니라 증상을 읽어서 생긴 일입니다.</p>",
+            ]),
+            ("무엇이 실제로 고쳤나", [
+                "<p>state-sync 는 세 번 실패했습니다 — 한 번은 전송 도중, 두 번은 라이트 클라이언트 "
+                "검증에서. 43GB 스냅샷 다운로드는 준비만 하고 쓰지 않았습니다.</p>",
+                "<p>통한 것은 이미 공식 amd64 이미지로 돌고 있던 다른 머신에서 데이터 디렉토리를 "
+                "복사해 오는 것이었습니다. <b>복사 전에 그 노드를 반드시 멈춰야 합니다.</b> "
+                "돌아가는 노드의 DB 를 복사하면 쓰기 도중 상태가 잘려 들어와, 지금 벗어나려는 바로 그 "
+                "불일치가 재현됩니다.</p>",
+                "<p>첫 복사는 그래도 실패했습니다. 데이터만 갈고 arm64 바이너리를 그대로 뒀더니 "
+                "233 블록을 다시 실행하다 같은 트랜잭션에서 또 갈라졌습니다. "
+                "<b>바이너리를 먼저 바꾸고, 그다음에 데이터입니다.</b></p>",
+                "<p>공식 이미지로 바꾸는 데 두 가지 오버라이드가 필요했습니다 — entrypoint 가 "
+                "<code>[\"gaiad\", \"start\"]</code> 인데 우리는 <code>[\"gaiad\"]</code> 였고, "
+                "실행 유저가 non-root 인데 데이터는 root 소유였습니다. 그다음엔 "
+                "<code>uname -m</code> 이 <code>x86_64</code> 를 뱉는지가 유일하게 중요한 확인이었습니다.</p>",
+            ]),
+            ("무엇을 바꿨나", [
+                "<p><b>메인넷 노드는 공식 릴리스 이미지만 씁니다. 자체 빌드 금지.</b> 호스트 아키텍처가 "
+                "릴리스와 다르면 공식 빌드를 에뮬레이션으로 돌립니다. 느려지지만 그럴 값어치가 "
+                "있습니다 — 느린 노드는 늦게 서명하고, 틀린 노드는 아예 못 합니다. 셀레스티아 노드가 "
+                "무사했던 이유도 처음부터 공식 이미지였기 때문입니다.</p>",
+                "<p><b>모니터는 65분 만에 알렸고, 그 뒤 여섯 시간을 침묵했습니다.</b> 모든 규칙이 "
+                "쓰인 대로 작동했습니다 — 규칙이 틀렸습니다. 조건마다 한 번만 알리는 설계는 사람이 "
+                "알림을 꺼버리는 걸 막지만, 그 결과 장애가 가장 시끄러워야 할 구간이 가장 조용했습니다. "
+                "그 침묵 동안 놓친 블록은 689 에서 5,989 로 올랐습니다.</p>",
+                "<p>그래서 이제 <b>멈춘 노드</b>와 <b>가끔 놓치는 노드</b>를 구분합니다. 놓친 블록 "
+                "증가분을 체인이 나아간 블록 수와 대조해서, 그 비율이 0.9 이상이면 서명이 사실상 0 "
+                "입니다. 카운터가 위협적으로 보일 때까지 기다리지 않고 <b>한 번의 폴링으로</b> "
+                "판정됩니다. 이 알림은 정지가 이어지는 동안 매 폴링마다 반복되고, jail 임계의 "
+                "25/50/75% 사다리가 함께 울립니다. 모든 알림에 예상 jail 시각이 붙습니다.</p>",
+                "<p>감시기는 공개돼 있습니다: "
+                "<a href=\"https://github.com/durenodes/monitor\" rel=\"noopener\" target=\"_blank\">"
+                "github.com/durenodes/monitor</a>.</p>",
+            ]),
+        ],
+        back="← durenodes.com 으로",
+    ),
+)]
 
 
 def _get(url, timeout=12):
@@ -85,46 +299,70 @@ def _first(apis, path):
 def _one(c):
     v = _first(c["api"], f"/cosmos/staking/v1beta1/validators/{c['valoper']}")["validator"]
     si = _first(c["api"], f"/cosmos/slashing/v1beta1/signing_infos/{c['valcons']}")["val_signing_info"]
-    missed = int(si["missed_blocks_counter"])
+    rates = v["commission"]["commission_rates"]
+
+    rank = None
+    if c["rank"]:
+        # 본딩된 밸리데이터를 스테이크 순으로 정렬해 우리 자리를 찾습니다.
+        # 코스모스 허브는 본딩 200 곳 중 상위 180 곳만 합의에 참여하므로,
+        # 분모는 본딩 수가 아니라 cap 입니다.
+        vs = _first(c["api"], "/cosmos/staking/v1beta1/validators"
+                              "?pagination.limit=500&status=BOND_STATUS_BONDED")["validators"]
+        vs.sort(key=lambda x: int(x["tokens"]), reverse=True)
+        for i, x in enumerate(vs, 1):
+            if x["operator_address"] == c["valoper"]:
+                rank = i
+                break
+
     return c["key"], dict(
         stake=f"{int(v['tokens']) / 1e6:,.2f}",
-        comm=f"{float(v['commission']['commission_rates']['rate']) * 100:.2f}",
-        missed=missed,
+        comm=f"{float(rates['rate']) * 100:.2f}",
+        max_comm=f"{float(rates['max_rate']) * 100:.2f}",
+        max_change=f"{float(rates['max_change_rate']) * 100:.2f}",
+        missed=int(si["missed_blocks_counter"]),
         window=c["window"],
+        rank=rank,
+        status=v["status"].replace("BOND_STATUS_", ""),
         bonded=(v["status"] == "BOND_STATUS_BONDED"),
         jailed=bool(v.get("jailed", False)),
     )
 
 
+LIVE: dict[str, dict] = {}
+
+
 def fetch_onchain():
-    """DATA 를 온체인 현재값으로 갱신합니다. 성공하면 True."""
+    """LIVE 를 온체인 현재값으로 채웁니다. 성공하면 True."""
     try:
         with _cf.ThreadPoolExecutor(len(CHAINS)) as ex:
             got = dict(ex.map(_one, CHAINS))
     except Exception as e:          # noqa: BLE001
-        print(f"  온체인 조회 실패 — 기존 값을 유지합니다: {e}", file=sys.stderr)
+        print(f"  온체인 조회 실패: {e}", file=sys.stderr)
         return False
 
-    for k, r in got.items():
-        DATA[f"{k}_stake"] = r["stake"]
-        DATA[f"{k}_comm"] = r["comm"]
-        DATA[f"{k}_missed"] = f"{r['missed']:,} / {r['window']:,}"
-        if r["jailed"] or not r["bonded"]:
-            print(f"  경고: {k} 가 BONDED 가 아닙니다 (jailed={r['jailed']})", file=sys.stderr)
+    LIVE.update(got)
+    DATA["as_of"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+    DATA["mainnets"] = str(sum(1 for c in CHAINS if c["kind"] == "mainnet"))
+    DATA["testnets"] = str(sum(1 for c in CHAINS if c["kind"] == "testnet"))
+    DATA["incidents"] = str(len(INCIDENTS))
+
+    print("  온체인 조회 완료")
+    for c in CHAINS:
+        r = got[c["key"]]
+        pos = f" · {r['rank']}/{c['cap']}" if r["rank"] else ""
+        print(f"    {c['cid']:<20} {r['stake']:>14} {c['denom']} · 커미션 {r['comm']}%"
+              f" · 미스 {r['missed']:,}/{r['window']:,} · {r['status']}{pos}")
+        if not r["bonded"] or r["jailed"]:
+            print(f"      경고: BONDED 가 아닙니다 (jailed={r['jailed']})", file=sys.stderr)
+        # 합의 셋 하위 5 자리 안으로 들어오면 빌드 로그에 남깁니다.
+        # 밀려나면 보상이 끊기는데 missed 로는 잡히지 않습니다.
+        if r["rank"] and c["cap"] and r["rank"] > c["cap"] - 5:
+            print(f"      경고: 합의 셋 하위 {r['rank']}/{c['cap']} — 밀려날 수 있습니다", file=sys.stderr)
 
     # 가동률은 **페이지에 싣지 않습니다.** missed_blocks_counter 는 누적이 아니라
     # 최근 10,000블록(약 7.6시간) 롤링 윈도라, 이걸 "가동률"로 내걸면
     # 방문자는 전체 기간 수치로 읽고 값은 하루에도 크게 출렁입니다.
     # 대신 STATUS 표에 "미스 / 윈도" 를 그대로 적어 해석의 여지를 없앴습니다.
-    # 아래 값은 빌드 로그에서 운영자가 추이를 보기 위한 용도입니다.
-    tia = got["tia"]
-    DATA["uptime"] = f"{(1 - tia['missed'] / tia['window']) * 100:.2f}"
-    DATA["as_of"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
-
-    print("  온체인 조회 완료")
-    for k in ("tia", "mocha", "atom"):
-        print(f"    {k:<6} {DATA[f'{k}_stake']:>16} · 커미션 {DATA[f'{k}_comm']}% · 미스 {DATA[f'{k}_missed']}")
-    print(f"    uptime {DATA['uptime']}% · as_of {DATA['as_of']}")
     return True
 
 
@@ -147,20 +385,21 @@ CONTENT = {
     title="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Published Costs",
     desc="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes fee income alongside infrastructure cost, and never deletes an incident record.",
     og_desc="Each chain's minimum commission. Fee income published alongside infrastructure cost. Incidents never deleted.",
-    kicker="CELESTIA MAINNET · COSMOS HUB TESTNET · VALIDATOR",
+    kicker="CELESTIA · COSMOS HUB · MAINNET VALIDATOR",
     h1="One chain at a time, run properly",
-    lede=('We started a Celestia mainnet validator on 31 July 2026 — not long enough to have '
-          'a record worth showing. What we can do is write down uptime and outages as they '
-          'happen, publish the order and dates of public services before they open, and charge '
-          '<b>each chain\'s minimum commission</b>. Everything we open is '
+    lede=('We started on Celestia mainnet on 31 July 2026 and joined the Cosmos Hub active set '
+          'on 11 August — not long enough to have a record worth showing. What we can do is '
+          'publish every number you can check on-chain yourself, write outages down as they '
+          'happen, and charge <b>each chain\'s minimum commission</b>. Everything we open is '
           '<a href="#services">free to use</a>.'),
     nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="PUBLIC SERVICES · LIVE",
+    stat_incidents="INCIDENTS ON RECORD",
     cta_delegate="DELEGATE", cta_services="Service schedule", cta_status="STATUS",
-    sec_networks="Networks we run today",
+    sec_networks="{mainnets} mainnet · {testnets} testnet",
     net_mainnet="MAINNET", net_testnet="TESTNET",
-    net_stake="stake", net_comm="commission", net_validator="validator", net_running="running",
+    net_stake="stake", net_comm="commission", net_rank="rank",
     net_next="Next network", net_planned="PLANNED",
     net_next_desc="We add one only after the network we already hold is stable",
     sec_services="The order and dates, published before they open · all free",
@@ -176,24 +415,49 @@ CONTENT = {
              relayer=("IBC Relayer","Cross-chain packet relay")),
     svc_planned="PLANNED", svc_tbd="DATE TBD",
     sec_status="Only values you can verify on-chain · as of {as_of}",
-    th=dict(network="NETWORK", status="STATUS", stake="STAKE", commission="COMMISSION", missed="MISSED", since="SINCE"),
+    th=dict(network="NETWORK", status="STATUS", stake="STAKE", commission="COMMISSION",
+            missed="MISSED", rank="RANK", since="SINCE"),
     note=('<b>We charge each chain\'s minimum commission.</b> Celestia enforces a 20% floor at '
           'the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ '
           'because the rules differ, not the policy — and every value above can be verified on-chain.'
+          '<br><br><b>RANK is the part we would rather not show.</b> Celestia keeps 100 validators '
+          'in its active set and the Cosmos Hub keeps 180. A validator that slips past those cuts '
+          'stops earning, and on the Hub it stops signing while still reading as bonded. We are '
+          'closer to those edges than we would like, so the number stays on the page.'
           '<br><br><b>Fee income and infrastructure cost are not published yet.</b> We have not been '
           'running long enough for a settlement period worth showing. As soon as the first one closes '
           'we will put income and cost side by side, and leave the breakdown in the repository. '
           'We do not put up a number we cannot point at.'),
     foot_meta=["MIN = the lowest commission the chain allows",
                "MISSED = within the last 10,000-block window",
-               "no jail history · no slashing"],
+               "RANK = position in the active set",
+               "testnet tokens have no value"],
     sec_log="We write down outages and what we did about them. We do not delete them.",
+    log_head=("Monitoring runs every 10 minutes and the code is "
+              '<a href="{monitor}" rel="noopener" target="_blank">public</a>. '
+              "No jail and no slashing so far — the entries below are the gaps we saw."),
+    log_cause="CAUSE",
+    log_impact="IMPACT",
+    log_none="no jail · no slashing",
+    log_causes=dict(
+        unknown="Not identified. We did not find a cause we could point at, so we are not writing one down.",
+        arch=("We were running a self-built arm64 binary while the rest of the network runs the "
+              "official amd64 release. One transaction metered 254 gas differently, ran out of gas "
+              "on our node alone, and our application state diverged from the chain."),
+    ),
+    log_bodies=dict(
+        outage="A {dur} outage on {chain}, detected by our own monitoring.",
+        gap="A {dur} gap on {chain}, recorded by our own monitoring. We have not confirmed "
+            "whether the node was unreachable or simply missed signatures.",
+    ),
+    log_more="Read the full postmortem →",
+    log_criteria=("We record outages where signing stopped. If we could not identify a cause we say "
+                  "so, and what goes up here stays up."),
     log_empty="NO INCIDENTS ON RECORD",
-    log_empty_p=("Since we started on 31 July 2026 there has been no jail and no slashing. "
-                 "That is not a boast — it means the time has been short. Outages happen eventually, "
-                 "and when they do the cause and the fix go here. We do not delete them."),
+    log_empty_p=("There has been no jail and no slashing. That is not a boast — it means the time "
+                 "has been short. Outages happen eventually, and when they do the cause and the fix "
+                 "go here. We do not delete them."),
     sec_delegate="Delegation",
-    val_label="CELESTIA VALOPER",
     val_min="· NETWORK MINIMUM",
     val_since="SINCE",
     btn_keplr="Delegate with Keplr",
@@ -209,19 +473,20 @@ CONTENT = {
     title="DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 비용 공개",
     desc="DURE(두레)는 셀레스티아와 코스모스 허브 밸리데이터를 각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개하며, 장애 기록을 지우지 않습니다.",
     og_desc="각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개합니다.",
-    kicker="셀레스티아 메인넷 · 코스모스 허브 테스트넷 · 밸리데이터",
+    kicker="셀레스티아 · 코스모스 허브 · 메인넷 밸리데이터",
     h1="체인 하나부터 제대로 운영합니다",
-    lede=('2026년 7월 31일 셀레스티아 메인넷 밸리데이터를 시작했습니다. 아직 짧아서 '
-          '내세울 실적이 없습니다. 대신 가동률과 장애를 있는 그대로 적고, 공개 서비스는 '
-          '여는 순서와 시점을 미리 알립니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
+    lede=('2026년 7월 31일 셀레스티아 메인넷에서 시작했고, 8월 11일 코스모스 허브 액티브 셋에 '
+          '들어갔습니다. 아직 짧아서 내세울 실적이 없습니다. 대신 직접 확인할 수 있는 온체인 값만 '
+          '올리고, 장애는 생기는 대로 적습니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
           '받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.'),
     nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="공개 서비스 · 제공 중",
+    stat_incidents="기록된 장애",
     cta_delegate="DELEGATE", cta_services="서비스 공개 일정", cta_status="STATUS",
-    sec_networks="지금 운영하는 네트워크",
+    sec_networks="메인넷 {mainnets} · 테스트넷 {testnets}",
     net_mainnet="메인넷", net_testnet="테스트넷",
-    net_stake="위임", net_comm="커미션", net_validator="밸리데이터", net_running="운영 중",
+    net_stake="위임", net_comm="커미션", net_rank="순위",
     net_next="다음 네트워크", net_planned="예정",
     net_next_desc="지금 맡은 네트워크가 안정된 뒤에 늘립니다",
     sec_services="여는 순서와 시점을 미리 알립니다 · 모두 무료",
@@ -237,25 +502,50 @@ CONTENT = {
              relayer=("IBC Relayer","체인 간 패킷 중계")),
     svc_planned="예정", svc_tbd="시점 미정",
     sec_status="온체인에서 그대로 확인할 수 있는 값만 적습니다 · {as_of} 기준",
-    th=dict(network="NETWORK", status="STATUS", stake="STAKE", commission="COMMISSION", missed="MISSED", since="SINCE"),
+    th=dict(network="NETWORK", status="STATUS", stake="STAKE", commission="COMMISSION",
+            missed="MISSED", rank="RANK", since="SINCE"),
     note=('<b>수수료는 각 체인이 허용하는 최소값으로 받습니다.</b> 셀레스티아는 네트워크가 20%를 '
           '최소로 강제하고, 코스모스 허브는 5%입니다. 두 곳 모두 그 하한에 맞춰 두었습니다. '
           '체인마다 숫자가 다른 건 정책이 달라서가 아니라 규칙이 다르기 때문이고, 위 표의 값은 '
           '온체인에서 그대로 확인할 수 있습니다.'
+          '<br><br><b>RANK 는 사실 감추고 싶은 숫자입니다.</b> 셀레스티아는 액티브 셋이 100곳, '
+          '코스모스 허브는 180곳입니다. 이 선 밖으로 밀리면 보상이 끊기고, 허브에서는 '
+          '본딩 상태 그대로 블록 서명만 멈춥니다. 지금 우리는 그 경계에 가까운 편이고, '
+          '그래서 더더욱 이 숫자를 페이지에 남겨둡니다.'
           '<br><br><b>수수료 수입과 인프라 비용은 아직 공개하지 않습니다.</b> 운영을 시작한 지 '
           '얼마 되지 않아 공개할 만한 정산 주기가 쌓이지 않았습니다. 첫 정산이 끝나는 대로 수입과 '
           '비용을 나란히 올리고, 명세는 저장소에 그대로 둡니다. '
           '가리킬 수 없는 숫자는 올리지 않습니다.'),
     foot_meta=["MIN = 해당 체인이 허용하는 최소 수수료",
                "MISSED = 최근 10,000블록 윈도우 기준",
-               "jail 이력 없음 · 슬래싱 없음"],
+               "RANK = 액티브 셋 내 순위",
+               "테스트넷 토큰은 가치가 없습니다"],
     sec_log="장애와 조치 내역을 그대로 남깁니다. 지우지 않습니다.",
+    log_head=("10분 간격으로 감시하고 있고, 그 코드는 "
+              '<a href="{monitor}" rel="noopener" target="_blank">공개</a>돼 있습니다. '
+              "지금까지 jail·슬래싱은 없었고, 아래는 관측된 공백입니다."),
+    log_cause="원인",
+    log_impact="영향",
+    log_none="jail 없음 · 슬래싱 없음",
+    log_causes=dict(
+        unknown="확인하지 못했습니다. 가리킬 수 있는 원인을 찾지 못해 추정으로 채우지 않습니다.",
+        arch=("네트워크의 나머지가 공식 amd64 릴리스로 도는데 우리만 자체 빌드한 arm64 바이너리를 "
+              "쓰고 있었습니다. 한 트랜잭션에서 가스가 254 만큼 다르게 계산돼 우리 노드에서만 "
+              "실패했고, 앱 상태가 체인과 갈라졌습니다."),
+    ),
+    log_bodies=dict(
+        outage="{chain} 에서 {dur} 동안 멈췄고, 자체 모니터링으로 감지했습니다.",
+        gap="{chain} 에서 {dur} 의 공백이 자체 모니터링에 기록되었습니다. "
+            "노드가 응답하지 않은 것인지 서명만 누락된 것인지는 확인하지 못했습니다.",
+    ),
+    log_more="전체 기록 읽기 →",
+    log_criteria=("서명이 멈춘 장애를 기록합니다. 원인을 모르면 모른다고 적고, "
+                  "여기 올라온 것은 지우지 않습니다."),
     log_empty="기록된 장애 없음",
-    log_empty_p=("운영을 시작한 2026년 7월 31일 이후 jail되거나 슬래싱된 이력이 없습니다. "
-                 "다만 이건 자랑이 아니라 아직 시간이 짧다는 뜻입니다. 장애는 결국 생기고, "
-                 "생기면 원인과 조치를 여기에 그대로 적습니다. 지우지 않습니다."),
+    log_empty_p=("jail되거나 슬래싱된 이력이 없습니다. 다만 이건 자랑이 아니라 아직 시간이 "
+                 "짧다는 뜻입니다. 장애는 결국 생기고, 생기면 원인과 조치를 여기에 그대로 "
+                 "적습니다. 지우지 않습니다."),
     sec_delegate="위임 안내",
-    val_label="CELESTIA VALOPER",
     val_min="· 네트워크 최소",
     val_since="SINCE",
     btn_keplr="Keplr로 위임",
@@ -290,6 +580,206 @@ def jsonld(c):
             {"@type": "ContactPoint", "contactType": "security", "email": DATA["security"]},
         ],
     }, ensure_ascii=False, indent=2)
+
+
+def net_cards(c):
+    cards = []
+    for ch in CHAINS:
+        r = LIVE[ch["key"]]
+        main = ch["kind"] == "mainnet"
+        tag = ('<span class="tag on"><span class="blink"></span>ACTIVE</span>' if main
+               else f'<span class="tag warn">{c["net_testnet"]}</span>')
+        meta = [f'<span>{ch["cid"].upper()}</span>',
+                f'<span>{c["net_stake"]} <b>{r["stake"]} {ch["denom"]}</b></span>',
+                f'<span>{c["net_comm"]} <b>{r["comm"]}%</b></span>']
+        if r["rank"]:
+            meta.append(f'<span>{c["net_rank"]} <b>{r["rank"]} / {ch["cap"]}</b></span>')
+        cards.append(
+            f'        <div class="net {"live" if main else "test"}">\n'
+            f'          <div class="net-top"><span class="tick">{ch["tick"]}</span>'
+            f'<span class="net-name">{ch["label"]}</span>{tag}</div>\n'
+            f'          <div class="net-meta">{"".join(meta)}</div>\n'
+            f'        </div>')
+    cards.append(
+        f'        <div class="net next">\n'
+        f'          <div class="net-top"><span class="tick">—</span>'
+        f'<span class="net-name" style="color:var(--muted)">{c["net_next"]}</span>'
+        f'<span class="tag">{c["net_planned"]}</span></div>\n'
+        f'          <div class="net-meta">{c["net_next_desc"]}</div>\n'
+        f'        </div>')
+    return "\n".join(cards)
+
+
+def table_rows(c):
+    rows = []
+    for ch in CHAINS:
+        r = LIVE[ch["key"]]
+        rank = f'{r["rank"]} / {ch["cap"]}' if r["rank"] else "—"
+        rows.append(
+            f'            <tr><td>{ch["cid"]}</td>'
+            f'<td class="{"ok" if r["bonded"] else ""}">{r["status"]}</td>'
+            f'<td class="num">{r["stake"]} {ch["denom"]}</td>'
+            f'<td class="num">{r["comm"]}%<span class="min-badge">MIN</span></td>'
+            f'<td class="num">{r["missed"]:,} / {r["window"]:,}</td>'
+            f'<td class="num">{rank}</td>'
+            f'<td class="num">{ch["since"]}</td></tr>')
+    return "\n".join(rows)
+
+
+def incidents(c, key):
+    """장애 기록. 서명이 멈춘 건은 카드로, 그 아래는 한 줄로. 어느 쪽도 지우지 않습니다."""
+    if not INCIDENTS:
+        return (f'      <div class="empty">\n'
+                f'        <div class="empty-t">{c["log_empty"]}</div>\n'
+                f'        <p>{c["log_empty_p"]}</p>\n'
+                f'      </div>')
+    slugs = {p["slug"].split("-", 3)[-1]: p["slug"] for p in POSTMORTEMS}
+    items = [f'      <p class="log-head">{c["log_head"].format(monitor=DATA["monitor"])}</p>']
+    for i in INCIDENTS:
+        pm = next((p for p in POSTMORTEMS if p["date"] == i["date"]), None)
+        more = ""
+        if pm:
+            href = ("/ko" if key == "ko" else "") + f'/incidents/{pm["slug"]}/'
+            more = f'\n        <a class="inc-more" href="{href}">{c["log_more"]}</a>'
+        items.append(
+            f'      <div class="inc">\n'
+            f'        <div class="inc-when">{i["date"]} · {i["time"]}</div>\n'
+            f'        <p class="inc-body">{c["log_bodies"][i["kind"]].format(chain=i["chain"], dur=i["dur"])}</p>\n'
+            f'        <div class="inc-meta">'
+            f'<span><b>{c["log_cause"]}</b> {c["log_causes"][i["cause"]]}</span>'
+            f'<span><b>{c["log_impact"]}</b> {c["log_none"]}</span></div>'
+            f'{more}\n'
+            f'      </div>')
+    items.append(f'      <p class="log-note">{c["log_criteria"]}</p>')
+    return "\n".join(items)
+
+
+def delegate_cards(c):
+    out = []
+    for ch in CHAINS:
+        if not ch.get("keplr"):
+            continue
+        r = LIVE[ch["key"]]
+        expl = "".join(
+            f'        <a href="{u}" target="_blank" rel="noopener" class="btn">{n}</a>\n'
+            for n, u in ch["explorers"])
+        out.append(
+            f'      <div class="val-card">\n'
+            f'        <b class="val-label">{ch["label"].upper()} VALOPER</b>\n'
+            f'        <div class="val-addr">{ch["valoper"]}</div>\n'
+            f'        <div class="val-meta">\n'
+            f'          <span>COMMISSION {r["comm"]}% <b>{c["val_min"]}</b></span>\n'
+            f'          <span>MAX {r["max_comm"]}%</span>'
+            f'<span>MAX CHANGE {r["max_change"]}%</span>'
+            f'<span>{c["val_since"]} {ch["since"]}</span>\n'
+            f'        </div>\n'
+            f'      </div>\n'
+            f'      <div class="cta">\n'
+            f'        <a href="{ch["keplr"]}" target="_blank" rel="noopener" class="btn btn-solid">'
+            f'<span>{c["btn_keplr"]}</span><span class="dot"></span></a>\n'
+            f'{expl}      </div>')
+    return "\n".join(out)
+
+
+def postmortem_html(key, pm):
+    """장애 기록 상세 페이지. 랜딩과 같은 셸을 쓰되 본문만 다릅니다."""
+    c = CONTENT[key]
+    p = pm[key]
+    css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
+    path = f"/incidents/{pm['slug']}/"
+    canonical = SITE + ("/ko" if key == "ko" else "") + path
+    alt = ("/ko" if key == "en" else "") + path if key == "en" else path
+    home = "/ko/" if key == "ko" else "/"
+
+    meta = "".join(f'<div class="pm-m"><b>{k}</b><span>{v}</span></div>' for k, v in p["meta"])
+    body = "\n".join(
+        f'      <h2>{title}</h2>\n' + "\n".join(f"      {para}" for para in paras)
+        for title, paras in p["sections"])
+
+    return f'''<!DOCTYPE html>
+<html lang="{c["lang"]}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{p["title"]}</title>
+<meta name="description" content="{p["desc"]}">
+<link rel="canonical" href="{canonical}">
+<link rel="alternate" hreflang="en" href="{SITE}/incidents/{pm["slug"]}/">
+<link rel="alternate" hreflang="ko" href="{SITE}/ko/incidents/{pm["slug"]}/">
+<link rel="alternate" hreflang="x-default" href="{SITE}/incidents/{pm["slug"]}/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/icon-256.png">
+<meta name="theme-color" content="#0D0F0C">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DURE">
+<meta property="og:locale" content="{"ko_KR" if key == "ko" else "en_US"}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:title" content="{p["title"]}">
+<meta property="og:description" content="{p["desc"]}">
+<meta property="og:image" content="{SITE}/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@durenodes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+{css}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="{home}" aria-label="DURE">
+      {MARK}
+      <b>DURE</b>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="{home}#status">{c["nav"]["status"]}</a>
+      <a href="{home}#log">{c["nav"]["log"]}</a>
+      <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
+    </nav>
+    <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">{p["kicker"]}</div>
+      <h1>{p["h1"]}</h1>
+      <p class="lede">{p["lede"]}</p>
+      <div class="pm-meta">{meta}</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap post">
+{body}
+      <p class="pm-back"><a href="{home}">{p["back"]}</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-story">
+      {c["story"]}
+      <div class="copy">{c["copy"]}</div>
+    </div>
+    <div class="foot-links">
+        <a href="{DATA["github"]}" rel="me noopener" target="_blank">{c["links"]["github"]}</a>
+        <a href="{DATA["x"]}" rel="me noopener" target="_blank">{c["links"]["x"]}</a>
+        <a href="{DATA["telegram"]}" rel="me noopener" target="_blank">{c["links"]["telegram"]}</a>
+        <a href="mailto:{DATA["contact"]}">{c["links"]["contact"]}</a>
+        <a href="mailto:{DATA["security"]}">{c["links"]["security"]}</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+'''
 
 
 def build(key):
@@ -382,9 +872,10 @@ def build(key):
       <p class="lede">{c["lede"]}</p>
 
       <div class="stats">
-        <div class="stat"><div class="stat-n">{d["networks"]}</div><div class="stat-l">{c["stat_networks"]}</div></div>
+        <div class="stat"><div class="stat-n">{len(CHAINS)}</div><div class="stat-l">{c["stat_networks"]}</div></div>
         <div class="stat"><div class="stat-n">{d["slashing"]}</div><div class="stat-l">{c["stat_slashing"]}</div></div>
         <div class="stat"><div class="stat-n">{d["services_live"]}<small> / {d["services_total"]}</small></div><div class="stat-l">{c["stat_services"]}</div></div>
+        <div class="stat"><div class="stat-n"><a href="#log">{d["incidents"]}</a></div><div class="stat-l">{c["stat_incidents"]}</div></div>
       </div>
 
       <div class="cta">
@@ -397,28 +888,9 @@ def build(key):
 
   <section id="networks">
     <div class="wrap">
-      <div class="sec-head"><h2>NETWORKS</h2><span class="sec-sub">{c["sec_networks"]}</span></div>
+      <div class="sec-head"><h2>NETWORKS</h2><span class="sec-sub">{c["sec_networks"].format(mainnets=d["mainnets"], testnets=d["testnets"])}</span></div>
       <div class="grid-2">
-        <div class="net live">
-          <div class="net-top"><span class="tick">TIA</span><span class="net-name">Celestia</span>
-            <span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>{c["net_mainnet"]}</span><span>{c["net_stake"]} <b>{d["tia_stake"]} TIA</b></span><span>{c["net_comm"]} <b>{d["tia_comm"]}%</b></span></div>
-        </div>
-        <div class="net test">
-          <div class="net-top"><span class="tick">MCH</span><span class="net-name">Celestia Mocha</span>
-            <span class="tag warn">{c["net_testnet"]}</span></div>
-          <div class="net-meta"><span>MOCHA-4</span><span>{c["net_stake"]} <b>{d["mocha_stake"]} TIA</b></span><span>{c["net_comm"]} <b>{d["mocha_comm"]}%</b></span></div>
-        </div>
-        <div class="net test">
-          <div class="net-top"><span class="tick">ATOM</span><span class="net-name">Cosmos Hub</span>
-            <span class="tag warn">{c["net_testnet"]}</span></div>
-          <div class="net-meta"><span>PROVIDER</span><span>{c["net_stake"]} <b>{d["atom_stake"]} ATOM</b></span><span>{c["net_comm"]} <b>{d["atom_comm"]}%</b></span></div>
-        </div>
-        <div class="net next">
-          <div class="net-top"><span class="tick">—</span><span class="net-name" style="color:var(--muted)">{c["net_next"]}</span>
-            <span class="tag">{c["net_planned"]}</span></div>
-          <div class="net-meta">{c["net_next_desc"]}</div>
-        </div>
+{net_cards(c)}
       </div>
     </div>
   </section>
@@ -444,15 +916,11 @@ def build(key):
           <thead><tr>
             <th>{c["th"]["network"]}</th><th>{c["th"]["status"]}</th>
             <th class="num">{c["th"]["stake"]}</th><th class="num">{c["th"]["commission"]}</th>
-            <th class="num">{c["th"]["missed"]}</th><th class="num">{c["th"]["since"]}</th>
+            <th class="num">{c["th"]["missed"]}</th><th class="num">{c["th"]["rank"]}</th>
+            <th class="num">{c["th"]["since"]}</th>
           </tr></thead>
           <tbody>
-            <tr><td>celestia-mainnet</td><td class="ok">BONDED</td><td class="num">{d["tia_stake"]} TIA</td>
-                <td class="num">{d["tia_comm"]}%<span class="min-badge">MIN</span></td><td class="num">{d["tia_missed"]}</td><td class="num">{d["tia_since"]}</td></tr>
-            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">{d["mocha_stake"]} TIA</td>
-                <td class="num">{d["mocha_comm"]}%<span class="min-badge">MIN</span></td><td class="num">{d["mocha_missed"]}</td><td class="num">{d["mocha_since"]}</td></tr>
-            <tr><td>cosmoshub-provider</td><td class="ok">BONDED</td><td class="num">{d["atom_stake"]} ATOM</td>
-                <td class="num">{d["atom_comm"]}%<span class="min-badge">MIN</span></td><td class="num">{d["atom_missed"]}</td><td class="num">{d["atom_since"]}</td></tr>
+{table_rows(c)}
           </tbody>
         </table>
       </div>
@@ -466,10 +934,7 @@ def build(key):
   <section id="log">
     <div class="wrap">
       <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">{c["sec_log"]}</span></div>
-      <div class="empty">
-        <div class="empty-t">{c["log_empty"]}</div>
-        <p>{c["log_empty_p"]}</p>
-      </div>
+{incidents(c, key)}
     </div>
   </section>
 
@@ -478,19 +943,7 @@ def build(key):
   <section id="delegate">
     <div class="wrap">
       <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">{c["sec_delegate"]}</span></div>
-      <div class="val-card">
-        <b class="val-label">{c["val_label"]}</b>
-        <div class="val-addr">{d["valoper"]}</div>
-        <div class="val-meta">
-          <span>COMMISSION {d["tia_comm"]}% <b>{c["val_min"]}</b></span>
-          <span>MAX 25.00%</span><span>MAX CHANGE 1.00%</span><span>{c["val_since"]} {d["tia_since"]}</span>
-        </div>
-      </div>
-      <div class="cta">
-        <a href="{d["keplr"]}" target="_blank" rel="noopener" class="btn btn-solid"><span>{c["btn_keplr"]}</span><span class="dot"></span></a>
-        <a href="{d["mintscan"]}" target="_blank" rel="noopener" class="btn">Mintscan</a>
-        <a href="{d["celenium"]}" target="_blank" rel="noopener" class="btn">Celenium</a>
-      </div>
+{delegate_cards(c)}
     </div>
   </section>
 
@@ -536,8 +989,26 @@ def main():
     (HERE / "ko").mkdir(exist_ok=True)
     (HERE / "ko" / "index.html").write_text(build("ko"), encoding="utf-8")
 
+    written = []
+    for pm in POSTMORTEMS:
+        for key in ("en", "ko"):
+            d = HERE / ("ko" if key == "ko" else ".") / "incidents" / pm["slug"]
+            d.mkdir(parents=True, exist_ok=True)
+            (d / "index.html").write_text(postmortem_html(key, pm), encoding="utf-8")
+            written.append(str((d / "index.html").relative_to(HERE)))
+
     (HERE / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
+
+    pm_urls = "\n".join(
+        f"""  <url>
+    <loc>{SITE}{pre}/incidents/{pm["slug"]}/</loc>
+    <lastmod>{pm["date"]}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/incidents/{pm["slug"]}/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/incidents/{pm["slug"]}/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/incidents/{pm["slug"]}/"/>
+  </url>"""
+        for pm in POSTMORTEMS for pre in ("", "/ko"))
 
     (HERE / "sitemap.xml").write_text(f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -556,10 +1027,11 @@ def main():
     <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>
   </url>
+{pm_urls}
 </urlset>
 ''', encoding="utf-8")
 
-    for f in ("index.html", "ko/index.html", "robots.txt", "sitemap.xml"):
+    for f in ["index.html", "ko/index.html", "robots.txt", "sitemap.xml"] + written:
         print(f"  {f:<20} {os.path.getsize(HERE / f):>7,} bytes")
 
     return 0

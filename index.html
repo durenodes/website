@@ -192,9 +192,23 @@ tbody tr:last-child td { border-bottom: 0; }
 .empty-t { font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; color: var(--green); margin-bottom: 10px; }
 .empty p { margin: 0 auto; font-size: 13.5px; color: var(--muted); line-height: 1.8; max-width: 60ch; }
 
+.log-head { margin: 0 0 16px; font-size: 13.5px; color: var(--muted); line-height: 1.8; max-width: 66ch; }
+.log-head a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
+.inc { border: 1px solid var(--line); background: var(--panel); padding: 16px 18px; border-left: 2px solid var(--brass); }
+.inc + .inc { margin-top: 1px; }
+.inc-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
+.inc-body { margin: 9px 0 0; font-size: 14px; color: var(--fg); line-height: 1.75; }
+.inc-meta { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 13px; padding-top: 12px;
+  border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+.inc-meta span { max-width: 58ch; }
+.inc-meta b { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted);
+  font-weight: 500; margin-right: 8px; }
+
 
 .val-card { border: 1px solid var(--line); background: var(--panel); padding: 14px 16px; margin-bottom: 16px; }
-.val-card + .val-card { margin-top: -8px; }
+
+#delegate .cta { margin-bottom: 30px; }
+#delegate .cta:last-child { margin-bottom: 0; }
 .val-label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--brass); font-weight: 500; margin-bottom: 7px; }
 .val-addr { font-family: var(--mono); font-size: 12.5px; word-break: break-all; color: var(--fg); }
 .val-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); }
@@ -240,6 +254,30 @@ footer { border-top: 1px solid var(--line); }
   * { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+.log-note { margin: 16px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.8; max-width: 66ch; }
+
+.inc-more { display: inline-block; margin-top: 13px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; color: var(--brass); border-bottom: 1px solid rgba(180,147,78,.35); padding-bottom: 2px; }
+.inc-more:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
+
+.pm-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 1px; margin-top: 34px; background: var(--line); border: 1px solid var(--line); }
+.pm-m { background: var(--panel); padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; }
+.pm-m b { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); font-weight: 400; }
+.pm-m span { font-family: var(--mono); font-size: 13px; }
+.post { max-width: 68ch; }
+.post h2 { font-family: var(--sans); font-size: 19px; font-weight: 600; letter-spacing: 0; margin: 44px 0 14px; text-transform: none; }
+.post h2:first-child { margin-top: 0; }
+.post p { margin: 0 0 15px; font-size: 15px; line-height: 1.85; color: #C9C4B4; }
+.post p b { color: var(--fg); font-weight: 600; }
+.post code { font-family: var(--mono); font-size: .88em; color: var(--brass); background: var(--panel-2); padding: 1px 5px; }
+.post pre { font-family: var(--mono); font-size: 12px; line-height: 1.7; color: var(--muted);
+  background: var(--panel); border: 1px solid var(--line); border-left: 2px solid var(--line-2);
+  padding: 14px 16px; margin: 0 0 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.post a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
+.post a:hover { color: var(--fg); }
+.pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
 </style>
 </head>
 <body>
@@ -270,14 +308,15 @@ footer { border-top: 1px solid var(--line); }
 
   <div class="hero">
     <div class="wrap">
-      <div class="kicker">CELESTIA MAINNET · COSMOS HUB TESTNET · VALIDATOR</div>
+      <div class="kicker">CELESTIA · COSMOS HUB · MAINNET VALIDATOR</div>
       <h1>One chain at a time, run properly</h1>
-      <p class="lede">We started a Celestia mainnet validator on 31 July 2026 — not long enough to have a record worth showing. What we can do is write down uptime and outages as they happen, publish the order and dates of public services before they open, and charge <b>each chain's minimum commission</b>. Everything we open is <a href="#services">free to use</a>.</p>
+      <p class="lede">We started on Celestia mainnet on 31 July 2026 and joined the Cosmos Hub active set on 11 August — not long enough to have a record worth showing. What we can do is publish every number you can check on-chain yourself, write outages down as they happen, and charge <b>each chain's minimum commission</b>. Everything we open is <a href="#services">free to use</a>.</p>
 
       <div class="stats">
-        <div class="stat"><div class="stat-n">3</div><div class="stat-l">NETWORKS</div></div>
+        <div class="stat"><div class="stat-n">4</div><div class="stat-l">NETWORKS</div></div>
         <div class="stat"><div class="stat-n">0</div><div class="stat-l">SLASHING · JAIL</div></div>
         <div class="stat"><div class="stat-n">0<small> / 10</small></div><div class="stat-l">PUBLIC SERVICES · LIVE</div></div>
+        <div class="stat"><div class="stat-n"><a href="#log">1</a></div><div class="stat-l">INCIDENTS ON RECORD</div></div>
       </div>
 
       <div class="cta">
@@ -290,26 +329,26 @@ footer { border-top: 1px solid var(--line); }
 
   <section id="networks">
     <div class="wrap">
-      <div class="sec-head"><h2>NETWORKS</h2><span class="sec-sub">Networks we run today</span></div>
+      <div class="sec-head"><h2>NETWORKS</h2><span class="sec-sub">2 mainnet · 2 testnet</span></div>
       <div class="grid-2">
         <div class="net live">
-          <div class="net-top"><span class="tick">TIA</span><span class="net-name">Celestia</span>
-            <span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>MAINNET</span><span>stake <b>195.12 TIA</b></span><span>commission <b>20.00%</b></span></div>
+          <div class="net-top"><span class="tick">TIA</span><span class="net-name">Celestia</span><span class="tag on"><span class="blink"></span>ACTIVE</span></div>
+          <div class="net-meta"><span>CELESTIA</span><span>stake <b>195.12 TIA</b></span><span>commission <b>20.00%</b></span><span>rank <b>98 / 100</b></span></div>
+        </div>
+        <div class="net live">
+          <div class="net-top"><span class="tick">ATOM</span><span class="net-name">Cosmos Hub</span><span class="tag on"><span class="blink"></span>ACTIVE</span></div>
+          <div class="net-meta"><span>COSMOSHUB-4</span><span>stake <b>340.00 ATOM</b></span><span>commission <b>5.00%</b></span><span>rank <b>172 / 180</b></span></div>
         </div>
         <div class="net test">
-          <div class="net-top"><span class="tick">MCH</span><span class="net-name">Celestia Mocha</span>
-            <span class="tag warn">TESTNET</span></div>
-          <div class="net-meta"><span>MOCHA-4</span><span>stake <b>500,057.48 TIA</b></span><span>commission <b>20.00%</b></span></div>
+          <div class="net-top"><span class="tick">MCH</span><span class="net-name">Celestia Mocha</span><span class="tag warn">TESTNET</span></div>
+          <div class="net-meta"><span>MOCHA-4</span><span>stake <b>500,102.43 TIA</b></span><span>commission <b>20.00%</b></span></div>
         </div>
         <div class="net test">
-          <div class="net-top"><span class="tick">ATOM</span><span class="net-name">Cosmos Hub</span>
-            <span class="tag warn">TESTNET</span></div>
+          <div class="net-top"><span class="tick">PROV</span><span class="net-name">Cosmos Hub Provider</span><span class="tag warn">TESTNET</span></div>
           <div class="net-meta"><span>PROVIDER</span><span>stake <b>2.00 ATOM</b></span><span>commission <b>5.00%</b></span></div>
         </div>
         <div class="net next">
-          <div class="net-top"><span class="tick">—</span><span class="net-name" style="color:var(--muted)">Next network</span>
-            <span class="tag">PLANNED</span></div>
+          <div class="net-top"><span class="tick">—</span><span class="net-name" style="color:var(--muted)">Next network</span><span class="tag">PLANNED</span></div>
           <div class="net-meta">We add one only after the network we already hold is stable</div>
         </div>
       </div>
@@ -380,26 +419,25 @@ footer { border-top: 1px solid var(--line); }
 
   <section id="status">
     <div class="wrap">
-      <div class="sec-head"><h2>STATUS</h2><span class="sec-sub">Only values you can verify on-chain · as of 2026-08-11</span></div>
+      <div class="sec-head"><h2>STATUS</h2><span class="sec-sub">Only values you can verify on-chain · as of 2026-08-12</span></div>
       <div class="tbl-wrap">
         <table>
           <thead><tr>
             <th>NETWORK</th><th>STATUS</th>
             <th class="num">STAKE</th><th class="num">COMMISSION</th>
-            <th class="num">MISSED</th><th class="num">SINCE</th>
+            <th class="num">MISSED</th><th class="num">RANK</th>
+            <th class="num">SINCE</th>
           </tr></thead>
           <tbody>
-            <tr><td>celestia-mainnet</td><td class="ok">BONDED</td><td class="num">195.12 TIA</td>
-                <td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">293 / 10,000</td><td class="num">2026-07-31</td></tr>
-            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,057.48 TIA</td>
-                <td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">224 / 10,000</td><td class="num">2026-07-31</td></tr>
-            <tr><td>cosmoshub-provider</td><td class="ok">BONDED</td><td class="num">2.00 ATOM</td>
-                <td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">2026-08-05</td></tr>
+            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">63 / 10,000</td><td class="num">98 / 100</td><td class="num">2026-07-31</td></tr>
+            <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">172 / 180</td><td class="num">2026-08-11</td></tr>
+            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,102.43 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">15 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
+            <tr><td>provider</td><td class="ok">BONDED</td><td class="num">2.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">173 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="note"><b>We charge each chain's minimum commission.</b> Celestia enforces a 20% floor at the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ because the rules differ, not the policy — and every value above can be verified on-chain.<br><br><b>Fee income and infrastructure cost are not published yet.</b> We have not been running long enough for a settlement period worth showing. As soon as the first one closes we will put income and cost side by side, and leave the breakdown in the repository. We do not put up a number we cannot point at.</div>
-      <div class="foot-meta"><span>MIN = the lowest commission the chain allows</span><span>MISSED = within the last 10,000-block window</span><span>no jail history · no slashing</span></div>
+      <div class="note"><b>We charge each chain's minimum commission.</b> Celestia enforces a 20% floor at the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ because the rules differ, not the policy — and every value above can be verified on-chain.<br><br><b>RANK is the part we would rather not show.</b> Celestia keeps 100 validators in its active set and the Cosmos Hub keeps 180. A validator that slips past those cuts stops earning, and on the Hub it stops signing while still reading as bonded. We are closer to those edges than we would like, so the number stays on the page.<br><br><b>Fee income and infrastructure cost are not published yet.</b> We have not been running long enough for a settlement period worth showing. As soon as the first one closes we will put income and cost side by side, and leave the breakdown in the repository. We do not put up a number we cannot point at.</div>
+      <div class="foot-meta"><span>MIN = the lowest commission the chain allows</span><span>MISSED = within the last 10,000-block window</span><span>RANK = position in the active set</span><span>testnet tokens have no value</span></div>
     </div>
   </section>
 
@@ -408,10 +446,14 @@ footer { border-top: 1px solid var(--line); }
   <section id="log">
     <div class="wrap">
       <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">We write down outages and what we did about them. We do not delete them.</span></div>
-      <div class="empty">
-        <div class="empty-t">NO INCIDENTS ON RECORD</div>
-        <p>Since we started on 31 July 2026 there has been no jail and no slashing. That is not a boast — it means the time has been short. Outages happen eventually, and when they do the cause and the fix go here. We do not delete them.</p>
+      <p class="log-head">Monitoring runs every 10 minutes and the code is <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">public</a>. No jail and no slashing so far — the entries below are the gaps we saw.</p>
+      <div class="inc">
+        <div class="inc-when">2026-08-12 · 02:00 KST</div>
+        <p class="inc-body">A 9h 29m outage on cosmoshub-4, detected by our own monitoring.</p>
+        <div class="inc-meta"><span><b>CAUSE</b> We were running a self-built arm64 binary while the rest of the network runs the official amd64 release. One transaction metered 254 gas differently, ran out of gas on our node alone, and our application state diverged from the chain.</span><span><b>IMPACT</b> no jail · no slashing</span></div>
+        <a class="inc-more" href="/incidents/2026-08-12-cosmos-hub/">Read the full postmortem →</a>
       </div>
+      <p class="log-note">We record outages where signing stopped. If we could not identify a cause we say so, and what goes up here stays up.</p>
     </div>
   </section>
 
@@ -432,6 +474,18 @@ footer { border-top: 1px solid var(--line); }
         <a href="https://wallet.keplr.app/chains/celestia?modal=validator&chain=celestia&validator_address=celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn btn-solid"><span>Delegate with Keplr</span><span class="dot"></span></a>
         <a href="https://www.mintscan.io/celestia/validators/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn">Mintscan</a>
         <a href="https://celenium.io/validator/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn">Celenium</a>
+      </div>
+      <div class="val-card">
+        <b class="val-label">COSMOS HUB VALOPER</b>
+        <div class="val-addr">cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm</div>
+        <div class="val-meta">
+          <span>COMMISSION 5.00% <b>· NETWORK MINIMUM</b></span>
+          <span>MAX 20.00%</span><span>MAX CHANGE 1.00%</span><span>SINCE 2026-08-11</span>
+        </div>
+      </div>
+      <div class="cta">
+        <a href="https://wallet.keplr.app/chains/cosmos-hub?modal=validator&chain=cosmoshub-4&validator_address=cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm" target="_blank" rel="noopener" class="btn btn-solid"><span>Delegate with Keplr</span><span class="dot"></span></a>
+        <a href="https://www.mintscan.io/cosmos/validators/cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm" target="_blank" rel="noopener" class="btn">Mintscan</a>
       </div>
     </div>
   </section>

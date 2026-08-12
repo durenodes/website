@@ -3,63 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 비용 공개</title>
-<meta name="description" content="DURE(두레)는 셀레스티아와 코스모스 허브 밸리데이터를 각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개하며, 장애 기록을 지우지 않습니다.">
-<link rel="canonical" href="https://durenodes.com/ko/">
-<link rel="alternate" hreflang="en" href="https://durenodes.com/">
-<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/">
-<link rel="alternate" hreflang="x-default" href="https://durenodes.com/">
+<title>가스 254 — 코스모스 허브 장애 기록 | DURE</title>
+<meta name="description" content="코스모스 허브 밸리데이터가 9시간 반 동안 서명을 멈췄습니다. 바이너리를 직접 빌드하면서 아키텍처가 어긋난 것이 원인이었습니다. 무슨 일이 있었고, 무엇을 잘못 짚었고, 무엇을 바꿨는지.">
+<link rel="canonical" href="https://durenodes.com/ko/incidents/2026-08-12-cosmos-hub/">
+<link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/">
+<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/2026-08-12-cosmos-hub/">
+<link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:site_name" content="DURE">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:url" content="https://durenodes.com/ko/">
-<meta property="og:title" content="DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 비용 공개">
-<meta property="og:description" content="각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개합니다.">
+<meta property="og:url" content="https://durenodes.com/ko/incidents/2026-08-12-cosmos-hub/">
+<meta property="og:title" content="가스 254 — 코스모스 허브 장애 기록 | DURE">
+<meta property="og:description" content="코스모스 허브 밸리데이터가 9시간 반 동안 서명을 멈췄습니다. 바이너리를 직접 빌드하면서 아키텍처가 어긋난 것이 원인이었습니다. 무슨 일이 있었고, 무엇을 잘못 짚었고, 무엇을 바꿨는지.">
 <meta property="og:image" content="https://durenodes.com/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
-<meta name="twitter:title" content="DURE 두레 — 셀레스티아·코스모스 허브 밸리데이터 | 최소 수수료, 비용 공개">
-<meta name="twitter:description" content="각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개합니다.">
-<meta name="twitter:image" content="https://durenodes.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "DURE",
-  "alternateName": [
-    "DURE Nodes",
-    "두레"
-  ],
-  "url": "https://durenodes.com/",
-  "logo": "https://durenodes.com/icon-256.png",
-  "description": "DURE(두레)는 셀레스티아와 코스모스 허브 밸리데이터를 각 체인이 허용하는 최소 수수료로 운영하고, 수수료 수입과 인프라 비용을 함께 공개하며, 장애 기록을 지우지 않습니다.",
-  "sameAs": [
-    "https://github.com/durenodes",
-    "https://x.com/durenodes",
-    "https://t.me/durenodes"
-  ],
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "contactType": "customer support",
-      "email": "contact@durenodes.com"
-    },
-    {
-      "@type": "ContactPoint",
-      "contactType": "security",
-      "email": "security@durenodes.com"
-    }
-  ]
-}
-</script>
 <style>
 :root {
   --bg: #0D0F0C;
@@ -284,7 +248,7 @@ footer { border-top: 1px solid var(--line); }
 
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="#top" aria-label="DURE">
+    <a class="brand" href="/ko/" aria-label="DURE">
       <svg width="19" height="26" viewBox="52 32 133 184" aria-hidden="true" style="display:block">
           <rect x="55" y="36" width="22" height="22" fill="#2BB673"></rect>
           <rect x="58" y="58" width="16" height="154" fill="#E7E3D6"></rect>
@@ -294,202 +258,63 @@ footer { border-top: 1px solid var(--line); }
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="#networks">NETWORKS</a>
-      <a href="#services">SERVICES</a>
-      <a href="#status">STATUS</a>
-      <a href="#log">LOG</a>
-      <a href="#delegate" class="nav-key">DELEGATE</a>
+      <a href="/ko/#status">STATUS</a>
+      <a href="/ko/#log">LOG</a>
+      <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
     </nav>
-    <a class="lang" href="/?lang=en" hreflang="en" rel="alternate">English</a>
+    <a class="lang" href="/incidents/2026-08-12-cosmos-hub/" hreflang="en" rel="alternate">English</a>
   </div>
 </header>
 
 <main id="top">
-
   <div class="hero">
     <div class="wrap">
-      <div class="kicker">셀레스티아 · 코스모스 허브 · 메인넷 밸리데이터</div>
-      <h1>체인 하나부터 제대로 운영합니다</h1>
-      <p class="lede">2026년 7월 31일 셀레스티아 메인넷에서 시작했고, 8월 11일 코스모스 허브 액티브 셋에 들어갔습니다. 아직 짧아서 내세울 실적이 없습니다. 대신 직접 확인할 수 있는 온체인 값만 올리고, 장애는 생기는 대로 적습니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.</p>
-
-      <div class="stats">
-        <div class="stat"><div class="stat-n">4</div><div class="stat-l">NETWORKS</div></div>
-        <div class="stat"><div class="stat-n">0</div><div class="stat-l">SLASHING · JAIL</div></div>
-        <div class="stat"><div class="stat-n">0<small> / 10</small></div><div class="stat-l">공개 서비스 · 제공 중</div></div>
-        <div class="stat"><div class="stat-n"><a href="#log">1</a></div><div class="stat-l">기록된 장애</div></div>
-      </div>
-
-      <div class="cta">
-        <a href="#delegate" class="btn btn-solid"><span>DELEGATE</span><span class="dot"></span></a>
-        <a href="#services" class="btn">서비스 공개 일정</a>
-        <a href="#status" class="btn">STATUS</a>
-      </div>
+      <div class="kicker">장애 기록 · 2026년 8월 12일</div>
+      <h1>가스 254</h1>
+      <p class="lede">코스모스 허브 밸리데이터가 02:00 에 서명을 멈췄고 11:29 에 재개했습니다. jail 되지도 슬래싱되지도 않았지만 임계까지 37% 를 남긴 상태였습니다. 원인은 숫자 하나였습니다 — 가스 254.</p>
+      <div class="pm-meta"><div class="pm-m"><b>체인</b><span>cosmoshub-4</span></div><div class="pm-m"><b>길이</b><span>9시간 29분</span></div><div class="pm-m"><b>영향</b><span>jail 없음 · 슬래싱 없음</span></div><div class="pm-m"><b>최고 미스</b><span>5,989 / 9,500</span></div></div>
     </div>
   </div>
 
-  <section id="networks">
-    <div class="wrap">
-      <div class="sec-head"><h2>NETWORKS</h2><span class="sec-sub">메인넷 2 · 테스트넷 2</span></div>
-      <div class="grid-2">
-        <div class="net live">
-          <div class="net-top"><span class="tick">TIA</span><span class="net-name">Celestia</span><span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>CELESTIA</span><span>위임 <b>195.12 TIA</b></span><span>커미션 <b>20.00%</b></span><span>순위 <b>98 / 100</b></span></div>
-        </div>
-        <div class="net live">
-          <div class="net-top"><span class="tick">ATOM</span><span class="net-name">Cosmos Hub</span><span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>COSMOSHUB-4</span><span>위임 <b>340.00 ATOM</b></span><span>커미션 <b>5.00%</b></span><span>순위 <b>172 / 180</b></span></div>
-        </div>
-        <div class="net test">
-          <div class="net-top"><span class="tick">MCH</span><span class="net-name">Celestia Mocha</span><span class="tag warn">테스트넷</span></div>
-          <div class="net-meta"><span>MOCHA-4</span><span>위임 <b>500,102.43 TIA</b></span><span>커미션 <b>20.00%</b></span></div>
-        </div>
-        <div class="net test">
-          <div class="net-top"><span class="tick">PROV</span><span class="net-name">Cosmos Hub Provider</span><span class="tag warn">테스트넷</span></div>
-          <div class="net-meta"><span>PROVIDER</span><span>위임 <b>2.00 ATOM</b></span><span>커미션 <b>5.00%</b></span></div>
-        </div>
-        <div class="net next">
-          <div class="net-top"><span class="tick">—</span><span class="net-name" style="color:var(--muted)">다음 네트워크</span><span class="tag">예정</span></div>
-          <div class="net-meta">지금 맡은 네트워크가 안정된 뒤에 늘립니다</div>
-        </div>
-      </div>
+  <section>
+    <div class="wrap post">
+      <h2>무엇이 깨졌나</h2>
+      <p>노드를 직접 빌드한 이미지로 돌리고 있었고, 그 빌드가 <code>linux/arm64</code> 로 나왔습니다. 코스모스 허브 공식 릴리스는 <code>linux/amd64</code> 전용이고, 네트워크의 다른 밸리데이터는 전부 그것으로 돕니다.</p>
+      <p>세 시간 동안은 아무 차이가 없었습니다. 그러다 32,454,059 번 블록에 우리 빌드에서만 다르게 계량되는 트랜잭션이 실려 왔습니다.</p>
+      <pre>panic recovered in runTx
+  err="out of gas in location: WritePerByte;
+       gasWanted: 259076, gasUsed: 259330: out of gas"</pre>
+      <p>한도를 254 가스 넘겼습니다. 다른 모든 노드에서는 한도 안에 들어와 성공한 트랜잭션이 우리 노드에서만 실패했고, <b>실패한 트랜잭션은 상태를 바꾸지 않습니다.</b> 그 블록부터 우리 앱 상태는 체인의 것과 다른 물건이 되었습니다.</p>
+      <pre>CONSENSUS FAILURE!!! wrong Block.Header.AppHash
+  Expected D018907A...   ← 우리 노드가 계산한 값
+  got      56826755...   ← 네트워크가 합의한 값</pre>
+      <p>합의는 바이트 단위로 같은 결과를 요구합니다. "같은 버전"을 돌리는 것과 같은 바이너리를 돌리는 것은 다릅니다.</p>
+      <h2>왜 여섯 시간을 몰랐고, 세 시간을 더 헤맸나</h2>
+      <p>상태가 갈라진 뒤로 우리 노드는 받은 정상 블록을 전부 잘못된 블록으로 판단하고, 그것을 보내준 피어를 끊었습니다.</p>
+      <pre>Stopping peer for error
+  err="reactor validation error: wrong Block.Header.AppHash"</pre>
+      <p>로그의 99% 가 피어 연결과 해제였습니다. 겉보기 증상은 <em>네트워크가 우리를 거부한다</em> 였습니다. 실제로는 우리가 네트워크를 거부하고 있었습니다.</p>
+      <p>노드는 그동안 내내 <code>catching_up: false</code> 를 보고했습니다. 블록 동기화 리액터가 이미 종료된 뒤라 스스로는 따라잡을 게 없다고 믿었습니다. 실제로는 4,000 블록 뒤에서 멈춰 있었습니다.</p>
+      <p>명령 한 줄이면 panic 이 바로 보였습니다.</p>
+      <pre>docker logs --tail 400 &lt;컨테이너&gt; 2>&amp;1 | grep -v 'module=p2p' | tail -40</pre>
+      <p>이제 노드 장애에서 가장 먼저 하는 일입니다.</p>
+      <h2>가는 길에 두 번 잘못 짚었습니다</h2>
+      <p><b>메모리 탓이라고 봤습니다.</b> 호스트가 32GB 중 31GB 사용에 스왑이 심해 컨테이너 상한을 걸었고, 멀쩡한 컨테이너 셋이 이유 없이 재시작됐습니다. 제대로 재보니 컨테이너 합계는 20 GiB 중 15.6, 코스모스 노드는 8 중 3.1 이었습니다. 호스트 수치는 블록체인 디스크 I/O 의 페이지 캐시였고, <b>이미 우리 문서에 적어둔 내용</b>인데 다시 읽어볼 생각을 못 했습니다.</p>
+      <p><b>다음엔 피어 탓이라고 봤습니다.</b> 멀쩡히 돌던 피어 목록을 공개 RPC 에서 긁은 주소 20개로 바꿨습니다. 상당수가 모르는 연결을 즉시 끊는 센트리였고, persistent peer 는 무한 재시도라 다이얼 슬롯을 점유해 정상적인 피어 탐색까지 막았습니다. 원래 목록은 처음부터 문제가 아니었습니다.</p>
+      <p>두 번의 우회 모두 로그가 아니라 증상을 읽어서 생긴 일입니다.</p>
+      <h2>무엇이 실제로 고쳤나</h2>
+      <p>state-sync 는 세 번 실패했습니다 — 한 번은 전송 도중, 두 번은 라이트 클라이언트 검증에서. 43GB 스냅샷 다운로드는 준비만 하고 쓰지 않았습니다.</p>
+      <p>통한 것은 이미 공식 amd64 이미지로 돌고 있던 다른 머신에서 데이터 디렉토리를 복사해 오는 것이었습니다. <b>복사 전에 그 노드를 반드시 멈춰야 합니다.</b> 돌아가는 노드의 DB 를 복사하면 쓰기 도중 상태가 잘려 들어와, 지금 벗어나려는 바로 그 불일치가 재현됩니다.</p>
+      <p>첫 복사는 그래도 실패했습니다. 데이터만 갈고 arm64 바이너리를 그대로 뒀더니 233 블록을 다시 실행하다 같은 트랜잭션에서 또 갈라졌습니다. <b>바이너리를 먼저 바꾸고, 그다음에 데이터입니다.</b></p>
+      <p>공식 이미지로 바꾸는 데 두 가지 오버라이드가 필요했습니다 — entrypoint 가 <code>["gaiad", "start"]</code> 인데 우리는 <code>["gaiad"]</code> 였고, 실행 유저가 non-root 인데 데이터는 root 소유였습니다. 그다음엔 <code>uname -m</code> 이 <code>x86_64</code> 를 뱉는지가 유일하게 중요한 확인이었습니다.</p>
+      <h2>무엇을 바꿨나</h2>
+      <p><b>메인넷 노드는 공식 릴리스 이미지만 씁니다. 자체 빌드 금지.</b> 호스트 아키텍처가 릴리스와 다르면 공식 빌드를 에뮬레이션으로 돌립니다. 느려지지만 그럴 값어치가 있습니다 — 느린 노드는 늦게 서명하고, 틀린 노드는 아예 못 합니다. 셀레스티아 노드가 무사했던 이유도 처음부터 공식 이미지였기 때문입니다.</p>
+      <p><b>모니터는 65분 만에 알렸고, 그 뒤 여섯 시간을 침묵했습니다.</b> 모든 규칙이 쓰인 대로 작동했습니다 — 규칙이 틀렸습니다. 조건마다 한 번만 알리는 설계는 사람이 알림을 꺼버리는 걸 막지만, 그 결과 장애가 가장 시끄러워야 할 구간이 가장 조용했습니다. 그 침묵 동안 놓친 블록은 689 에서 5,989 로 올랐습니다.</p>
+      <p>그래서 이제 <b>멈춘 노드</b>와 <b>가끔 놓치는 노드</b>를 구분합니다. 놓친 블록 증가분을 체인이 나아간 블록 수와 대조해서, 그 비율이 0.9 이상이면 서명이 사실상 0 입니다. 카운터가 위협적으로 보일 때까지 기다리지 않고 <b>한 번의 폴링으로</b> 판정됩니다. 이 알림은 정지가 이어지는 동안 매 폴링마다 반복되고, jail 임계의 25/50/75% 사다리가 함께 울립니다. 모든 알림에 예상 jail 시각이 붙습니다.</p>
+      <p>감시기는 공개돼 있습니다: <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">github.com/durenodes/monitor</a>.</p>
+      <p class="pm-back"><a href="/ko/">← durenodes.com 으로</a></p>
     </div>
   </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="services">
-    <div class="wrap">
-      <div class="sec-head"><h2>PUBLIC SERVICES</h2><span class="sec-sub">여는 순서와 시점을 미리 알립니다 · 모두 무료</span></div>
-      <div class="grid-svc">
-          <div class="svc">
-            <span class="svc-n">Public RPC</span>
-            <span class="svc-d">요청 제한 없는 공개 RPC</span>
-            <span class="svc-s">2026 Q4 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Snapshot</span>
-            <span class="svc-d">6시간마다 갱신하는 프룬 스냅샷</span>
-            <span class="svc-s">2026 Q4 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">설치 가이드</span>
-            <span class="svc-d">노드 구축 스크립트와 설명서</span>
-            <span class="svc-s">2026 Q4 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Public API</span>
-            <span class="svc-d">REST 엔드포인트</span>
-            <span class="svc-s">2026 Q4 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Public gRPC</span>
-            <span class="svc-d">gRPC 엔드포인트</span>
-            <span class="svc-s">2026 Q4 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">State-Sync</span>
-            <span class="svc-d">빠른 동기화를 위한 RPC와 트러스트 해시</span>
-            <span class="svc-s">2027 Q1 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Seed Node</span>
-            <span class="svc-d">피어 디스커버리</span>
-            <span class="svc-s">2027 Q1 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Addrbook</span>
-            <span class="svc-d">최신 피어 주소록</span>
-            <span class="svc-s">2027 Q1 예정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Archive Snapshot</span>
-            <span class="svc-d">아카이벌 노드 스냅샷</span>
-            <span class="svc-s">시점 미정</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">IBC Relayer</span>
-            <span class="svc-d">체인 간 패킷 중계</span>
-            <span class="svc-s">시점 미정</span>
-          </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="status">
-    <div class="wrap">
-      <div class="sec-head"><h2>STATUS</h2><span class="sec-sub">온체인에서 그대로 확인할 수 있는 값만 적습니다 · 2026-08-12 기준</span></div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th>NETWORK</th><th>STATUS</th>
-            <th class="num">STAKE</th><th class="num">COMMISSION</th>
-            <th class="num">MISSED</th><th class="num">RANK</th>
-            <th class="num">SINCE</th>
-          </tr></thead>
-          <tbody>
-            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">63 / 10,000</td><td class="num">98 / 100</td><td class="num">2026-07-31</td></tr>
-            <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">172 / 180</td><td class="num">2026-08-11</td></tr>
-            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,102.43 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">15 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
-            <tr><td>provider</td><td class="ok">BONDED</td><td class="num">2.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">173 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note"><b>수수료는 각 체인이 허용하는 최소값으로 받습니다.</b> 셀레스티아는 네트워크가 20%를 최소로 강제하고, 코스모스 허브는 5%입니다. 두 곳 모두 그 하한에 맞춰 두었습니다. 체인마다 숫자가 다른 건 정책이 달라서가 아니라 규칙이 다르기 때문이고, 위 표의 값은 온체인에서 그대로 확인할 수 있습니다.<br><br><b>RANK 는 사실 감추고 싶은 숫자입니다.</b> 셀레스티아는 액티브 셋이 100곳, 코스모스 허브는 180곳입니다. 이 선 밖으로 밀리면 보상이 끊기고, 허브에서는 본딩 상태 그대로 블록 서명만 멈춥니다. 지금 우리는 그 경계에 가까운 편이고, 그래서 더더욱 이 숫자를 페이지에 남겨둡니다.<br><br><b>수수료 수입과 인프라 비용은 아직 공개하지 않습니다.</b> 운영을 시작한 지 얼마 되지 않아 공개할 만한 정산 주기가 쌓이지 않았습니다. 첫 정산이 끝나는 대로 수입과 비용을 나란히 올리고, 명세는 저장소에 그대로 둡니다. 가리킬 수 없는 숫자는 올리지 않습니다.</div>
-      <div class="foot-meta"><span>MIN = 해당 체인이 허용하는 최소 수수료</span><span>MISSED = 최근 10,000블록 윈도우 기준</span><span>RANK = 액티브 셋 내 순위</span><span>테스트넷 토큰은 가치가 없습니다</span></div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="log">
-    <div class="wrap">
-      <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">장애와 조치 내역을 그대로 남깁니다. 지우지 않습니다.</span></div>
-      <p class="log-head">10분 간격으로 감시하고 있고, 그 코드는 <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">공개</a>돼 있습니다. 지금까지 jail·슬래싱은 없었고, 아래는 관측된 공백입니다.</p>
-      <div class="inc">
-        <div class="inc-when">2026-08-12 · 02:00 KST</div>
-        <p class="inc-body">cosmoshub-4 에서 9h 29m 동안 멈췄고, 자체 모니터링으로 감지했습니다.</p>
-        <div class="inc-meta"><span><b>원인</b> 네트워크의 나머지가 공식 amd64 릴리스로 도는데 우리만 자체 빌드한 arm64 바이너리를 쓰고 있었습니다. 한 트랜잭션에서 가스가 254 만큼 다르게 계산돼 우리 노드에서만 실패했고, 앱 상태가 체인과 갈라졌습니다.</span><span><b>영향</b> jail 없음 · 슬래싱 없음</span></div>
-        <a class="inc-more" href="/ko/incidents/2026-08-12-cosmos-hub/">전체 기록 읽기 →</a>
-      </div>
-      <p class="log-note">서명이 멈춘 장애를 기록합니다. 원인을 모르면 모른다고 적고, 여기 올라온 것은 지우지 않습니다.</p>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="delegate">
-    <div class="wrap">
-      <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">위임 안내</span></div>
-      <div class="val-card">
-        <b class="val-label">CELESTIA VALOPER</b>
-        <div class="val-addr">celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq</div>
-        <div class="val-meta">
-          <span>COMMISSION 20.00% <b>· 네트워크 최소</b></span>
-          <span>MAX 25.00%</span><span>MAX CHANGE 1.00%</span><span>SINCE 2026-07-31</span>
-        </div>
-      </div>
-      <div class="cta">
-        <a href="https://wallet.keplr.app/chains/celestia?modal=validator&chain=celestia&validator_address=celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn btn-solid"><span>Keplr로 위임</span><span class="dot"></span></a>
-        <a href="https://www.mintscan.io/celestia/validators/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn">Mintscan</a>
-        <a href="https://celenium.io/validator/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn">Celenium</a>
-      </div>
-      <div class="val-card">
-        <b class="val-label">COSMOS HUB VALOPER</b>
-        <div class="val-addr">cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm</div>
-        <div class="val-meta">
-          <span>COMMISSION 5.00% <b>· 네트워크 최소</b></span>
-          <span>MAX 20.00%</span><span>MAX CHANGE 1.00%</span><span>SINCE 2026-08-11</span>
-        </div>
-      </div>
-      <div class="cta">
-        <a href="https://wallet.keplr.app/chains/cosmos-hub?modal=validator&chain=cosmoshub-4&validator_address=cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm" target="_blank" rel="noopener" class="btn btn-solid"><span>Keplr로 위임</span><span class="dot"></span></a>
-        <a href="https://www.mintscan.io/cosmos/validators/cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm" target="_blank" rel="noopener" class="btn">Mintscan</a>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>
