@@ -845,9 +845,9 @@ def nav_html(c, key, landing=False):
         f'<a href="{a}#networks">{n["networks"]}</a>',
         f'<a href="{a}#services">{n["services"]}</a>',
         f'<a href="{a}#status">{n["status"]}</a>',
+        f'<a href="{a}#delegate" class="nav-key">{n["delegate"]}</a>',
         f'<a href="{pre}/incidents/" class="nav-pg">{n["log"]}</a>',
         f'<a href="{pre}/guides/" class="nav-pg">{n["guides"]}</a>',
-        f'<a href="{a}#delegate" class="nav-key">{n["delegate"]}</a>',
     ))
 
 
