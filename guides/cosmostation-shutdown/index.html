@@ -205,7 +205,13 @@ footer { border-top: 1px solid var(--line); }
 
 @media (max-width: 560px) {
   
-  .nav a:not(.nav-key):not(.nav-pg) { display: none; }
+  .hdr-in { flex-wrap: wrap; height: auto; padding: 9px 0; row-gap: 9px; }
+  .brand { order: 1; }
+  .lang { order: 2; margin-left: auto; }
+  .nav {
+    order: 3; width: 100%; margin-left: 0;
+    flex-wrap: wrap; overflow: visible; gap: 9px 15px; font-size: 10.5px;
+  }
 }
 
 @media (max-width: 460px) {
