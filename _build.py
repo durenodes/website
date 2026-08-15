@@ -301,8 +301,11 @@ GUIDES = [dict(
                 "<p>Your balance, delegations, unbonding entries and unclaimed rewards are "
                 "recorded on-chain against your address. Closing the app does not change any of "
                 "them.</p>",
-                "<p>The one thing with a deadline is your recovery phrase. When the app stops "
-                "working, the screen that shows it goes with it.</p>",
+                "<p>From 1 September the app keeps two functions only — exporting your "
+                "recovery phrase and exporting your private key. Everything else is retired in "
+                "stages, and once the app closes for good those two go as well. Cosmostation "
+                "asks users to back up before 1 September: "
+                "<a href=\"https://x.com/IBCwallet/status/2088162092922864114\" rel=\"noopener\" target=\"_blank\">the notice is here</a>.</p>",
                 "<pre>Phrase already written down   → nothing urgent, import it whenever\n"
                 "Phrase only inside the app    → export it before 1 September</pre>",
             ]),
@@ -357,8 +360,10 @@ GUIDES = [dict(
             ("스테이킹은 체인에 있습니다", [
                 "<p>잔고, 위임, 언본딩, 미수령 보상은 전부 체인에 주소별로 기록돼 있습니다. "
                 "앱이 닫혀도 바뀌지 않습니다.</p>",
-                "<p>기한이 있는 건 니모닉 하나입니다. 앱이 멈추면 니모닉을 보여주는 화면도 "
-                "같이 없어집니다.</p>",
+                "<p>9월 1일부터 앱에는 <b>복구 구문 내보내기</b>와 <b>개인 키 내보내기</b> 둘만 "
+                "남습니다. 나머지 기능은 순차 종료되고, 앱이 완전히 닫히면 그 둘도 없어집니다. "
+                "코스모스테이션은 9월 1일 전에 백업하라고 안내합니다 — "
+                "<a href=\"https://x.com/IBCwallet/status/2088162092922864114\" rel=\"noopener\" target=\"_blank\">공지 원문</a>.</p>",
                 "<pre>니모닉을 적어두셨다면   급하지 않습니다. 아무 때나 다른 지갑에 넣으면 됩니다\n"
                 "앱 안에만 있다면        9월 1일 전에 내보내세요</pre>",
             ]),
