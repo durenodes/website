@@ -3,63 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures</title>
-<meta name="description" content="DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes only figures you can verify on-chain, and never deletes an incident record.">
-<link rel="canonical" href="https://durenodes.com/">
-<link rel="alternate" hreflang="en" href="https://durenodes.com/">
-<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/">
-<link rel="alternate" hreflang="x-default" href="https://durenodes.com/">
+<title>Cosmostation is shutting down. What happens to your stake? | DURE</title>
+<meta name="description" content="Cosmostation ends its wallet service on 1 September 2026. Your delegations, unbonding entries and unclaimed rewards are on-chain, not in the app. Do not unstake. Here is what actually needs doing, and where people lose money.">
+<link rel="canonical" href="https://durenodes.com/guides/cosmostation-shutdown/">
+<link rel="alternate" hreflang="en" href="https://durenodes.com/guides/cosmostation-shutdown/">
+<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/cosmostation-shutdown/">
+<link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/cosmostation-shutdown/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:site_name" content="DURE">
 <meta property="og:locale" content="en_US">
-<meta property="og:url" content="https://durenodes.com/">
-<meta property="og:title" content="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures">
-<meta property="og:description" content="Each chain's minimum commission. Only figures you can check on-chain. Incidents never deleted.">
+<meta property="og:url" content="https://durenodes.com/guides/cosmostation-shutdown/">
+<meta property="og:title" content="Cosmostation is shutting down. What happens to your stake? | DURE">
+<meta property="og:description" content="Cosmostation ends its wallet service on 1 September 2026. Your delegations, unbonding entries and unclaimed rewards are on-chain, not in the app. Do not unstake. Here is what actually needs doing, and where people lose money.">
 <meta property="og:image" content="https://durenodes.com/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
-<meta name="twitter:title" content="DURE — Celestia & Cosmos Hub Validator | Minimum Commission, Verifiable Figures">
-<meta name="twitter:description" content="Each chain's minimum commission. Only figures you can check on-chain. Incidents never deleted.">
-<meta name="twitter:image" content="https://durenodes.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "DURE",
-  "alternateName": [
-    "DURE Nodes",
-    "두레"
-  ],
-  "url": "https://durenodes.com/",
-  "logo": "https://durenodes.com/icon-256.png",
-  "description": "DURE (doo-reh) runs Celestia and Cosmos Hub validators at each chain's minimum commission, publishes only figures you can verify on-chain, and never deletes an incident record.",
-  "sameAs": [
-    "https://github.com/durenodes",
-    "https://x.com/durenodes",
-    "https://t.me/durenodes"
-  ],
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "contactType": "customer support",
-      "email": "contact@durenodes.com"
-    },
-    {
-      "@type": "ContactPoint",
-      "contactType": "security",
-      "email": "security@durenodes.com"
-    }
-  ]
-}
-</script>
 <style>
 :root {
   --bg: #0D0F0C;
@@ -284,7 +248,7 @@ footer { border-top: 1px solid var(--line); }
 
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="#top" aria-label="DURE">
+    <a class="brand" href="/" aria-label="DURE">
       <svg width="19" height="26" viewBox="52 32 133 184" aria-hidden="true" style="display:block">
           <rect x="55" y="36" width="22" height="22" fill="#2BB673"></rect>
           <rect x="58" y="58" width="16" height="154" fill="#E7E3D6"></rect>
@@ -294,202 +258,59 @@ footer { border-top: 1px solid var(--line); }
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="#networks">NETWORKS</a>
-      <a href="#services">SERVICES</a>
-      <a href="#status">STATUS</a>
-      <a href="#log">LOG</a>
-      <a href="#delegate" class="nav-key">DELEGATE</a>
+      <a href="/#status">STATUS</a>
+      <a href="/#log">LOG</a>
+      <a href="/#delegate" class="nav-key">DELEGATE</a>
     </nav>
-    <a class="lang" href="/ko/" hreflang="ko" rel="alternate">한국어</a>
+    <a class="lang" href="/ko/guides/cosmostation-shutdown/" hreflang="ko" rel="alternate">한국어</a>
   </div>
 </header>
 
 <main id="top">
-
   <div class="hero">
     <div class="wrap">
-      <div class="kicker">CELESTIA · COSMOS HUB · MAINNET VALIDATOR</div>
-      <h1>One chain at a time, run properly</h1>
-      <p class="lede">We started on Celestia mainnet on 31 July 2026 and joined the Cosmos Hub active set on 11 August — not long enough to have a record worth showing. What we can do is publish every number you can check on-chain yourself, write outages down as they happen, and charge <b>each chain's minimum commission</b>. Everything we open is <a href="#services">free to use</a>.</p>
-
-      <div class="stats">
-        <div class="stat"><div class="stat-n">4</div><div class="stat-l">NETWORKS</div></div>
-        <div class="stat"><div class="stat-n">0</div><div class="stat-l">SLASHING · JAIL</div></div>
-        <div class="stat"><div class="stat-n">0<small> / 10</small></div><div class="stat-l">PUBLIC SERVICES · LIVE</div></div>
-        <div class="stat"><div class="stat-n"><a href="#log">1</a></div><div class="stat-l">INCIDENTS ON RECORD</div></div>
-      </div>
-
-      <div class="cta">
-        <a href="#delegate" class="btn btn-solid"><span>DELEGATE</span><span class="dot"></span></a>
-        <a href="#services" class="btn">Service schedule</a>
-        <a href="#status" class="btn">STATUS</a>
-      </div>
+      <div class="kicker">GUIDE · 16 AUGUST 2026</div>
+      <h1>Your stake is not in the wallet</h1>
+      <p class="lede">Cosmostation announced on 14 August that its wallet service ends on 1 September. The dangerous reaction is to unstake everything. You do not need to, and doing it costs you 21 days.</p>
+      <div class="pm-meta"><div class="pm-m"><b>ANNOUNCED</b><span>14 Aug 2026</span></div><div class="pm-m"><b>SERVICE ENDS</b><span>1 Sep 2026</span></div><div class="pm-m"><b>PLATFORMS</b><span>iOS · Android · Chrome</span></div><div class="pm-m"><b>YOUR FUNDS</b><span>on-chain · unaffected</span></div></div>
     </div>
   </div>
 
-  <section id="networks">
-    <div class="wrap">
-      <div class="sec-head"><h2>NETWORKS</h2><span class="sec-sub">2 mainnet · 2 testnet</span></div>
-      <div class="grid-2">
-        <div class="net live">
-          <div class="net-top"><span class="tick">TIA</span><span class="net-name">Celestia</span><span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>CELESTIA</span><span>stake <b>1,195.12 TIA</b></span><span>commission <b>20.00%</b></span><span>rank <b>97 / 100</b></span></div>
-        </div>
-        <div class="net live">
-          <div class="net-top"><span class="tick">ATOM</span><span class="net-name">Cosmos Hub</span><span class="tag on"><span class="blink"></span>ACTIVE</span></div>
-          <div class="net-meta"><span>COSMOSHUB-4</span><span>stake <b>340.00 ATOM</b></span><span>commission <b>5.00%</b></span><span>rank <b>173 / 180</b></span></div>
-        </div>
-        <div class="net test">
-          <div class="net-top"><span class="tick">MCH</span><span class="net-name">Celestia Mocha</span><span class="tag warn">TESTNET</span></div>
-          <div class="net-meta"><span>MOCHA-4</span><span>stake <b>500,147.49 TIA</b></span><span>commission <b>20.00%</b></span></div>
-        </div>
-        <div class="net test">
-          <div class="net-top"><span class="tick">PROV</span><span class="net-name">Cosmos Hub Provider</span><span class="tag warn">TESTNET</span></div>
-          <div class="net-meta"><span>PROVIDER</span><span>stake <b>1,000,002.00 ATOM</b></span><span>commission <b>5.00%</b></span></div>
-        </div>
-        <div class="net next">
-          <div class="net-top"><span class="tick">—</span><span class="net-name" style="color:var(--muted)">Next network</span><span class="tag">PLANNED</span></div>
-          <div class="net-meta">We add one only after the network we already hold is stable</div>
-        </div>
-      </div>
+  <section>
+    <div class="wrap post">
+      <h2>Start here</h2>
+      <p>A wallet is a key manager. It is not where your assets live. Your balance, your delegations, your unbonding entries and your unclaimed rewards are rows in the chain's state, attached to your <b>address</b>. Cosmostation shutting down does not touch any of them.</p>
+      <p>What ends is the <b>app</b>, and with it the button that shows you your recovery phrase. That is the only thing with a deadline.</p>
+      <pre>Already have your recovery phrase written down?
+  → Nothing is urgent. Import it into another wallet whenever you like.
+
+Only ever had it inside the app?
+  → Export it before the app stops working.</pre>
+      <h2>Do not unstake</h2>
+      <p>Unbonding on Cosmos Hub takes 21 days. During those 21 days you earn nothing, you cannot vote, and you cannot cancel and go back. If you unbond because a wallet is closing, you have paid 21 days of rewards and 21 days of price exposure for a migration that did not require moving a single token.</p>
+      <p>Changing wallets does not move your stake, because your stake was never in the wallet. The same recovery phrase in a different app produces the same address, and the same address already holds the delegation.</p>
+      <h2>Where people actually lose money</h2>
+      <p>The failure we expect is not theft. It is someone importing their phrase into a new wallet, seeing a zero balance, and concluding their funds are gone.</p>
+      <p>Cosmostation lets you choose the derivation path. Its extension ships a coin-type selector, and it reads <code>hd_path</code> per chain rather than hardcoding one — Ethereum-style chains use <code>m/44'/60'/0'/0/x</code> while the Cosmos default is <code>m/44'/118'/0'/0/x</code>. If you ever switched that setting, the same phrase gives a <b>different address</b> in a wallet that assumes the default.</p>
+      <p>Nothing is lost in that situation. The assets are sitting at the address you originally used. Before you panic, check the address itself:</p>
+      <pre>1. Find the address you actually staked from (any explorer, your tx history)
+2. Look it up on an explorer — the delegation will still be there
+3. If your new wallet shows a different address, it derived a different path</pre>
+      <p>The other case with no recovery path through a phrase is <b>Ledger</b>. An account created with a hardware wallet has no recovery phrase in the app, because the key never left the device. Nothing to export, and nothing lost — connect the same Ledger to another wallet.</p>
+      <h2>Do not migrate to Leap</h2>
+      <p>Some coverage of the shutdown lists Leap as an alternative. <b>Leap ceased operations on 28 May 2026.</b> Two of the ecosystem's wallets have now closed within four months. Check that whatever you migrate to is still running before you commit to it.</p>
+      <h2>Phishing</h2>
+      <p>A wallet shutdown with a public deadline is the ideal setup for a phishing campaign, and the announcement is two days old. Expect sites offering a "Cosmostation migration tool" that asks for your recovery phrase.</p>
+      <p><b>No migration requires you to type your recovery phrase into a website.</b> Not Cosmostation's, not another wallet's, and not this page — we do not have a form and we never will. Importing a phrase happens inside a wallet application you installed yourself, from a source you verified yourself.</p>
+      <h2>What we could not confirm</h2>
+      <p>We could not find the original announcement from Cosmostation — only secondary reporting, and it does not agree with itself. One outlet says funds are lost without a backup, which is wrong for a non-custodial wallet. So we are marking what we do not know rather than filling it in:</p>
+      <pre>How long export stays available after 1 Sep   — unconfirmed
+Whether Mintscan continues                     — unconfirmed
+Whether their validator keeps operating        — unconfirmed</pre>
+      <p>Treat 1 September as the deadline regardless. If you find the primary announcement, we would like to see it.</p>
+      <p class="pm-back"><a href="/">← durenodes.com</a></p>
     </div>
   </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="services">
-    <div class="wrap">
-      <div class="sec-head"><h2>PUBLIC SERVICES</h2><span class="sec-sub">The order and dates, published before they open · all free</span></div>
-      <div class="grid-svc">
-          <div class="svc">
-            <span class="svc-n">Public RPC</span>
-            <span class="svc-d">Open RPC with no request limits</span>
-            <span class="svc-s">2026 Q4 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Snapshot</span>
-            <span class="svc-d">Pruned snapshot refreshed every 6 hours</span>
-            <span class="svc-s">2026 Q4 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Install Guide</span>
-            <span class="svc-d">Node setup scripts and documentation</span>
-            <span class="svc-s">2026 Q4 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Public API</span>
-            <span class="svc-d">REST endpoint</span>
-            <span class="svc-s">2026 Q4 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Public gRPC</span>
-            <span class="svc-d">gRPC endpoint</span>
-            <span class="svc-s">2026 Q4 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">State-Sync</span>
-            <span class="svc-d">RPC and trust hash for fast sync</span>
-            <span class="svc-s">2027 Q1 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Seed Node</span>
-            <span class="svc-d">Peer discovery</span>
-            <span class="svc-s">2027 Q1 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Addrbook</span>
-            <span class="svc-d">Current peer address book</span>
-            <span class="svc-s">2027 Q1 PLANNED</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">Archive Snapshot</span>
-            <span class="svc-d">Archival node snapshot</span>
-            <span class="svc-s">DATE TBD</span>
-          </div>
-          <div class="svc">
-            <span class="svc-n">IBC Relayer</span>
-            <span class="svc-d">Cross-chain packet relay</span>
-            <span class="svc-s">DATE TBD</span>
-          </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="status">
-    <div class="wrap">
-      <div class="sec-head"><h2>STATUS</h2><span class="sec-sub">Only values you can verify on-chain · as of 2026-08-15</span></div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th>NETWORK</th><th>STATUS</th>
-            <th class="num">STAKE</th><th class="num">COMMISSION</th>
-            <th class="num">MISSED</th><th class="num">RANK</th>
-            <th class="num">SINCE</th>
-          </tr></thead>
-          <tbody>
-            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">1,195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">47 / 10,000</td><td class="num">97 / 100</td><td class="num">2026-07-31</td></tr>
-            <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">173 / 180</td><td class="num">2026-08-11</td></tr>
-            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,147.49 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">14 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
-            <tr><td>provider</td><td class="ok">BONDED</td><td class="num">1,000,002.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">41 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note"><b>We charge each chain's minimum commission.</b> Celestia enforces a 20% floor at the network level; Cosmos Hub enforces 5%. We sit on both floors. The numbers differ because the rules differ, not the policy — and every value above can be verified on-chain.<br><br><b>RANK is the part we would rather not show.</b> Celestia caps its active set at 100 and the Cosmos Hub at 180 of its 200 bonded. A validator that slips past those cuts stops earning, and on the Hub it stops signing while still reading as bonded. We are closer to those edges than we would like, so the number stays on the page.<br><br><b>We do not put up a number you cannot check.</b> Every figure on this page resolves to a query against the chain, and the addresses to run it against are below. If a value here disagrees with the chain, the chain is right.</div>
-      <div class="foot-meta"><span>MIN = the lowest commission the chain allows</span><span>MISSED = within the last 10,000-block window</span><span>RANK = position in the active set</span><span>testnet tokens have no value</span></div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="log">
-    <div class="wrap">
-      <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">We write down outages and what we did about them. We do not delete them.</span></div>
-      <p class="log-head">Monitoring runs every 10 minutes and the code is <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">public</a>. No jail and no slashing so far — the entries below are the gaps we saw.</p>
-      <div class="inc">
-        <div class="inc-when">2026-08-12 · 02:00 KST</div>
-        <p class="inc-body">A 9h 29m outage on cosmoshub-4, detected by our own monitoring.</p>
-        <div class="inc-meta"><span><b>CAUSE</b> We were running a self-built arm64 binary while the rest of the network runs the official amd64 release. One transaction metered 254 gas differently, ran out of gas on our node alone, and our application state diverged from the chain.</span><span><b>IMPACT</b> no jail · no slashing</span></div>
-        <a class="inc-more" href="/incidents/2026-08-12-cosmos-hub/">Read the full postmortem →</a>
-      </div>
-      <p class="log-note">We record outages where signing stopped. If we could not identify a cause we say so, and what goes up here stays up.</p>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="delegate">
-    <div class="wrap">
-      <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">Delegation</span></div>
-      <div class="val-card">
-        <b class="val-label">CELESTIA VALOPER</b>
-        <div class="val-addr">celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq</div>
-        <div class="val-meta">
-          <span>COMMISSION 20.00% <b>· NETWORK MINIMUM</b></span>
-          <span>MAX 25.00%</span><span>MAX CHANGE 1.00%</span><span>SINCE 2026-07-31</span>
-        </div>
-      </div>
-      <div class="cta">
-        <a href="https://wallet.keplr.app/chains/celestia?modal=validator&chain=celestia&validator_address=celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn btn-solid"><span>Delegate with Keplr</span><span class="dot"></span></a>
-        <a href="https://www.mintscan.io/celestia/validators/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn">Mintscan</a>
-        <a href="https://celenium.io/validator/celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq" target="_blank" rel="noopener" class="btn">Celenium</a>
-      </div>
-      <div class="val-card">
-        <b class="val-label">COSMOS HUB VALOPER</b>
-        <div class="val-addr">cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm</div>
-        <div class="val-meta">
-          <span>COMMISSION 5.00% <b>· NETWORK MINIMUM</b></span>
-          <span>MAX 20.00%</span><span>MAX CHANGE 1.00%</span><span>SINCE 2026-08-11</span>
-        </div>
-      </div>
-      <div class="cta">
-        <a href="https://wallet.keplr.app/chains/cosmos-hub?modal=validator&chain=cosmoshub-4&validator_address=cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm" target="_blank" rel="noopener" class="btn btn-solid"><span>Delegate with Keplr</span><span class="dot"></span></a>
-        <a href="https://www.mintscan.io/cosmos/validators/cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm" target="_blank" rel="noopener" class="btn">Mintscan</a>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>

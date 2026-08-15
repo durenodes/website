@@ -29,4 +29,18 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/2026-08-12-cosmos-hub/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/"/>
   </url>
+  <url>
+    <loc>https://durenodes.com/guides/cosmostation-shutdown/</loc>
+    <lastmod>2026-08-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/guides/cosmostation-shutdown/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/cosmostation-shutdown/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/cosmostation-shutdown/"/>
+  </url>
+  <url>
+    <loc>https://durenodes.com/ko/guides/cosmostation-shutdown/</loc>
+    <lastmod>2026-08-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/guides/cosmostation-shutdown/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/cosmostation-shutdown/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/cosmostation-shutdown/"/>
+  </url>
 </urlset>

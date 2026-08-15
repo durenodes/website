@@ -279,6 +279,175 @@ POSTMORTEMS = [dict(
 )]
 
 
+# 가이드는 포스트모템과 같은 셸을 씁니다. 별도 저장소·서브도메인을 만들지 않는 이유는
+# 쪼개면 방치되기 때문입니다. 기준: 공식 문서에 없고, 우리가 밸리데이터라서 말할 수 있는 것.
+GUIDES = [dict(
+    slug="cosmostation-shutdown",
+    date="2026-08-16",
+    en=dict(
+        title="Cosmostation is shutting down. What happens to your stake? | DURE",
+        h1="Your stake is not in the wallet",
+        desc="Cosmostation ends its wallet service on 1 September 2026. Your delegations, "
+             "unbonding entries and unclaimed rewards are on-chain, not in the app. "
+             "Do not unstake. Here is what actually needs doing, and where people lose money.",
+        kicker="GUIDE · 16 AUGUST 2026",
+        lede="Cosmostation announced on 14 August that its wallet service ends on 1 September. "
+             "The dangerous reaction is to unstake everything. You do not need to, and doing it "
+             "costs you 21 days.",
+        meta=[("ANNOUNCED", "14 Aug 2026"), ("SERVICE ENDS", "1 Sep 2026"),
+              ("PLATFORMS", "iOS · Android · Chrome"), ("YOUR FUNDS", "on-chain · unaffected")],
+        sections=[
+            ("Start here", [
+                "<p>A wallet is a key manager. It is not where your assets live. Your balance, "
+                "your delegations, your unbonding entries and your unclaimed rewards are rows in "
+                "the chain's state, attached to your <b>address</b>. Cosmostation shutting down "
+                "does not touch any of them.</p>",
+                "<p>What ends is the <b>app</b>, and with it the button that shows you your "
+                "recovery phrase. That is the only thing with a deadline.</p>",
+                "<pre>Already have your recovery phrase written down?\n"
+                "  → Nothing is urgent. Import it into another wallet whenever you like.\n\n"
+                "Only ever had it inside the app?\n"
+                "  → Export it before the app stops working.</pre>",
+            ]),
+            ("Do not unstake", [
+                "<p>Unbonding on Cosmos Hub takes 21 days. During those 21 days you earn nothing, "
+                "you cannot vote, and you cannot cancel and go back. If you unbond because a "
+                "wallet is closing, you have paid 21 days of rewards and 21 days of price exposure "
+                "for a migration that did not require moving a single token.</p>",
+                "<p>Changing wallets does not move your stake, because your stake was never in the "
+                "wallet. The same recovery phrase in a different app produces the same address, "
+                "and the same address already holds the delegation.</p>",
+            ]),
+            ("Where people actually lose money", [
+                "<p>The failure we expect is not theft. It is someone importing their phrase into "
+                "a new wallet, seeing a zero balance, and concluding their funds are gone.</p>",
+                "<p>Cosmostation lets you choose the derivation path. Its extension ships a "
+                "coin-type selector, and it reads <code>hd_path</code> per chain rather than "
+                "hardcoding one — Ethereum-style chains use <code>m/44'/60'/0'/0/x</code> while "
+                "the Cosmos default is <code>m/44'/118'/0'/0/x</code>. If you ever switched that "
+                "setting, the same phrase gives a <b>different address</b> in a wallet that "
+                "assumes the default.</p>",
+                "<p>Nothing is lost in that situation. The assets are sitting at the address you "
+                "originally used. Before you panic, check the address itself:</p>",
+                "<pre>1. Find the address you actually staked from (any explorer, your tx history)\n"
+                "2. Look it up on an explorer — the delegation will still be there\n"
+                "3. If your new wallet shows a different address, it derived a different path</pre>",
+                "<p>The other case with no recovery path through a phrase is <b>Ledger</b>. An "
+                "account created with a hardware wallet has no recovery phrase in the app, because "
+                "the key never left the device. Nothing to export, and nothing lost — connect the "
+                "same Ledger to another wallet.</p>",
+            ]),
+            ("Do not migrate to Leap", [
+                "<p>Some coverage of the shutdown lists Leap as an alternative. "
+                "<b>Leap ceased operations on 28 May 2026.</b> Two of the ecosystem's wallets have "
+                "now closed within four months. Check that whatever you migrate to is still "
+                "running before you commit to it.</p>",
+            ]),
+            ("Phishing", [
+                "<p>A wallet shutdown with a public deadline is the ideal setup for a phishing "
+                "campaign, and the announcement is two days old. Expect sites offering a "
+                "\"Cosmostation migration tool\" that asks for your recovery phrase.</p>",
+                "<p><b>No migration requires you to type your recovery phrase into a website.</b> "
+                "Not Cosmostation's, not another wallet's, and not this page — we do not have a "
+                "form and we never will. Importing a phrase happens inside a wallet application "
+                "you installed yourself, from a source you verified yourself.</p>",
+            ]),
+            ("What we could not confirm", [
+                "<p>We could not find the original announcement from Cosmostation — only secondary "
+                "reporting, and it does not agree with itself. One outlet says funds are lost "
+                "without a backup, which is wrong for a non-custodial wallet. So we are marking "
+                "what we do not know rather than filling it in:</p>",
+                "<pre>How long export stays available after 1 Sep   — unconfirmed\n"
+                "Whether Mintscan continues                     — unconfirmed\n"
+                "Whether their validator keeps operating        — unconfirmed</pre>",
+                "<p>Treat 1 September as the deadline regardless. If you find the primary "
+                "announcement, we would like to see it.</p>",
+            ]),
+        ],
+        back="← durenodes.com",
+    ),
+    ko=dict(
+        title="코스모스테이션이 닫힙니다 — 스테이킹은 어떻게 되나 | DURE",
+        h1="스테이킹은 지갑에 없습니다",
+        desc="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 위임·언본딩·미수령 "
+             "보상은 앱이 아니라 체인에 있습니다. 언스테이킹하지 마세요. 실제로 해야 할 것과, "
+             "사람들이 돈을 잃는 지점을 정리했습니다.",
+        kicker="가이드 · 2026년 8월 16일",
+        lede="코스모스테이션이 8월 14일에 9월 1일 지갑 서비스 종료를 알렸습니다. 가장 위험한 "
+             "반응은 전부 언스테이킹하는 것입니다. 그럴 필요가 없고, 하면 21일을 잃습니다.",
+        meta=[("공지", "2026-08-14"), ("종료", "2026-09-01"),
+              ("대상", "iOS · Android · Chrome"), ("자산", "체인에 있음 · 영향 없음")],
+        sections=[
+            ("먼저 이것부터", [
+                "<p>지갑은 키 관리 프로그램입니다. 자산이 들어 있는 곳이 아닙니다. 잔고도, 위임도, "
+                "언본딩도, 미수령 보상도 전부 체인 상태에 <b>주소</b>로 붙어 있습니다. "
+                "코스모스테이션이 닫혀도 그중 아무것도 건드려지지 않습니다.</p>",
+                "<p>끝나는 것은 <b>앱</b>이고, 그와 함께 니모닉을 보여주는 버튼이 사라집니다. "
+                "기한이 걸린 건 그것 하나뿐입니다.</p>",
+                "<pre>니모닉을 이미 따로 적어두셨다면\n"
+                "  → 급한 일이 없습니다. 아무 때나 다른 지갑에 넣으면 됩니다.\n\n"
+                "앱 안에만 있었다면\n"
+                "  → 앱이 멈추기 전에 내보내세요.</pre>",
+            ]),
+            ("언스테이킹하지 마세요", [
+                "<p>코스모스 허브의 언본딩은 21일입니다. 그동안 보상이 없고, 투표할 수 없고, "
+                "중간에 취소해서 되돌릴 수 없습니다. 지갑이 닫힌다는 이유로 언본딩을 걸면 "
+                "<b>토큰을 하나도 옮길 필요가 없는 이사</b>에 21일치 보상과 21일치 가격 노출을 "
+                "지불하는 것입니다.</p>",
+                "<p>지갑을 바꿔도 스테이킹은 움직이지 않습니다. 애초에 지갑에 있던 것이 아니기 "
+                "때문입니다. 같은 니모닉을 다른 앱에 넣으면 같은 주소가 나오고, 그 주소가 이미 "
+                "위임을 들고 있습니다.</p>",
+            ]),
+            ("사람들이 실제로 돈을 잃는 지점", [
+                "<p>예상되는 사고는 도난이 아닙니다. 니모닉을 새 지갑에 넣었는데 잔고가 0으로 "
+                "보이고, 자산이 사라졌다고 판단하는 경우입니다.</p>",
+                "<p>코스모스테이션은 파생 경로를 사용자가 고를 수 있게 해뒀습니다. 확장 프로그램에 "
+                "코인 타입 선택기가 있고, 경로를 하나로 박아두지 않고 체인마다 "
+                "<code>hd_path</code> 를 읽어옵니다 — 이더리움 계열은 "
+                "<code>m/44'/60'/0'/0/x</code>, 코스모스 기본값은 "
+                "<code>m/44'/118'/0'/0/x</code> 입니다. 그 설정을 한 번이라도 바꿨다면, 기본값을 "
+                "가정하는 지갑에서는 같은 니모닉이 <b>다른 주소</b>를 냅니다.</p>",
+                "<p>이 경우 잃은 것은 없습니다. 자산은 원래 쓰던 주소에 그대로 있습니다. "
+                "놀라기 전에 주소부터 확인하세요.</p>",
+                "<pre>1. 실제로 스테이킹했던 주소를 찾습니다 (익스플로러·거래 내역)\n"
+                "2. 익스플로러에서 그 주소를 조회하면 위임이 그대로 보입니다\n"
+                "3. 새 지갑이 다른 주소를 보여준다면 파생 경로가 다른 것입니다</pre>",
+                "<p>니모닉으로 복구되지 않는 경우가 하나 더 있습니다 — <b>렛저</b>입니다. "
+                "하드웨어 지갑으로 만든 계정은 키가 기기 밖으로 나온 적이 없어서 앱에 니모닉이 "
+                "없습니다. 내보낼 것도 없고 잃을 것도 없습니다. 같은 렛저를 다른 지갑에 연결하면 "
+                "됩니다.</p>",
+            ]),
+            ("Leap 으로 옮기지 마세요", [
+                "<p>이번 종료를 다룬 일부 기사가 대안으로 Leap 을 적어두었습니다. "
+                "<b>Leap 은 2026년 5월 28일에 이미 운영을 종료했습니다.</b> 넉 달 사이에 "
+                "생태계 지갑 둘이 닫혔습니다. 옮기기 전에 그 지갑이 아직 살아 있는지부터 "
+                "확인하세요.</p>",
+            ]),
+            ("피싱", [
+                "<p>공개된 기한이 있는 지갑 종료는 피싱에 가장 좋은 조건이고, 공지가 나온 지 "
+                "이틀입니다. \"코스모스테이션 마이그레이션 도구\"를 자처하며 니모닉을 입력받는 "
+                "사이트가 나올 것으로 봅니다.</p>",
+                "<p><b>어떤 이전 절차도 웹사이트에 니모닉을 입력하라고 요구하지 않습니다.</b> "
+                "코스모스테이션도, 다른 지갑도, 이 페이지도 마찬가지입니다 — 우리는 입력란을 "
+                "두지 않으며 앞으로도 두지 않습니다. 니모닉 복구는 직접 설치하고 직접 확인한 "
+                "지갑 프로그램 안에서만 일어납니다.</p>",
+            ]),
+            ("확인하지 못한 것", [
+                "<p>코스모스테이션의 공지 원문을 찾지 못했습니다. 2차 보도만 있고 그마저 서로 "
+                "맞지 않습니다. 한 매체는 백업이 없으면 자산을 잃는다고 썼는데, 비수탁 지갑에서는 "
+                "틀린 설명입니다. 그래서 모르는 것은 채우지 않고 표시해 둡니다.</p>",
+                "<pre>9월 1일 이후 내보내기가 언제까지 남는지   — 미확인\n"
+                "Mintscan 이 계속되는지                    — 미확인\n"
+                "이들의 밸리데이터 운영이 계속되는지         — 미확인</pre>",
+                "<p>어느 쪽이든 9월 1일을 기한으로 보고 움직이세요. 원문 공지를 찾으시면 "
+                "알려주시면 반영하겠습니다.</p>",
+            ]),
+        ],
+        back="← durenodes.com 으로",
+    ),
+)]
+
+
 def _get(url, timeout=12):
     req = urllib.request.Request(url, headers={"User-Agent": "durenodes-site-build"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -679,12 +848,16 @@ def delegate_cards(c):
     return "\n".join(out)
 
 
-def postmortem_html(key, pm):
-    """장애 기록 상세 페이지. 랜딩과 같은 셸을 쓰되 본문만 다릅니다."""
+def postmortem_html(key, pm, kind="incidents"):
+    """장애 기록 상세 페이지. 랜딩과 같은 셸을 쓰되 본문만 다릅니다.
+
+    `kind` 로 /incidents/ 와 /guides/ 를 함께 처리합니다. 셸을 복제하면 한쪽만 고치는
+    일이 생깁니다 — 실제로 문구가 갈라진 적이 있습니다.
+    """
     c = CONTENT[key]
     p = pm[key]
     css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
-    path = f"/incidents/{pm['slug']}/"
+    path = f"/{kind}/{pm['slug']}/"
     canonical = SITE + ("/ko" if key == "ko" else "") + path
     alt = ("/ko" if key == "en" else "") + path if key == "en" else path
     home = "/ko/" if key == "ko" else "/"
@@ -702,9 +875,9 @@ def postmortem_html(key, pm):
 <title>{p["title"]}</title>
 <meta name="description" content="{p["desc"]}">
 <link rel="canonical" href="{canonical}">
-<link rel="alternate" hreflang="en" href="{SITE}/incidents/{pm["slug"]}/">
-<link rel="alternate" hreflang="ko" href="{SITE}/ko/incidents/{pm["slug"]}/">
-<link rel="alternate" hreflang="x-default" href="{SITE}/incidents/{pm["slug"]}/">
+<link rel="alternate" hreflang="en" href="{SITE}/{kind}/{pm["slug"]}/">
+<link rel="alternate" hreflang="ko" href="{SITE}/ko/{kind}/{pm["slug"]}/">
+<link rel="alternate" hreflang="x-default" href="{SITE}/{kind}/{pm["slug"]}/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
@@ -778,6 +951,11 @@ def postmortem_html(key, pm):
 </body>
 </html>
 '''
+
+
+def guide_html(key, g):
+    """가이드 페이지. 포스트모템과 같은 셸이고 경로만 /guides/ 입니다."""
+    return postmortem_html(key, g, kind="guides")
 
 
 def build(key):
@@ -988,25 +1166,28 @@ def main():
     (HERE / "ko" / "index.html").write_text(build("ko"), encoding="utf-8")
 
     written = []
-    for pm in POSTMORTEMS:
-        for key in ("en", "ko"):
-            d = HERE / ("ko" if key == "ko" else ".") / "incidents" / pm["slug"]
-            d.mkdir(parents=True, exist_ok=True)
-            (d / "index.html").write_text(postmortem_html(key, pm), encoding="utf-8")
-            written.append(str((d / "index.html").relative_to(HERE)))
+    for kind, items in (("incidents", POSTMORTEMS), ("guides", GUIDES)):
+        for pm in items:
+            for key in ("en", "ko"):
+                d = HERE / ("ko" if key == "ko" else ".") / kind / pm["slug"]
+                d.mkdir(parents=True, exist_ok=True)
+                (d / "index.html").write_text(
+                    postmortem_html(key, pm, kind=kind), encoding="utf-8")
+                written.append(str((d / "index.html").relative_to(HERE)))
 
     (HERE / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
 
     pm_urls = "\n".join(
         f"""  <url>
-    <loc>{SITE}{pre}/incidents/{pm["slug"]}/</loc>
+    <loc>{SITE}{pre}/{kind}/{pm["slug"]}/</loc>
     <lastmod>{pm["date"]}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/incidents/{pm["slug"]}/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/incidents/{pm["slug"]}/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/incidents/{pm["slug"]}/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/{kind}/{pm["slug"]}/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/{kind}/{pm["slug"]}/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/{kind}/{pm["slug"]}/"/>
   </url>"""
-        for pm in POSTMORTEMS for pre in ("", "/ko"))
+        for kind, items in (("incidents", POSTMORTEMS), ("guides", GUIDES))
+        for pm in items for pre in ("", "/ko"))
 
     (HERE / "sitemap.xml").write_text(f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
