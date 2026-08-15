@@ -309,6 +309,20 @@ GUIDES = [dict(
                 "<pre>Phrase already written down   → nothing urgent, import it whenever\n"
                 "Phrase only inside the app    → export it before 1 September</pre>",
             ]),
+            ("If you delegated to Cosmostation's validator", [
+                "<p>This is a separate matter from the wallet, and it does need action. "
+                "Cosmostation also ran a validator, and that validator is <b>unbonded and "
+                "jailed</b> on both Cosmos Hub and Celestia. Its moniker now reads "
+                "<code>[Shutting down] cosmostation please redelegate</code>.</p>",
+                "<p>A validator in that state signs nothing, so stake delegated to it earns "
+                "nothing. As of 16 August the stake still sitting there is:</p>",
+                "<pre>Cosmos Hub   6,092,673 ATOM\n"
+                "Celestia     8,777,885 TIA</pre>",
+                "<p><b>Redelegate — do not unbond.</b> Redelegation moves your stake to another "
+                "validator immediately and keeps it earning. Unbonding first would cost you 21 "
+                "days for no reason. Any wallet that supports staking can do this; you pick the "
+                "validator.</p>",
+            ]),
             ("Do not unbond", [
                 "<p>Unbonding on Cosmos Hub takes 21 days. You earn nothing during that time, "
                 "you cannot vote, and you cannot cancel it once started.</p>",
@@ -366,6 +380,20 @@ GUIDES = [dict(
                 "<a href=\"https://x.com/IBCwallet/status/2088162092922864114\" rel=\"noopener\" target=\"_blank\">공지 원문</a>.</p>",
                 "<pre>니모닉을 적어두셨다면   급하지 않습니다. 아무 때나 다른 지갑에 넣으면 됩니다\n"
                 "앱 안에만 있다면        9월 1일 전에 내보내세요</pre>",
+            ]),
+            ("코스모스테이션 밸리데이터에 위임했다면", [
+                "<p>이건 지갑과 별개이고, 이쪽은 조치가 필요합니다. 코스모스테이션은 "
+                "밸리데이터도 운영했는데, 그 밸리데이터가 코스모스 허브와 셀레스티아 양쪽에서 "
+                "<b>언본디드 · jail 상태</b>입니다. 모니커가 지금 이렇게 되어 있습니다 — "
+                "<code>[Shutting down] cosmostation please redelegate</code>.</p>",
+                "<p>이 상태의 밸리데이터는 블록에 서명하지 않으므로 거기 위임된 물량은 "
+                "<b>보상이 발생하지 않습니다.</b> 8월 16일 기준 아직 남아 있는 물량입니다.</p>",
+                "<pre>코스모스 허브   6,092,673 ATOM\n"
+                "셀레스티아      8,777,885 TIA</pre>",
+                "<p><b>재위임하세요. 언스테이킹이 아닙니다.</b> 재위임은 다른 밸리데이터로 "
+                "즉시 옮겨지고 보상도 끊기지 않습니다. 언본딩부터 걸면 이유 없이 21일을 "
+                "버리게 됩니다. 스테이킹을 지원하는 지갑이면 어디서든 되고, 어느 밸리데이터로 "
+                "갈지는 직접 고르시면 됩니다.</p>",
             ]),
             ("언스테이킹하지 마세요", [
                 "<p>코스모스 허브 언본딩은 21일입니다. 그동안 보상이 없고, 투표할 수 없고, "

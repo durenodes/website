@@ -312,6 +312,12 @@ footer { border-top: 1px solid var(--line); }
       <p>From 1 September the app keeps two functions only — exporting your recovery phrase and exporting your private key. Everything else is retired in stages, and once the app closes for good those two go as well. Cosmostation asks users to back up before 1 September: <a href="https://x.com/IBCwallet/status/2088162092922864114" rel="noopener" target="_blank">the notice is here</a>.</p>
       <pre>Phrase already written down   → nothing urgent, import it whenever
 Phrase only inside the app    → export it before 1 September</pre>
+      <h2>If you delegated to Cosmostation's validator</h2>
+      <p>This is a separate matter from the wallet, and it does need action. Cosmostation also ran a validator, and that validator is <b>unbonded and jailed</b> on both Cosmos Hub and Celestia. Its moniker now reads <code>[Shutting down] cosmostation please redelegate</code>.</p>
+      <p>A validator in that state signs nothing, so stake delegated to it earns nothing. As of 16 August the stake still sitting there is:</p>
+      <pre>Cosmos Hub   6,092,673 ATOM
+Celestia     8,777,885 TIA</pre>
+      <p><b>Redelegate — do not unbond.</b> Redelegation moves your stake to another validator immediately and keeps it earning. Unbonding first would cost you 21 days for no reason. Any wallet that supports staking can do this; you pick the validator.</p>
       <h2>Do not unbond</h2>
       <p>Unbonding on Cosmos Hub takes 21 days. You earn nothing during that time, you cannot vote, and you cannot cancel it once started.</p>
       <p>Switching wallets does not require unbonding. Put the same recovery phrase into another wallet and you get the same address, with the same delegation already on it.</p>
