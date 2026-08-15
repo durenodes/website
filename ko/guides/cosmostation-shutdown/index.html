@@ -205,8 +205,9 @@ footer { border-top: 1px solid var(--line); }
 
 @media (max-width: 560px) {
   
-  .hdr-in { flex-wrap: wrap; height: auto; padding: 9px 0; row-gap: 9px; }
-  .brand { order: 1; }
+  .hdr-in { flex-wrap: wrap; row-gap: 8px; }
+  .nav { flex-wrap: wrap; overflow: visible; }
+}
   .lang { order: 2; margin-left: auto; }
   .nav {
     order: 3; width: 100%; margin-left: 0;
@@ -270,6 +271,7 @@ footer { border-top: 1px solid var(--line); }
 .door-go { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 11px;
   letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
 .door:hover .door-go { color: var(--fg); border-bottom-color: var(--fg); }
+.nav-here { color: var(--fg); }
 </style>
 </head>
 <body>
@@ -286,12 +288,9 @@ footer { border-top: 1px solid var(--line); }
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="/ko/#networks">NETWORKS</a>
-      <a href="/ko/#services">SERVICES</a>
-      <a href="/ko/#status">STATUS</a>
-      <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
-      <a href="/ko/incidents/" class="nav-pg">LOG</a>
-      <a href="/ko/guides/" class="nav-pg">GUIDES</a>
+      <a href="/ko/">HOME</a>
+      <a href="/ko/incidents/">LOGS</a>
+      <a href="/ko/guides/">GUIDES</a>
     </nav>
     <a class="lang" href="/guides/cosmostation-shutdown/" hreflang="en" rel="alternate">English</a>
   </div>

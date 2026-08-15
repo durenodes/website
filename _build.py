@@ -512,8 +512,8 @@ CONTENT = {
           'publish every number you can check on-chain yourself, write outages down as they '
           'happen, and charge <b>each chain\'s minimum commission</b>. Everything we open is '
           '<a href="#services">free to use</a>.'),
-    nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG",
-             guides="GUIDES", delegate="DELEGATE"),
+    nav=dict(home="HOME", networks="NETWORKS", services="SERVICES", status="STATUS",
+             log="LOGS", guides="GUIDES", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="PUBLIC SERVICES · LIVE",
     stat_incidents="INCIDENTS ON RECORD",
@@ -629,8 +629,8 @@ CONTENT = {
           '들어갔습니다. 아직 짧아서 내세울 실적이 없습니다. 대신 직접 확인할 수 있는 온체인 값만 '
           '올리고, 장애는 생기는 대로 적습니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
           '받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.'),
-    nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG",
-             guides="GUIDES", delegate="DELEGATE"),
+    nav=dict(home="HOME", networks="NETWORKS", services="SERVICES", status="STATUS",
+             log="LOGS", guides="GUIDES", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="공개 서비스 · 제공 중",
     stat_incidents="기록된 장애",
@@ -839,15 +839,13 @@ def nav_html(c, key, landing=False):
     어디서든 여섯 항목 모두로 이동됩니다.
     """
     pre = "/ko" if key == "ko" else ""
-    a = "" if landing else (pre + "/")
+    home = pre + "/"
     n = c["nav"]
+    here = ' class="nav-here"' if landing else ""
     return "\n".join(f"      {x}" for x in (
-        f'<a href="{a}#networks">{n["networks"]}</a>',
-        f'<a href="{a}#services">{n["services"]}</a>',
-        f'<a href="{a}#status">{n["status"]}</a>',
-        f'<a href="{a}#delegate" class="nav-key">{n["delegate"]}</a>',
-        f'<a href="{pre}/incidents/" class="nav-pg">{n["log"]}</a>',
-        f'<a href="{pre}/guides/" class="nav-pg">{n["guides"]}</a>',
+        f'<a href="{home}"{here}>{n["home"]}</a>',
+        f'<a href="{pre}/incidents/">{n["log"]}</a>',
+        f'<a href="{pre}/guides/">{n["guides"]}</a>',
     ))
 
 
