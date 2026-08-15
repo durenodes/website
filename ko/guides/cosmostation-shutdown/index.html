@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>코스모스테이션이 닫힙니다 — 스테이킹은 어떻게 되나 | DURE</title>
-<meta name="description" content="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 위임·언본딩·미수령 보상은 앱이 아니라 체인에 있습니다. 언스테이킹하지 마세요. 실제로 해야 할 것과, 사람들이 돈을 잃는 지점을 정리했습니다.">
+<title>코스모스테이션 종료 — 스테이킹은 어떻게 되나 | DURE</title>
+<meta name="description" content="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.">
 <link rel="canonical" href="https://durenodes.com/ko/guides/cosmostation-shutdown/">
 <link rel="alternate" hreflang="en" href="https://durenodes.com/guides/cosmostation-shutdown/">
 <link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/cosmostation-shutdown/">
@@ -16,8 +16,8 @@
 <meta property="og:site_name" content="DURE">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:url" content="https://durenodes.com/ko/guides/cosmostation-shutdown/">
-<meta property="og:title" content="코스모스테이션이 닫힙니다 — 스테이킹은 어떻게 되나 | DURE">
-<meta property="og:description" content="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 위임·언본딩·미수령 보상은 앱이 아니라 체인에 있습니다. 언스테이킹하지 마세요. 실제로 해야 할 것과, 사람들이 돈을 잃는 지점을 정리했습니다.">
+<meta property="og:title" content="코스모스테이션 종료 — 스테이킹은 어떻게 되나 | DURE">
+<meta property="og:description" content="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.">
 <meta property="og:image" content="https://durenodes.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
@@ -242,6 +242,15 @@ footer { border-top: 1px solid var(--line); }
 .post a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
 .post a:hover { color: var(--fg); }
 .pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
+
+
+.gd { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 16px 18px; border-left: 2px solid var(--brass); text-decoration: none; }
+.gd + .gd { margin-top: 1px; }
+.gd:hover { border-left-color: var(--fg); }
+.gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
+.gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
+.gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
 </style>
 </head>
 <body>
@@ -260,6 +269,7 @@ footer { border-top: 1px solid var(--line); }
     <nav class="nav" aria-label="Sections">
       <a href="/ko/#status">STATUS</a>
       <a href="/ko/#log">LOG</a>
+      <a href="/ko/#guides">GUIDES</a>
       <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
     </nav>
     <a class="lang" href="/guides/cosmostation-shutdown/" hreflang="en" rel="alternate">English</a>
@@ -270,44 +280,35 @@ footer { border-top: 1px solid var(--line); }
   <div class="hero">
     <div class="wrap">
       <div class="kicker">가이드 · 2026년 8월 16일</div>
-      <h1>스테이킹은 지갑에 없습니다</h1>
-      <p class="lede">코스모스테이션이 8월 14일에 9월 1일 지갑 서비스 종료를 알렸습니다. 가장 위험한 반응은 전부 언스테이킹하는 것입니다. 그럴 필요가 없고, 하면 21일을 잃습니다.</p>
+      <h1>스테이킹은 그대로 남습니다</h1>
+      <p class="lede">코스모스테이션이 8월 14일에 9월 1일 지갑 서비스 종료를 알렸습니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.</p>
       <div class="pm-meta"><div class="pm-m"><b>공지</b><span>2026-08-14</span></div><div class="pm-m"><b>종료</b><span>2026-09-01</span></div><div class="pm-m"><b>대상</b><span>iOS · Android · Chrome</span></div><div class="pm-m"><b>자산</b><span>체인에 있음 · 영향 없음</span></div></div>
     </div>
   </div>
 
   <section>
     <div class="wrap post">
-      <h2>먼저 이것부터</h2>
-      <p>지갑은 키 관리 프로그램입니다. 자산이 들어 있는 곳이 아닙니다. 잔고도, 위임도, 언본딩도, 미수령 보상도 전부 체인 상태에 <b>주소</b>로 붙어 있습니다. 코스모스테이션이 닫혀도 그중 아무것도 건드려지지 않습니다.</p>
-      <p>끝나는 것은 <b>앱</b>이고, 그와 함께 니모닉을 보여주는 버튼이 사라집니다. 기한이 걸린 건 그것 하나뿐입니다.</p>
-      <pre>니모닉을 이미 따로 적어두셨다면
-  → 급한 일이 없습니다. 아무 때나 다른 지갑에 넣으면 됩니다.
-
-앱 안에만 있었다면
-  → 앱이 멈추기 전에 내보내세요.</pre>
+      <h2>스테이킹은 체인에 있습니다</h2>
+      <p>잔고, 위임, 언본딩, 미수령 보상은 전부 체인에 주소별로 기록돼 있습니다. 앱이 닫혀도 바뀌지 않습니다.</p>
+      <p>기한이 있는 건 니모닉 하나입니다. 앱이 멈추면 니모닉을 보여주는 화면도 같이 없어집니다.</p>
+      <pre>니모닉을 적어두셨다면   급하지 않습니다. 아무 때나 다른 지갑에 넣으면 됩니다
+앱 안에만 있다면        9월 1일 전에 내보내세요</pre>
       <h2>언스테이킹하지 마세요</h2>
-      <p>코스모스 허브의 언본딩은 21일입니다. 그동안 보상이 없고, 투표할 수 없고, 중간에 취소해서 되돌릴 수 없습니다. 지갑이 닫힌다는 이유로 언본딩을 걸면 <b>토큰을 하나도 옮길 필요가 없는 이사</b>에 21일치 보상과 21일치 가격 노출을 지불하는 것입니다.</p>
-      <p>지갑을 바꿔도 스테이킹은 움직이지 않습니다. 애초에 지갑에 있던 것이 아니기 때문입니다. 같은 니모닉을 다른 앱에 넣으면 같은 주소가 나오고, 그 주소가 이미 위임을 들고 있습니다.</p>
-      <h2>사람들이 실제로 돈을 잃는 지점</h2>
-      <p>예상되는 사고는 도난이 아닙니다. 니모닉을 새 지갑에 넣었는데 잔고가 0으로 보이고, 자산이 사라졌다고 판단하는 경우입니다.</p>
-      <p>코스모스테이션은 파생 경로를 사용자가 고를 수 있게 해뒀습니다. 확장 프로그램에 코인 타입 선택기가 있고, 경로를 하나로 박아두지 않고 체인마다 <code>hd_path</code> 를 읽어옵니다 — 이더리움 계열은 <code>m/44'/60'/0'/0/x</code>, 코스모스 기본값은 <code>m/44'/118'/0'/0/x</code> 입니다. 그 설정을 한 번이라도 바꿨다면, 기본값을 가정하는 지갑에서는 같은 니모닉이 <b>다른 주소</b>를 냅니다.</p>
-      <p>이 경우 잃은 것은 없습니다. 자산은 원래 쓰던 주소에 그대로 있습니다. 놀라기 전에 주소부터 확인하세요.</p>
-      <pre>1. 실제로 스테이킹했던 주소를 찾습니다 (익스플로러·거래 내역)
-2. 익스플로러에서 그 주소를 조회하면 위임이 그대로 보입니다
-3. 새 지갑이 다른 주소를 보여준다면 파생 경로가 다른 것입니다</pre>
-      <p>니모닉으로 복구되지 않는 경우가 하나 더 있습니다 — <b>렛저</b>입니다. 하드웨어 지갑으로 만든 계정은 키가 기기 밖으로 나온 적이 없어서 앱에 니모닉이 없습니다. 내보낼 것도 없고 잃을 것도 없습니다. 같은 렛저를 다른 지갑에 연결하면 됩니다.</p>
+      <p>코스모스 허브 언본딩은 21일입니다. 그동안 보상이 없고, 투표할 수 없고, 시작하면 취소할 수 없습니다.</p>
+      <p>지갑을 바꾸는 데 언본딩이 필요하지 않습니다. 같은 니모닉을 다른 지갑에 넣으면 같은 주소가 나오고, 위임은 그 주소에 이미 붙어 있습니다.</p>
+      <h2>잔고가 0으로 보인다면</h2>
+      <p>니모닉을 새 지갑에 넣었는데 계정이 비어 보이는 경우가 있습니다. 대개 파생 경로 문제입니다.</p>
+      <p>코스모스테이션은 코인 타입을 사용자가 고를 수 있고, 경로를 하나로 정해두지 않고 체인마다 <code>hd_path</code> 를 읽습니다. 이더리움 계열은 <code>m/44'/60'/0'/0/x</code>, 코스모스 기본값은 <code>m/44'/118'/0'/0/x</code> 입니다. 기본값이 아닌 설정으로 만든 계정은 기본값을 쓰는 지갑에서 다른 주소로 나옵니다.</p>
+      <p>토큰은 원래 스테이킹하던 주소에 있습니다. 먼저 주소부터 확인하세요.</p>
+      <pre>1. 스테이킹하던 주소를 찾습니다 — 익스플로러나 거래 내역
+2. 익스플로러에서 조회하면 위임이 보입니다
+3. 새 지갑 주소가 다르면 파생 경로가 다른 것입니다</pre>
+      <p>렛저 계정은 경우가 다릅니다. 키가 기기 밖으로 나온 적이 없어 내보낼 니모닉이 없습니다. 같은 렛저를 다른 지갑에 연결하면 됩니다.</p>
+      <h2>사칭 사이트</h2>
+      <p>종료 날짜가 공개돼 있어 피싱하기 좋은 조건입니다. "코스모스테이션 마이그레이션" 같은 이름으로 니모닉을 입력받는 페이지를 조심하세요.</p>
+      <p>니모닉은 직접 설치한 지갑 앱에만 입력합니다. 웹페이지에 니모닉을 넣어야 하는 이전 절차는 없습니다.</p>
       <h2>Leap 으로 옮기지 마세요</h2>
-      <p>이번 종료를 다룬 일부 기사가 대안으로 Leap 을 적어두었습니다. <b>Leap 은 2026년 5월 28일에 이미 운영을 종료했습니다.</b> 넉 달 사이에 생태계 지갑 둘이 닫혔습니다. 옮기기 전에 그 지갑이 아직 살아 있는지부터 확인하세요.</p>
-      <h2>피싱</h2>
-      <p>공개된 기한이 있는 지갑 종료는 피싱에 가장 좋은 조건이고, 공지가 나온 지 이틀입니다. "코스모스테이션 마이그레이션 도구"를 자처하며 니모닉을 입력받는 사이트가 나올 것으로 봅니다.</p>
-      <p><b>어떤 이전 절차도 웹사이트에 니모닉을 입력하라고 요구하지 않습니다.</b> 코스모스테이션도, 다른 지갑도, 이 페이지도 마찬가지입니다 — 우리는 입력란을 두지 않으며 앞으로도 두지 않습니다. 니모닉 복구는 직접 설치하고 직접 확인한 지갑 프로그램 안에서만 일어납니다.</p>
-      <h2>확인하지 못한 것</h2>
-      <p>코스모스테이션의 공지 원문을 찾지 못했습니다. 2차 보도만 있고 그마저 서로 맞지 않습니다. 한 매체는 백업이 없으면 자산을 잃는다고 썼는데, 비수탁 지갑에서는 틀린 설명입니다. 그래서 모르는 것은 채우지 않고 표시해 둡니다.</p>
-      <pre>9월 1일 이후 내보내기가 언제까지 남는지   — 미확인
-Mintscan 이 계속되는지                    — 미확인
-이들의 밸리데이터 운영이 계속되는지         — 미확인</pre>
-      <p>어느 쪽이든 9월 1일을 기한으로 보고 움직이세요. 원문 공지를 찾으시면 알려주시면 반영하겠습니다.</p>
+      <p>대안으로 Leap 을 적어둔 기사가 있습니다. Leap 은 2026년 5월 28일에 종료했습니다. 옮길 지갑이 아직 운영 중인지 확인하세요.</p>
       <p class="pm-back"><a href="/ko/">← durenodes.com 으로</a></p>
     </div>
   </section>

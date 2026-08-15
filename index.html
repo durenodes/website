@@ -278,6 +278,15 @@ footer { border-top: 1px solid var(--line); }
 .post a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
 .post a:hover { color: var(--fg); }
 .pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
+
+
+.gd { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 16px 18px; border-left: 2px solid var(--brass); text-decoration: none; }
+.gd + .gd { margin-top: 1px; }
+.gd:hover { border-left-color: var(--fg); }
+.gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
+.gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
+.gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
 </style>
 </head>
 <body>
@@ -431,7 +440,7 @@ footer { border-top: 1px solid var(--line); }
           <tbody>
             <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">1,195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">47 / 10,000</td><td class="num">97 / 100</td><td class="num">2026-07-31</td></tr>
             <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">173 / 180</td><td class="num">2026-08-11</td></tr>
-            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,147.49 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">14 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
+            <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,147.49 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">12 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
             <tr><td>provider</td><td class="ok">BONDED</td><td class="num">1,000,002.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">41 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
           </tbody>
         </table>
@@ -454,6 +463,20 @@ footer { border-top: 1px solid var(--line); }
         <a class="inc-more" href="/incidents/2026-08-12-cosmos-hub/">Read the full postmortem →</a>
       </div>
       <p class="log-note">We record outages where signing stopped. If we could not identify a cause we say so, and what goes up here stays up.</p>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <section id="guides">
+    <div class="wrap">
+      <div class="sec-head"><h2>GUIDES</h2><span class="sec-sub">What the official docs do not cover</span></div>
+      <a class="gd" href="/guides/cosmostation-shutdown/">
+        <div class="gd-when">2026-08-16</div>
+        <div class="gd-t">Your stake stays where it is</div>
+        <p class="gd-d">Cosmostation ends its wallet service on 1 September 2026. Watch out for fake migration sites, and do not unbond — your delegation is unaffected and unbonding costs you 21 days of rewards.</p>
+      </a>
+      <p class="log-note">We do not publish general setup guides. If the official docs already say it, we link to them instead.</p>
     </div>
   </section>
 

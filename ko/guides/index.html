@@ -1,6 +1,30 @@
-/* DURE — 공통 스타일. 각 HTML 의 <style> 에 인라인으로 복사됩니다.
-   빌드 과정이 없으므로 이 파일은 원본 보관용입니다. 수정 시 두 HTML 에 모두 반영하세요. */
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>가이드 | DURE</title>
+<meta name="description" content="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. 공식 문서에 없는 것만 씁니다.">
+<link rel="canonical" href="https://durenodes.com/ko/guides/">
+<link rel="alternate" hreflang="en" href="https://durenodes.com/guides/">
+<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/">
+<link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/icon-256.png">
+<meta name="theme-color" content="#0D0F0C">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DURE">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://durenodes.com/ko/guides/">
+<meta property="og:title" content="가이드 | DURE">
+<meta property="og:description" content="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. 공식 문서에 없는 것만 씁니다.">
+<meta property="og:image" content="https://durenodes.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@durenodes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
 :root {
   --bg: #0D0F0C;
   --panel: #141713;
@@ -35,7 +59,7 @@ img, svg { max-width: 100%; }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 22px; }
 .mono { font-family: var(--mono); }
 
-/* ---------- header ---------- */
+
 .hdr {
   position: sticky; top: 0; z-index: 30;
   background: rgba(13,15,12,.92); backdrop-filter: blur(8px);
@@ -55,7 +79,7 @@ img, svg { max-width: 100%; }
 }
 .lang:hover { color: var(--fg); border-color: var(--muted); }
 
-/* ---------- hero ---------- */
+
 .hero { border-bottom: 1px solid var(--line); padding: 64px 0 44px; }
 .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--brass); margin-bottom: 20px; }
 h1 { font-size: clamp(24px, 4.2vw, 36px); line-height: 1.42; font-weight: 600; margin: 0 0 14px; letter-spacing: -.01em; max-width: 26ch; }
@@ -81,14 +105,14 @@ h1 { font-size: clamp(24px, 4.2vw, 36px); line-height: 1.42; font-weight: 600; m
 .btn-solid:hover { background: #fff; color: var(--bg); }
 .dot { width: 7px; height: 7px; background: var(--green); display: block; flex: none; }
 
-/* ---------- sections ---------- */
+
 section { padding: 52px 0; }
 .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
 h2 { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; font-weight: 600; margin: 0; }
 .sec-sub { font-size: 13px; color: var(--muted); }
 .rule { height: 7px; border-top: 1px solid var(--line); background-image: repeating-linear-gradient(90deg, var(--line-2) 0 1px, transparent 1px 22px); background-size: 100% 4px; background-repeat: no-repeat; }
 
-/* networks */
+
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .net { background: var(--panel); padding: 18px; display: flex; flex-direction: column; gap: 11px; min-height: 118px; border-left: 2px solid var(--line-2); }
 .net.live { border-left-color: #5C8A4A; }
@@ -105,14 +129,14 @@ h2 { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; font-weig
 .net-meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: auto; }
 .net-meta b { color: var(--fg); font-weight: 500; }
 
-/* services */
+
 .grid-svc { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .svc { background: var(--panel-2); padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; min-height: 106px; }
 .svc-n { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .svc-d { font-size: 12px; color: var(--muted); line-height: 1.55; }
 .svc-s { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--brass); margin-top: auto; }
 
-/* table */
+
 .tbl-wrap { border: 1px solid var(--line); overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; min-width: 620px; }
 thead tr { background: var(--panel); font-size: 10.5px; letter-spacing: .12em; color: var(--muted); }
@@ -127,7 +151,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .note b { color: var(--fg); font-weight: 500; }
 .foot-meta { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); }
 
-/* incident */
+
 .empty { border: 1px solid var(--line); background: var(--panel); padding: 26px 20px; text-align: center; }
 .empty-t { font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; color: var(--green); margin-bottom: 10px; }
 .empty p { margin: 0 auto; font-size: 13.5px; color: var(--muted); line-height: 1.8; max-width: 60ch; }
@@ -144,9 +168,9 @@ tbody tr:last-child td { border-bottom: 0; }
 .inc-meta b { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted);
   font-weight: 500; margin-right: 8px; }
 
-/* delegate */
+
 .val-card { border: 1px solid var(--line); background: var(--panel); padding: 14px 16px; margin-bottom: 16px; }
-/* 체인마다 카드 + 버튼 한 벌이 반복됩니다. 벌 사이는 띄우고 마지막은 붙입니다. */
+
 #delegate .cta { margin-bottom: 30px; }
 #delegate .cta:last-child { margin-bottom: 0; }
 .val-label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--brass); font-weight: 500; margin-bottom: 7px; }
@@ -154,7 +178,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .val-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); }
 .val-meta b { color: var(--green); font-weight: 500; }
 
-/* footer */
+
 footer { border-top: 1px solid var(--line); }
 .foot { padding: 34px 0 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
 .foot-story { max-width: 48ch; font-size: 12.5px; color: var(--muted); line-height: 1.8; }
@@ -163,7 +187,7 @@ footer { border-top: 1px solid var(--line); }
 .foot-links { margin-left: auto; display: flex; flex-direction: column; gap: 7px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; color: var(--muted); text-align: right; }
 .foot-links a:hover { color: var(--fg); }
 
-/* ---------- responsive ---------- */
+
 @media (max-width: 760px) {
   .wrap { padding: 0 16px; }
   .hdr-in { height: 52px; gap: 10px; }
@@ -180,8 +204,7 @@ footer { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 560px) {
-  /* 섹션 링크를 다 넣으면 헤더가 잘린다. 단일 페이지라 스크롤로 이동 가능하므로
-     전환 동선(DELEGATE)과 언어 전환만 남긴다. */
+  
   .nav a:not(.nav-key) { display: none; }
 }
 
@@ -202,7 +225,7 @@ footer { border-top: 1px solid var(--line); }
   letter-spacing: .1em; color: var(--brass); border-bottom: 1px solid rgba(180,147,78,.35); padding-bottom: 2px; }
 .inc-more:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
-/* postmortem */
+
 .pm-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 1px; margin-top: 34px; background: var(--line); border: 1px solid var(--line); }
 .pm-m { background: var(--panel); padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; }
 .pm-m b { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--muted); font-weight: 400; }
@@ -220,7 +243,7 @@ footer { border-top: 1px solid var(--line); }
 .post a:hover { color: var(--fg); }
 .pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
 
-/* 가이드 카드 — 장애 카드(.inc)와 같은 골격이되 링크 전체가 눌립니다. */
+
 .gd { display: block; border: 1px solid var(--line); background: var(--panel);
   padding: 16px 18px; border-left: 2px solid var(--brass); text-decoration: none; }
 .gd + .gd { margin-top: 1px; }
@@ -228,3 +251,68 @@ footer { border-top: 1px solid var(--line); }
 .gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
 .gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
 .gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="/ko/" aria-label="DURE">
+      <svg width="19" height="26" viewBox="52 32 133 184" aria-hidden="true" style="display:block">
+          <rect x="55" y="36" width="22" height="22" fill="#2BB673"></rect>
+          <rect x="58" y="58" width="16" height="154" fill="#E7E3D6"></rect>
+          <path d="M74,68 L182,68 L158,108 L182,148 L74,148 Z" fill="#E7E3D6"></path>
+          <g fill="#0D0F0C"><rect x="92" y="84" width="18" height="48"></rect><rect x="128" y="84" width="18" height="48"></rect></g>
+        </svg>
+      <b>DURE</b>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="/ko/#status">STATUS</a>
+      <a href="/ko/#log">LOG</a>
+      <a href="/ko/#guides">GUIDES</a>
+      <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
+    </nav>
+    <a class="lang" href="/guides/" hreflang="en" rel="alternate">English</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">가이드</div>
+      <h1>가이드</h1>
+      <p class="lede">공식 문서에 없는 것을 직접 겪었을 때, 또는 기한이 사람들의 돈을 가져갈 때 씁니다.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <a class="gd" href="/ko/guides/cosmostation-shutdown/">
+        <div class="gd-when">2026-08-16</div>
+        <div class="gd-t">스테이킹은 그대로 남습니다</div>
+        <p class="gd-d">코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.</p>
+      </a>
+      <p class="log-note">일반 설치 가이드는 쓰지 않습니다. 공식 문서에 이미 있는 것은 그쪽을 링크합니다.</p>
+      <p class="pm-back"><a href="/ko/">← durenodes.com 으로</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-story">
+      <b>DURE(두레)</b>는 조선 시대 마을 단위의 공동 노동 조직입니다. 주인이 따로 없었고, 누가 며칠 일했는지 장부에 적어 그만큼 나눴습니다. 지분만큼 보상이 돌아가는 지금 구조와 같아서 이름을 그대로 가져왔습니다.
+      <div class="copy">© 2026 DURE</div>
+    </div>
+    <div class="foot-links">
+        <a href="https://github.com/durenodes" rel="me noopener" target="_blank">GITHUB</a>
+        <a href="https://x.com/durenodes" rel="me noopener" target="_blank">X</a>
+        <a href="https://t.me/durenodes" rel="me noopener" target="_blank">TELEGRAM</a>
+        <a href="mailto:contact@durenodes.com">CONTACT</a>
+        <a href="mailto:security@durenodes.com">SECURITY</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

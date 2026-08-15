@@ -16,6 +16,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/"/>
   </url>
   <url>
+    <loc>https://durenodes.com/guides/</loc>
+    <lastmod>2026-08-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/guides/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/"/>
+  </url>
+  <url>
+    <loc>https://durenodes.com/ko/guides/</loc>
+    <lastmod>2026-08-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/guides/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/"/>
+  </url>
+  <url>
     <loc>https://durenodes.com/incidents/2026-08-12-cosmos-hub/</loc>
     <lastmod>2026-08-12</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/2026-08-12-cosmos-hub/"/>

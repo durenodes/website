@@ -286,161 +286,112 @@ GUIDES = [dict(
     date="2026-08-16",
     en=dict(
         title="Cosmostation is shutting down. What happens to your stake? | DURE",
-        h1="Your stake is not in the wallet",
-        desc="Cosmostation ends its wallet service on 1 September 2026. Your delegations, "
-             "unbonding entries and unclaimed rewards are on-chain, not in the app. "
-             "Do not unstake. Here is what actually needs doing, and where people lose money.",
+        h1="Your stake stays where it is",
+        desc="Cosmostation ends its wallet service on 1 September 2026. Watch out for fake "
+             "migration sites, and do not unbond — your delegation is unaffected and "
+             "unbonding costs you 21 days of rewards.",
         kicker="GUIDE · 16 AUGUST 2026",
         lede="Cosmostation announced on 14 August that its wallet service ends on 1 September. "
-             "The dangerous reaction is to unstake everything. You do not need to, and doing it "
-             "costs you 21 days.",
+             "Watch out for fake migration sites, and do not unbond — your delegation carries "
+             "over untouched, and unbonding throws away 21 days of rewards.",
         meta=[("ANNOUNCED", "14 Aug 2026"), ("SERVICE ENDS", "1 Sep 2026"),
               ("PLATFORMS", "iOS · Android · Chrome"), ("YOUR FUNDS", "on-chain · unaffected")],
         sections=[
-            ("Start here", [
-                "<p>A wallet is a key manager. It is not where your assets live. Your balance, "
-                "your delegations, your unbonding entries and your unclaimed rewards are rows in "
-                "the chain's state, attached to your <b>address</b>. Cosmostation shutting down "
-                "does not touch any of them.</p>",
-                "<p>What ends is the <b>app</b>, and with it the button that shows you your "
-                "recovery phrase. That is the only thing with a deadline.</p>",
-                "<pre>Already have your recovery phrase written down?\n"
-                "  → Nothing is urgent. Import it into another wallet whenever you like.\n\n"
-                "Only ever had it inside the app?\n"
-                "  → Export it before the app stops working.</pre>",
+            ("The stake is on the chain", [
+                "<p>Your balance, delegations, unbonding entries and unclaimed rewards are "
+                "recorded on-chain against your address. Closing the app does not change any of "
+                "them.</p>",
+                "<p>The one thing with a deadline is your recovery phrase. When the app stops "
+                "working, the screen that shows it goes with it.</p>",
+                "<pre>Phrase already written down   → nothing urgent, import it whenever\n"
+                "Phrase only inside the app    → export it before 1 September</pre>",
             ]),
-            ("Do not unstake", [
-                "<p>Unbonding on Cosmos Hub takes 21 days. During those 21 days you earn nothing, "
-                "you cannot vote, and you cannot cancel and go back. If you unbond because a "
-                "wallet is closing, you have paid 21 days of rewards and 21 days of price exposure "
-                "for a migration that did not require moving a single token.</p>",
-                "<p>Changing wallets does not move your stake, because your stake was never in the "
-                "wallet. The same recovery phrase in a different app produces the same address, "
-                "and the same address already holds the delegation.</p>",
+            ("Do not unbond", [
+                "<p>Unbonding on Cosmos Hub takes 21 days. You earn nothing during that time, "
+                "you cannot vote, and you cannot cancel it once started.</p>",
+                "<p>Switching wallets does not require unbonding. Put the same recovery phrase "
+                "into another wallet and you get the same address, with the same delegation "
+                "already on it.</p>",
             ]),
-            ("Where people actually lose money", [
-                "<p>The failure we expect is not theft. It is someone importing their phrase into "
-                "a new wallet, seeing a zero balance, and concluding their funds are gone.</p>",
-                "<p>Cosmostation lets you choose the derivation path. Its extension ships a "
-                "coin-type selector, and it reads <code>hd_path</code> per chain rather than "
-                "hardcoding one — Ethereum-style chains use <code>m/44'/60'/0'/0/x</code> while "
-                "the Cosmos default is <code>m/44'/118'/0'/0/x</code>. If you ever switched that "
-                "setting, the same phrase gives a <b>different address</b> in a wallet that "
-                "assumes the default.</p>",
-                "<p>Nothing is lost in that situation. The assets are sitting at the address you "
-                "originally used. Before you panic, check the address itself:</p>",
-                "<pre>1. Find the address you actually staked from (any explorer, your tx history)\n"
-                "2. Look it up on an explorer — the delegation will still be there\n"
-                "3. If your new wallet shows a different address, it derived a different path</pre>",
-                "<p>The other case with no recovery path through a phrase is <b>Ledger</b>. An "
-                "account created with a hardware wallet has no recovery phrase in the app, because "
-                "the key never left the device. Nothing to export, and nothing lost — connect the "
-                "same Ledger to another wallet.</p>",
+            ("If the balance shows zero", [
+                "<p>Some people will import their phrase, see an empty account, and assume the "
+                "funds are gone. Usually it is the derivation path.</p>",
+                "<p>Cosmostation lets you pick the coin type, and reads <code>hd_path</code> per "
+                "chain instead of assuming one. Ethereum-style chains use "
+                "<code>m/44'/60'/0'/0/x</code>; the Cosmos default is "
+                "<code>m/44'/118'/0'/0/x</code>. An account made with a non-default setting lands "
+                "on a different address in a wallet that assumes the default.</p>",
+                "<p>The tokens are still at the address you staked from. Check the address before "
+                "anything else:</p>",
+                "<pre>1. Find the address you staked from — explorer or transaction history\n"
+                "2. Look it up on an explorer; the delegation will be there\n"
+                "3. Different address in the new wallet means a different path</pre>",
+                "<p>Ledger accounts work differently. The key never left the device, so there is "
+                "no phrase to export. Connect the same Ledger to another wallet.</p>",
             ]),
-            ("Do not migrate to Leap", [
-                "<p>Some coverage of the shutdown lists Leap as an alternative. "
-                "<b>Leap ceased operations on 28 May 2026.</b> Two of the ecosystem's wallets have "
-                "now closed within four months. Check that whatever you migrate to is still "
-                "running before you commit to it.</p>",
+            ("Fake migration sites", [
+                "<p>A published shutdown date is good conditions for phishing. Expect pages "
+                "offering a \"Cosmostation migration tool\" that ask for your recovery phrase.</p>",
+                "<p>A recovery phrase goes into a wallet application you installed yourself. "
+                "There is no migration step that requires typing it into a website.</p>",
             ]),
-            ("Phishing", [
-                "<p>A wallet shutdown with a public deadline is the ideal setup for a phishing "
-                "campaign, and the announcement is two days old. Expect sites offering a "
-                "\"Cosmostation migration tool\" that asks for your recovery phrase.</p>",
-                "<p><b>No migration requires you to type your recovery phrase into a website.</b> "
-                "Not Cosmostation's, not another wallet's, and not this page — we do not have a "
-                "form and we never will. Importing a phrase happens inside a wallet application "
-                "you installed yourself, from a source you verified yourself.</p>",
-            ]),
-            ("What we could not confirm", [
-                "<p>We could not find the original announcement from Cosmostation — only secondary "
-                "reporting, and it does not agree with itself. One outlet says funds are lost "
-                "without a backup, which is wrong for a non-custodial wallet. So we are marking "
-                "what we do not know rather than filling it in:</p>",
-                "<pre>How long export stays available after 1 Sep   — unconfirmed\n"
-                "Whether Mintscan continues                     — unconfirmed\n"
-                "Whether their validator keeps operating        — unconfirmed</pre>",
-                "<p>Treat 1 September as the deadline regardless. If you find the primary "
-                "announcement, we would like to see it.</p>",
+            ("Do not move to Leap", [
+                "<p>Some coverage lists Leap as an alternative. Leap shut down on 28 May 2026. "
+                "Check that the wallet you are moving to is still operating.</p>",
             ]),
         ],
         back="← durenodes.com",
     ),
     ko=dict(
-        title="코스모스테이션이 닫힙니다 — 스테이킹은 어떻게 되나 | DURE",
-        h1="스테이킹은 지갑에 없습니다",
-        desc="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 위임·언본딩·미수령 "
-             "보상은 앱이 아니라 체인에 있습니다. 언스테이킹하지 마세요. 실제로 해야 할 것과, "
-             "사람들이 돈을 잃는 지점을 정리했습니다.",
+        title="코스모스테이션 종료 — 스테이킹은 어떻게 되나 | DURE",
+        h1="스테이킹은 그대로 남습니다",
+        desc="코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 "
+             "조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.",
         kicker="가이드 · 2026년 8월 16일",
-        lede="코스모스테이션이 8월 14일에 9월 1일 지갑 서비스 종료를 알렸습니다. 가장 위험한 "
-             "반응은 전부 언스테이킹하는 것입니다. 그럴 필요가 없고, 하면 21일을 잃습니다.",
+        lede="코스모스테이션이 8월 14일에 9월 1일 지갑 서비스 종료를 알렸습니다. "
+             "사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 "
+             "낭비하지 마세요.",
         meta=[("공지", "2026-08-14"), ("종료", "2026-09-01"),
               ("대상", "iOS · Android · Chrome"), ("자산", "체인에 있음 · 영향 없음")],
         sections=[
-            ("먼저 이것부터", [
-                "<p>지갑은 키 관리 프로그램입니다. 자산이 들어 있는 곳이 아닙니다. 잔고도, 위임도, "
-                "언본딩도, 미수령 보상도 전부 체인 상태에 <b>주소</b>로 붙어 있습니다. "
-                "코스모스테이션이 닫혀도 그중 아무것도 건드려지지 않습니다.</p>",
-                "<p>끝나는 것은 <b>앱</b>이고, 그와 함께 니모닉을 보여주는 버튼이 사라집니다. "
-                "기한이 걸린 건 그것 하나뿐입니다.</p>",
-                "<pre>니모닉을 이미 따로 적어두셨다면\n"
-                "  → 급한 일이 없습니다. 아무 때나 다른 지갑에 넣으면 됩니다.\n\n"
-                "앱 안에만 있었다면\n"
-                "  → 앱이 멈추기 전에 내보내세요.</pre>",
+            ("스테이킹은 체인에 있습니다", [
+                "<p>잔고, 위임, 언본딩, 미수령 보상은 전부 체인에 주소별로 기록돼 있습니다. "
+                "앱이 닫혀도 바뀌지 않습니다.</p>",
+                "<p>기한이 있는 건 니모닉 하나입니다. 앱이 멈추면 니모닉을 보여주는 화면도 "
+                "같이 없어집니다.</p>",
+                "<pre>니모닉을 적어두셨다면   급하지 않습니다. 아무 때나 다른 지갑에 넣으면 됩니다\n"
+                "앱 안에만 있다면        9월 1일 전에 내보내세요</pre>",
             ]),
             ("언스테이킹하지 마세요", [
-                "<p>코스모스 허브의 언본딩은 21일입니다. 그동안 보상이 없고, 투표할 수 없고, "
-                "중간에 취소해서 되돌릴 수 없습니다. 지갑이 닫힌다는 이유로 언본딩을 걸면 "
-                "<b>토큰을 하나도 옮길 필요가 없는 이사</b>에 21일치 보상과 21일치 가격 노출을 "
-                "지불하는 것입니다.</p>",
-                "<p>지갑을 바꿔도 스테이킹은 움직이지 않습니다. 애초에 지갑에 있던 것이 아니기 "
-                "때문입니다. 같은 니모닉을 다른 앱에 넣으면 같은 주소가 나오고, 그 주소가 이미 "
-                "위임을 들고 있습니다.</p>",
+                "<p>코스모스 허브 언본딩은 21일입니다. 그동안 보상이 없고, 투표할 수 없고, "
+                "시작하면 취소할 수 없습니다.</p>",
+                "<p>지갑을 바꾸는 데 언본딩이 필요하지 않습니다. 같은 니모닉을 다른 지갑에 "
+                "넣으면 같은 주소가 나오고, 위임은 그 주소에 이미 붙어 있습니다.</p>",
             ]),
-            ("사람들이 실제로 돈을 잃는 지점", [
-                "<p>예상되는 사고는 도난이 아닙니다. 니모닉을 새 지갑에 넣었는데 잔고가 0으로 "
-                "보이고, 자산이 사라졌다고 판단하는 경우입니다.</p>",
-                "<p>코스모스테이션은 파생 경로를 사용자가 고를 수 있게 해뒀습니다. 확장 프로그램에 "
-                "코인 타입 선택기가 있고, 경로를 하나로 박아두지 않고 체인마다 "
-                "<code>hd_path</code> 를 읽어옵니다 — 이더리움 계열은 "
-                "<code>m/44'/60'/0'/0/x</code>, 코스모스 기본값은 "
-                "<code>m/44'/118'/0'/0/x</code> 입니다. 그 설정을 한 번이라도 바꿨다면, 기본값을 "
-                "가정하는 지갑에서는 같은 니모닉이 <b>다른 주소</b>를 냅니다.</p>",
-                "<p>이 경우 잃은 것은 없습니다. 자산은 원래 쓰던 주소에 그대로 있습니다. "
-                "놀라기 전에 주소부터 확인하세요.</p>",
-                "<pre>1. 실제로 스테이킹했던 주소를 찾습니다 (익스플로러·거래 내역)\n"
-                "2. 익스플로러에서 그 주소를 조회하면 위임이 그대로 보입니다\n"
-                "3. 새 지갑이 다른 주소를 보여준다면 파생 경로가 다른 것입니다</pre>",
-                "<p>니모닉으로 복구되지 않는 경우가 하나 더 있습니다 — <b>렛저</b>입니다. "
-                "하드웨어 지갑으로 만든 계정은 키가 기기 밖으로 나온 적이 없어서 앱에 니모닉이 "
-                "없습니다. 내보낼 것도 없고 잃을 것도 없습니다. 같은 렛저를 다른 지갑에 연결하면 "
-                "됩니다.</p>",
+            ("잔고가 0으로 보인다면", [
+                "<p>니모닉을 새 지갑에 넣었는데 계정이 비어 보이는 경우가 있습니다. 대개 "
+                "파생 경로 문제입니다.</p>",
+                "<p>코스모스테이션은 코인 타입을 사용자가 고를 수 있고, 경로를 하나로 정해두지 "
+                "않고 체인마다 <code>hd_path</code> 를 읽습니다. 이더리움 계열은 "
+                "<code>m/44'/60'/0'/0/x</code>, 코스모스 기본값은 <code>m/44'/118'/0'/0/x</code> "
+                "입니다. 기본값이 아닌 설정으로 만든 계정은 기본값을 쓰는 지갑에서 다른 주소로 "
+                "나옵니다.</p>",
+                "<p>토큰은 원래 스테이킹하던 주소에 있습니다. 먼저 주소부터 확인하세요.</p>",
+                "<pre>1. 스테이킹하던 주소를 찾습니다 — 익스플로러나 거래 내역\n"
+                "2. 익스플로러에서 조회하면 위임이 보입니다\n"
+                "3. 새 지갑 주소가 다르면 파생 경로가 다른 것입니다</pre>",
+                "<p>렛저 계정은 경우가 다릅니다. 키가 기기 밖으로 나온 적이 없어 내보낼 니모닉이 "
+                "없습니다. 같은 렛저를 다른 지갑에 연결하면 됩니다.</p>",
+            ]),
+            ("사칭 사이트", [
+                "<p>종료 날짜가 공개돼 있어 피싱하기 좋은 조건입니다. \"코스모스테이션 "
+                "마이그레이션\" 같은 이름으로 니모닉을 입력받는 페이지를 조심하세요.</p>",
+                "<p>니모닉은 직접 설치한 지갑 앱에만 입력합니다. 웹페이지에 니모닉을 넣어야 하는 "
+                "이전 절차는 없습니다.</p>",
             ]),
             ("Leap 으로 옮기지 마세요", [
-                "<p>이번 종료를 다룬 일부 기사가 대안으로 Leap 을 적어두었습니다. "
-                "<b>Leap 은 2026년 5월 28일에 이미 운영을 종료했습니다.</b> 넉 달 사이에 "
-                "생태계 지갑 둘이 닫혔습니다. 옮기기 전에 그 지갑이 아직 살아 있는지부터 "
-                "확인하세요.</p>",
-            ]),
-            ("피싱", [
-                "<p>공개된 기한이 있는 지갑 종료는 피싱에 가장 좋은 조건이고, 공지가 나온 지 "
-                "이틀입니다. \"코스모스테이션 마이그레이션 도구\"를 자처하며 니모닉을 입력받는 "
-                "사이트가 나올 것으로 봅니다.</p>",
-                "<p><b>어떤 이전 절차도 웹사이트에 니모닉을 입력하라고 요구하지 않습니다.</b> "
-                "코스모스테이션도, 다른 지갑도, 이 페이지도 마찬가지입니다 — 우리는 입력란을 "
-                "두지 않으며 앞으로도 두지 않습니다. 니모닉 복구는 직접 설치하고 직접 확인한 "
-                "지갑 프로그램 안에서만 일어납니다.</p>",
-            ]),
-            ("확인하지 못한 것", [
-                "<p>코스모스테이션의 공지 원문을 찾지 못했습니다. 2차 보도만 있고 그마저 서로 "
-                "맞지 않습니다. 한 매체는 백업이 없으면 자산을 잃는다고 썼는데, 비수탁 지갑에서는 "
-                "틀린 설명입니다. 그래서 모르는 것은 채우지 않고 표시해 둡니다.</p>",
-                "<pre>9월 1일 이후 내보내기가 언제까지 남는지   — 미확인\n"
-                "Mintscan 이 계속되는지                    — 미확인\n"
-                "이들의 밸리데이터 운영이 계속되는지         — 미확인</pre>",
-                "<p>어느 쪽이든 9월 1일을 기한으로 보고 움직이세요. 원문 공지를 찾으시면 "
-                "알려주시면 반영하겠습니다.</p>",
+                "<p>대안으로 Leap 을 적어둔 기사가 있습니다. Leap 은 2026년 5월 28일에 "
+                "종료했습니다. 옮길 지갑이 아직 운영 중인지 확인하세요.</p>",
             ]),
         ],
         back="← durenodes.com 으로",
@@ -561,7 +512,8 @@ CONTENT = {
           'publish every number you can check on-chain yourself, write outages down as they '
           'happen, and charge <b>each chain\'s minimum commission</b>. Everything we open is '
           '<a href="#services">free to use</a>.'),
-    nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
+    nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG",
+             guides="GUIDES", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="PUBLIC SERVICES · LIVE",
     stat_incidents="INCIDENTS ON RECORD",
@@ -600,6 +552,19 @@ CONTENT = {
                "MISSED = within the last 10,000-block window",
                "RANK = position in the active set",
                "testnet tokens have no value"],
+    sec_guides="What the official docs do not cover",
+    guides=dict(
+        title="Guides | DURE",
+        h1="Guides",
+        desc="Operational notes from running Celestia and Cosmos Hub validators. "
+             "Only what the official documentation does not cover.",
+        kicker="GUIDES",
+        lede="We write these when we hit something the official documentation does not "
+             "cover, or when a deadline is about to cost people money.",
+        criteria="We do not publish general setup guides. If the official docs already "
+                 "say it, we link to them instead.",
+        back="\u2190 durenodes.com",
+    ),
     sec_log="We write down outages and what we did about them. We do not delete them.",
     log_head=("Monitoring runs every 10 minutes and the code is "
               '<a href="{monitor}" rel="noopener" target="_blank">public</a>. '
@@ -647,7 +612,8 @@ CONTENT = {
           '들어갔습니다. 아직 짧아서 내세울 실적이 없습니다. 대신 직접 확인할 수 있는 온체인 값만 '
           '올리고, 장애는 생기는 대로 적습니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
           '받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.'),
-    nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG", delegate="DELEGATE"),
+    nav=dict(networks="NETWORKS", services="SERVICES", status="STATUS", log="LOG",
+             guides="GUIDES", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="공개 서비스 · 제공 중",
     stat_incidents="기록된 장애",
@@ -687,6 +653,19 @@ CONTENT = {
                "MISSED = 최근 10,000블록 윈도우 기준",
                "RANK = 액티브 셋 내 순위",
                "테스트넷 토큰은 가치가 없습니다"],
+    sec_guides="공식 문서에 없는 것",
+    guides=dict(
+        title="가이드 | DURE",
+        h1="가이드",
+        desc="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. "
+             "공식 문서에 없는 것만 씁니다.",
+        kicker="가이드",
+        lede="공식 문서에 없는 것을 직접 겪었을 때, 또는 기한이 사람들의 돈을 "
+             "가져갈 때 씁니다.",
+        criteria="일반 설치 가이드는 쓰지 않습니다. 공식 문서에 이미 있는 것은 "
+                 "그쪽을 링크합니다.",
+        back="\u2190 durenodes.com 으로",
+    ),
     sec_log="장애와 조치 내역을 그대로 남깁니다. 지우지 않습니다.",
     log_head=("10분 간격으로 감시하고 있고, 그 코드는 "
               '<a href="{monitor}" rel="noopener" target="_blank">공개</a>돼 있습니다. '
@@ -821,6 +800,120 @@ def incidents(c, key):
     return "\n".join(items)
 
 
+def guide_list(key, home_prefixed=True):
+    """가이드 목록. 랜딩 섹션과 /guides/ 색인이 **같은 함수**를 씁니다.
+
+    두 곳에 손으로 적으면 반드시 갈라집니다 — `todo.md` 가 그 사고를 이미 기록하고 있습니다.
+    """
+    pre = "/ko" if key == "ko" else ""
+    out = []
+    for g in GUIDES:
+        p = g[key]
+        out.append(
+            f'      <a class="gd" href="{pre}/guides/{g["slug"]}/">\n'
+            f'        <div class="gd-when">{g["date"]}</div>\n'
+            f'        <div class="gd-t">{p["h1"]}</div>\n'
+            f'        <p class="gd-d">{p["desc"]}</p>\n'
+            f'      </a>')
+    return "\n".join(out)
+
+
+def guides_index(key):
+    """/guides/ 색인. 가이드가 하나여도 고정 URL 이 있어야 어디서든 링크할 수 있습니다."""
+    c = CONTENT[key]
+    css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
+    canonical = SITE + ("/ko" if key == "ko" else "") + "/guides/"
+    alt = ("/ko/guides/" if key == "en" else "/guides/")
+    home = "/ko/" if key == "ko" else "/"
+    g = c["guides"]
+
+    return f'''<!DOCTYPE html>
+<html lang="{c["lang"]}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{g["title"]}</title>
+<meta name="description" content="{g["desc"]}">
+<link rel="canonical" href="{canonical}">
+<link rel="alternate" hreflang="en" href="{SITE}/guides/">
+<link rel="alternate" hreflang="ko" href="{SITE}/ko/guides/">
+<link rel="alternate" hreflang="x-default" href="{SITE}/guides/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/icon-256.png">
+<meta name="theme-color" content="#0D0F0C">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DURE">
+<meta property="og:locale" content="{"ko_KR" if key == "ko" else "en_US"}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:title" content="{g["title"]}">
+<meta property="og:description" content="{g["desc"]}">
+<meta property="og:image" content="{SITE}/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@durenodes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+{css}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="{home}" aria-label="DURE">
+      {MARK}
+      <b>DURE</b>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="{home}#status">{c["nav"]["status"]}</a>
+      <a href="{home}#log">{c["nav"]["log"]}</a>
+      <a href="{home}#guides">{c["nav"]["guides"]}</a>
+      <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
+    </nav>
+    <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="kicker">{g["kicker"]}</div>
+      <h1>{g["h1"]}</h1>
+      <p class="lede">{g["lede"]}</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+{guide_list(key)}
+      <p class="log-note">{g["criteria"]}</p>
+      <p class="pm-back"><a href="{home}">{g["back"]}</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-story">
+      {c["story"]}
+      <div class="copy">{c["copy"]}</div>
+    </div>
+    <div class="foot-links">
+        <a href="{DATA["github"]}" rel="me noopener" target="_blank">{c["links"]["github"]}</a>
+        <a href="{DATA["x"]}" rel="me noopener" target="_blank">{c["links"]["x"]}</a>
+        <a href="{DATA["telegram"]}" rel="me noopener" target="_blank">{c["links"]["telegram"]}</a>
+        <a href="mailto:{DATA["contact"]}">{c["links"]["contact"]}</a>
+        <a href="mailto:{DATA["security"]}">{c["links"]["security"]}</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+'''
+
+
 def delegate_cards(c):
     out = []
     for ch in CHAINS:
@@ -908,6 +1001,7 @@ def postmortem_html(key, pm, kind="incidents"):
     <nav class="nav" aria-label="Sections">
       <a href="{home}#status">{c["nav"]["status"]}</a>
       <a href="{home}#log">{c["nav"]["log"]}</a>
+      <a href="{home}#guides">{c["nav"]["guides"]}</a>
       <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
     </nav>
     <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
@@ -1116,6 +1210,16 @@ def build(key):
 
   <div class="wrap"><div class="rule"></div></div>
 
+  <section id="guides">
+    <div class="wrap">
+      <div class="sec-head"><h2>GUIDES</h2><span class="sec-sub">{c["sec_guides"]}</span></div>
+{guide_list(key)}
+      <p class="log-note">{c["guides"]["criteria"]}</p>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
   <section id="delegate">
     <div class="wrap">
       <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">{c["sec_delegate"]}</span></div>
@@ -1166,6 +1270,12 @@ def main():
     (HERE / "ko" / "index.html").write_text(build("ko"), encoding="utf-8")
 
     written = []
+    for key in ("en", "ko"):
+        d = HERE / ("ko" if key == "ko" else ".") / "guides"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(guides_index(key), encoding="utf-8")
+        written.append(str((d / "index.html").relative_to(HERE)))
+
     for kind, items in (("incidents", POSTMORTEMS), ("guides", GUIDES)):
         for pm in items:
             for key in ("en", "ko"):
@@ -1205,6 +1315,20 @@ def main():
     <xhtml:link rel="alternate" hreflang="en" href="{SITE}/"/>
     <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>
+  </url>
+  <url>
+    <loc>{SITE}/guides/</loc>
+    <lastmod>{GUIDES[0]["date"]}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/guides/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/guides/"/>
+  </url>
+  <url>
+    <loc>{SITE}/ko/guides/</loc>
+    <lastmod>{GUIDES[0]["date"]}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/guides/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/guides/"/>
   </url>
 {pm_urls}
 </urlset>

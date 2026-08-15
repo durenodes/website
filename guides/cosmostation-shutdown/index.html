@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cosmostation is shutting down. What happens to your stake? | DURE</title>
-<meta name="description" content="Cosmostation ends its wallet service on 1 September 2026. Your delegations, unbonding entries and unclaimed rewards are on-chain, not in the app. Do not unstake. Here is what actually needs doing, and where people lose money.">
+<meta name="description" content="Cosmostation ends its wallet service on 1 September 2026. Watch out for fake migration sites, and do not unbond — your delegation is unaffected and unbonding costs you 21 days of rewards.">
 <link rel="canonical" href="https://durenodes.com/guides/cosmostation-shutdown/">
 <link rel="alternate" hreflang="en" href="https://durenodes.com/guides/cosmostation-shutdown/">
 <link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/cosmostation-shutdown/">
@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://durenodes.com/guides/cosmostation-shutdown/">
 <meta property="og:title" content="Cosmostation is shutting down. What happens to your stake? | DURE">
-<meta property="og:description" content="Cosmostation ends its wallet service on 1 September 2026. Your delegations, unbonding entries and unclaimed rewards are on-chain, not in the app. Do not unstake. Here is what actually needs doing, and where people lose money.">
+<meta property="og:description" content="Cosmostation ends its wallet service on 1 September 2026. Watch out for fake migration sites, and do not unbond — your delegation is unaffected and unbonding costs you 21 days of rewards.">
 <meta property="og:image" content="https://durenodes.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
@@ -242,6 +242,15 @@ footer { border-top: 1px solid var(--line); }
 .post a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
 .post a:hover { color: var(--fg); }
 .pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
+
+
+.gd { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 16px 18px; border-left: 2px solid var(--brass); text-decoration: none; }
+.gd + .gd { margin-top: 1px; }
+.gd:hover { border-left-color: var(--fg); }
+.gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
+.gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
+.gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
 </style>
 </head>
 <body>
@@ -260,6 +269,7 @@ footer { border-top: 1px solid var(--line); }
     <nav class="nav" aria-label="Sections">
       <a href="/#status">STATUS</a>
       <a href="/#log">LOG</a>
+      <a href="/#guides">GUIDES</a>
       <a href="/#delegate" class="nav-key">DELEGATE</a>
     </nav>
     <a class="lang" href="/ko/guides/cosmostation-shutdown/" hreflang="ko" rel="alternate">한국어</a>
@@ -270,44 +280,35 @@ footer { border-top: 1px solid var(--line); }
   <div class="hero">
     <div class="wrap">
       <div class="kicker">GUIDE · 16 AUGUST 2026</div>
-      <h1>Your stake is not in the wallet</h1>
-      <p class="lede">Cosmostation announced on 14 August that its wallet service ends on 1 September. The dangerous reaction is to unstake everything. You do not need to, and doing it costs you 21 days.</p>
+      <h1>Your stake stays where it is</h1>
+      <p class="lede">Cosmostation announced on 14 August that its wallet service ends on 1 September. Watch out for fake migration sites, and do not unbond — your delegation carries over untouched, and unbonding throws away 21 days of rewards.</p>
       <div class="pm-meta"><div class="pm-m"><b>ANNOUNCED</b><span>14 Aug 2026</span></div><div class="pm-m"><b>SERVICE ENDS</b><span>1 Sep 2026</span></div><div class="pm-m"><b>PLATFORMS</b><span>iOS · Android · Chrome</span></div><div class="pm-m"><b>YOUR FUNDS</b><span>on-chain · unaffected</span></div></div>
     </div>
   </div>
 
   <section>
     <div class="wrap post">
-      <h2>Start here</h2>
-      <p>A wallet is a key manager. It is not where your assets live. Your balance, your delegations, your unbonding entries and your unclaimed rewards are rows in the chain's state, attached to your <b>address</b>. Cosmostation shutting down does not touch any of them.</p>
-      <p>What ends is the <b>app</b>, and with it the button that shows you your recovery phrase. That is the only thing with a deadline.</p>
-      <pre>Already have your recovery phrase written down?
-  → Nothing is urgent. Import it into another wallet whenever you like.
-
-Only ever had it inside the app?
-  → Export it before the app stops working.</pre>
-      <h2>Do not unstake</h2>
-      <p>Unbonding on Cosmos Hub takes 21 days. During those 21 days you earn nothing, you cannot vote, and you cannot cancel and go back. If you unbond because a wallet is closing, you have paid 21 days of rewards and 21 days of price exposure for a migration that did not require moving a single token.</p>
-      <p>Changing wallets does not move your stake, because your stake was never in the wallet. The same recovery phrase in a different app produces the same address, and the same address already holds the delegation.</p>
-      <h2>Where people actually lose money</h2>
-      <p>The failure we expect is not theft. It is someone importing their phrase into a new wallet, seeing a zero balance, and concluding their funds are gone.</p>
-      <p>Cosmostation lets you choose the derivation path. Its extension ships a coin-type selector, and it reads <code>hd_path</code> per chain rather than hardcoding one — Ethereum-style chains use <code>m/44'/60'/0'/0/x</code> while the Cosmos default is <code>m/44'/118'/0'/0/x</code>. If you ever switched that setting, the same phrase gives a <b>different address</b> in a wallet that assumes the default.</p>
-      <p>Nothing is lost in that situation. The assets are sitting at the address you originally used. Before you panic, check the address itself:</p>
-      <pre>1. Find the address you actually staked from (any explorer, your tx history)
-2. Look it up on an explorer — the delegation will still be there
-3. If your new wallet shows a different address, it derived a different path</pre>
-      <p>The other case with no recovery path through a phrase is <b>Ledger</b>. An account created with a hardware wallet has no recovery phrase in the app, because the key never left the device. Nothing to export, and nothing lost — connect the same Ledger to another wallet.</p>
-      <h2>Do not migrate to Leap</h2>
-      <p>Some coverage of the shutdown lists Leap as an alternative. <b>Leap ceased operations on 28 May 2026.</b> Two of the ecosystem's wallets have now closed within four months. Check that whatever you migrate to is still running before you commit to it.</p>
-      <h2>Phishing</h2>
-      <p>A wallet shutdown with a public deadline is the ideal setup for a phishing campaign, and the announcement is two days old. Expect sites offering a "Cosmostation migration tool" that asks for your recovery phrase.</p>
-      <p><b>No migration requires you to type your recovery phrase into a website.</b> Not Cosmostation's, not another wallet's, and not this page — we do not have a form and we never will. Importing a phrase happens inside a wallet application you installed yourself, from a source you verified yourself.</p>
-      <h2>What we could not confirm</h2>
-      <p>We could not find the original announcement from Cosmostation — only secondary reporting, and it does not agree with itself. One outlet says funds are lost without a backup, which is wrong for a non-custodial wallet. So we are marking what we do not know rather than filling it in:</p>
-      <pre>How long export stays available after 1 Sep   — unconfirmed
-Whether Mintscan continues                     — unconfirmed
-Whether their validator keeps operating        — unconfirmed</pre>
-      <p>Treat 1 September as the deadline regardless. If you find the primary announcement, we would like to see it.</p>
+      <h2>The stake is on the chain</h2>
+      <p>Your balance, delegations, unbonding entries and unclaimed rewards are recorded on-chain against your address. Closing the app does not change any of them.</p>
+      <p>The one thing with a deadline is your recovery phrase. When the app stops working, the screen that shows it goes with it.</p>
+      <pre>Phrase already written down   → nothing urgent, import it whenever
+Phrase only inside the app    → export it before 1 September</pre>
+      <h2>Do not unbond</h2>
+      <p>Unbonding on Cosmos Hub takes 21 days. You earn nothing during that time, you cannot vote, and you cannot cancel it once started.</p>
+      <p>Switching wallets does not require unbonding. Put the same recovery phrase into another wallet and you get the same address, with the same delegation already on it.</p>
+      <h2>If the balance shows zero</h2>
+      <p>Some people will import their phrase, see an empty account, and assume the funds are gone. Usually it is the derivation path.</p>
+      <p>Cosmostation lets you pick the coin type, and reads <code>hd_path</code> per chain instead of assuming one. Ethereum-style chains use <code>m/44'/60'/0'/0/x</code>; the Cosmos default is <code>m/44'/118'/0'/0/x</code>. An account made with a non-default setting lands on a different address in a wallet that assumes the default.</p>
+      <p>The tokens are still at the address you staked from. Check the address before anything else:</p>
+      <pre>1. Find the address you staked from — explorer or transaction history
+2. Look it up on an explorer; the delegation will be there
+3. Different address in the new wallet means a different path</pre>
+      <p>Ledger accounts work differently. The key never left the device, so there is no phrase to export. Connect the same Ledger to another wallet.</p>
+      <h2>Fake migration sites</h2>
+      <p>A published shutdown date is good conditions for phishing. Expect pages offering a "Cosmostation migration tool" that ask for your recovery phrase.</p>
+      <p>A recovery phrase goes into a wallet application you installed yourself. There is no migration step that requires typing it into a website.</p>
+      <h2>Do not move to Leap</h2>
+      <p>Some coverage lists Leap as an alternative. Leap shut down on 28 May 2026. Check that the wallet you are moving to is still operating.</p>
       <p class="pm-back"><a href="/">← durenodes.com</a></p>
     </div>
   </section>
