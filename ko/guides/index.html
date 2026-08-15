@@ -205,7 +205,7 @@ footer { border-top: 1px solid var(--line); }
 
 @media (max-width: 560px) {
   
-  .nav a:not(.nav-key) { display: none; }
+  .nav a:not(.nav-key):not(.nav-pg) { display: none; }
 }
 
 @media (max-width: 460px) {
@@ -280,9 +280,11 @@ footer { border-top: 1px solid var(--line); }
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
+      <a href="/ko/#networks">NETWORKS</a>
+      <a href="/ko/#services">SERVICES</a>
       <a href="/ko/#status">STATUS</a>
-      <a href="/ko/incidents/">LOG</a>
-      <a href="/ko/guides/">GUIDES</a>
+      <a href="/ko/incidents/" class="nav-pg">LOG</a>
+      <a href="/ko/guides/" class="nav-pg">GUIDES</a>
       <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
     </nav>
     <a class="lang" href="/guides/" hreflang="en" rel="alternate">English</a>

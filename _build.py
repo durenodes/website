@@ -832,6 +832,25 @@ def incidents(c, key):
     return "\n".join(items)
 
 
+def nav_html(c, key, landing=False):
+    """헤더 네비게이션. 랜딩·목록·상세가 **같은 것**을 씁니다.
+
+    랜딩에서는 앵커만 쓰고(부드러운 스크롤), 다른 페이지에서는 랜딩 경로를 붙여
+    어디서든 여섯 항목 모두로 이동됩니다.
+    """
+    pre = "/ko" if key == "ko" else ""
+    a = "" if landing else (pre + "/")
+    n = c["nav"]
+    return "\n".join(f"      {x}" for x in (
+        f'<a href="{a}#networks">{n["networks"]}</a>',
+        f'<a href="{a}#services">{n["services"]}</a>',
+        f'<a href="{a}#status">{n["status"]}</a>',
+        f'<a href="{pre}/incidents/" class="nav-pg">{n["log"]}</a>',
+        f'<a href="{pre}/guides/" class="nav-pg">{n["guides"]}</a>',
+        f'<a href="{a}#delegate" class="nav-key">{n["delegate"]}</a>',
+    ))
+
+
 def guide_list(key, home_prefixed=True):
     """가이드 목록. 랜딩 섹션과 /guides/ 색인이 **같은 함수**를 씁니다.
 
@@ -903,10 +922,7 @@ def index_page(key, kind):
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="{home}#status">{c["nav"]["status"]}</a>
-      <a href="{pre}/incidents/">{c["nav"]["log"]}</a>
-      <a href="{pre}/guides/">{c["nav"]["guides"]}</a>
-      <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
+{nav_html(c, key)}
     </nav>
     <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
   </div>
@@ -1037,10 +1053,7 @@ def postmortem_html(key, pm, kind="incidents"):
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="{home}#status">{c["nav"]["status"]}</a>
-      <a href="{pre}/incidents/">{c["nav"]["log"]}</a>
-      <a href="{pre}/guides/">{c["nav"]["guides"]}</a>
-      <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
+{nav_html(c, key)}
     </nav>
     <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
   </div>
@@ -1162,12 +1175,7 @@ def build(key):
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="#networks">{c["nav"]["networks"]}</a>
-      <a href="#services">{c["nav"]["services"]}</a>
-      <a href="#status">{c["nav"]["status"]}</a>
-      <a href="{pre}/incidents/">{c["nav"]["log"]}</a>
-      <a href="{pre}/guides/">{c["nav"]["guides"]}</a>
-      <a href="#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
+{nav_html(c, key, landing=True)}
     </nav>
     <a class="lang" href="{c["other_href"]}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
   </div>
@@ -1241,6 +1249,16 @@ def build(key):
 
   <div class="wrap"><div class="rule"></div></div>
 
+
+  <section id="delegate">
+    <div class="wrap">
+      <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">{c["sec_delegate"]}</span></div>
+{delegate_cards(c)}
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
   <section id="records">
     <div class="wrap">
       <div class="doors">
@@ -1257,15 +1275,6 @@ def build(key):
           <span class="door-go">{c["door_go"]}</span>
         </a>
       </div>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="delegate">
-    <div class="wrap">
-      <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">{c["sec_delegate"]}</span></div>
-{delegate_cards(c)}
     </div>
   </section>
 

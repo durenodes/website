@@ -180,9 +180,9 @@ footer { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 560px) {
-  /* 섹션 링크를 다 넣으면 헤더가 잘린다. 단일 페이지라 스크롤로 이동 가능하므로
-     전환 동선(DELEGATE)과 언어 전환만 남긴다. */
-  .nav a:not(.nav-key) { display: none; }
+  /* 앵커 링크는 스크롤로 닿으므로 숨긴다. 다만 LOG·GUIDES 는 **별도 페이지**라
+     숨기면 모바일에서 갈 방법이 없어진다 — .nav-pg 는 남긴다. */
+  .nav a:not(.nav-key):not(.nav-pg) { display: none; }
 }
 
 @media (max-width: 460px) {
