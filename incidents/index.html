@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>가이드 | DURE</title>
-<meta name="description" content="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. 공식 문서에 없는 것만 씁니다.">
-<link rel="canonical" href="https://durenodes.com/ko/guides/">
-<link rel="alternate" hreflang="en" href="https://durenodes.com/guides/">
-<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/">
-<link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/">
+<title>Incident log | DURE</title>
+<meta name="description" content="Every signing outage on our validators, with cause, duration and what changed. Entries are never removed.">
+<link rel="canonical" href="https://durenodes.com/incidents/">
+<link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/">
+<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/">
+<link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DURE">
-<meta property="og:locale" content="ko_KR">
-<meta property="og:url" content="https://durenodes.com/ko/guides/">
-<meta property="og:title" content="가이드 | DURE">
-<meta property="og:description" content="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. 공식 문서에 없는 것만 씁니다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://durenodes.com/incidents/">
+<meta property="og:title" content="Incident log | DURE">
+<meta property="og:description" content="Every signing outage on our validators, with cause, duration and what changed. Entries are never removed.">
 <meta property="og:image" content="https://durenodes.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
@@ -270,7 +270,7 @@ footer { border-top: 1px solid var(--line); }
 
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="brand" href="/ko/" aria-label="DURE">
+    <a class="brand" href="/" aria-label="DURE">
       <svg width="19" height="26" viewBox="52 32 133 184" aria-hidden="true" style="display:block">
           <rect x="55" y="36" width="22" height="22" fill="#2BB673"></rect>
           <rect x="58" y="58" width="16" height="154" fill="#E7E3D6"></rect>
@@ -280,33 +280,36 @@ footer { border-top: 1px solid var(--line); }
       <b>DURE</b>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="/ko/#status">STATUS</a>
-      <a href="/ko/incidents/">LOG</a>
-      <a href="/ko/guides/">GUIDES</a>
-      <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
+      <a href="/#status">STATUS</a>
+      <a href="/incidents/">LOG</a>
+      <a href="/guides/">GUIDES</a>
+      <a href="/#delegate" class="nav-key">DELEGATE</a>
     </nav>
-    <a class="lang" href="/guides/" hreflang="en" rel="alternate">English</a>
+    <a class="lang" href="/ko/incidents/" hreflang="ko" rel="alternate">한국어</a>
   </div>
 </header>
 
 <main id="top">
   <div class="hero">
     <div class="wrap">
-      <div class="kicker">가이드</div>
-      <h1>가이드</h1>
-      <p class="lede">공식 문서에 없는 것을 직접 겪었을 때, 또는 기한이 사람들의 돈을 가져갈 때 씁니다.</p>
+      <div class="kicker">INCIDENT LOG</div>
+      <h1>Incident log</h1>
+      <p class="lede">Every outage that stopped us signing, with what caused it and what we changed. We do not delete entries.</p>
     </div>
   </div>
 
   <section>
     <div class="wrap">
-      <a class="gd" href="/ko/guides/cosmostation-shutdown/">
-        <div class="gd-when">2026-08-16</div>
-        <div class="gd-t">스테이킹은 그대로 남습니다</div>
-        <p class="gd-d">코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.</p>
-      </a>
-      <p class="log-note">일반 설치 가이드는 쓰지 않습니다. 공식 문서에 이미 있는 것은 그쪽을 링크합니다.</p>
-      <p class="pm-back"><a href="/ko/">← durenodes.com 으로</a></p>
+      <p class="log-head">Monitoring runs every 10 minutes and the code is <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">public</a>. No jail and no slashing so far — the entries below are the gaps we saw.</p>
+      <div class="inc">
+        <div class="inc-when">2026-08-12 · 02:00 KST</div>
+        <p class="inc-body">A 9h 29m outage on cosmoshub-4, detected by our own monitoring.</p>
+        <div class="inc-meta"><span><b>CAUSE</b> We were running a self-built arm64 binary while the rest of the network runs the official amd64 release. One transaction metered 254 gas differently, ran out of gas on our node alone, and our application state diverged from the chain.</span><span><b>IMPACT</b> no jail · no slashing</span></div>
+        <a class="inc-more" href="/incidents/2026-08-12-cosmos-hub/">Read the full postmortem →</a>
+      </div>
+      <p class="log-note">We record outages where signing stopped. If we could not identify a cause we say so, and what goes up here stays up.</p>
+
+      <p class="pm-back"><a href="/">← durenodes.com</a></p>
     </div>
   </section>
 </main>
@@ -314,7 +317,7 @@ footer { border-top: 1px solid var(--line); }
 <footer>
   <div class="wrap foot">
     <div class="foot-story">
-      <b>DURE(두레)</b>는 조선 시대 마을 단위의 공동 노동 조직입니다. 주인이 따로 없었고, 누가 며칠 일했는지 장부에 적어 그만큼 나눴습니다. 지분만큼 보상이 돌아가는 지금 구조와 같아서 이름을 그대로 가져왔습니다.
+      <b>DURE (두레, doo-reh)</b> was a village labour commons in Joseon-era Korea. No one owned it, a ledger recorded how many days each household worked, and the harvest was split in the same proportion. That is how stake and rewards work here, so we took the name as it is.
       <div class="copy">© 2026 DURE</div>
     </div>
     <div class="foot-links">

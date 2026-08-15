@@ -287,6 +287,19 @@ footer { border-top: 1px solid var(--line); }
 .gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
 .gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
 .gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+
+
+.doors { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+@media (max-width: 720px) { .doors { grid-template-columns: 1fr; } }
+.door { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 22px 22px 20px; text-decoration: none; }
+.door:hover { border-color: var(--brass); }
+.door-k { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--brass); }
+.door-t { margin-top: 12px; font-size: 17px; color: var(--fg); line-height: 1.5; font-weight: 500; }
+.door-d { margin: 9px 0 0; font-size: 13px; color: var(--muted); line-height: 1.8; }
+.door-go { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.door:hover .door-go { color: var(--fg); border-bottom-color: var(--fg); }
 </style>
 </head>
 <body>
@@ -306,7 +319,8 @@ footer { border-top: 1px solid var(--line); }
       <a href="#networks">NETWORKS</a>
       <a href="#services">SERVICES</a>
       <a href="#status">STATUS</a>
-      <a href="#log">LOG</a>
+      <a href="/incidents/">LOG</a>
+      <a href="/guides/">GUIDES</a>
       <a href="#delegate" class="nav-key">DELEGATE</a>
     </nav>
     <a class="lang" href="/ko/" hreflang="ko" rel="alternate">한국어</a>
@@ -325,7 +339,7 @@ footer { border-top: 1px solid var(--line); }
         <div class="stat"><div class="stat-n">4</div><div class="stat-l">NETWORKS</div></div>
         <div class="stat"><div class="stat-n">0</div><div class="stat-l">SLASHING · JAIL</div></div>
         <div class="stat"><div class="stat-n">0<small> / 10</small></div><div class="stat-l">PUBLIC SERVICES · LIVE</div></div>
-        <div class="stat"><div class="stat-n"><a href="#log">1</a></div><div class="stat-l">INCIDENTS ON RECORD</div></div>
+        <div class="stat"><div class="stat-n"><a href="/incidents/">1</a></div><div class="stat-l">INCIDENTS ON RECORD</div></div>
       </div>
 
       <div class="cta">
@@ -438,7 +452,7 @@ footer { border-top: 1px solid var(--line); }
             <th class="num">SINCE</th>
           </tr></thead>
           <tbody>
-            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">1,195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">47 / 10,000</td><td class="num">97 / 100</td><td class="num">2026-07-31</td></tr>
+            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">1,195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">50 / 10,000</td><td class="num">97 / 100</td><td class="num">2026-07-31</td></tr>
             <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">173 / 180</td><td class="num">2026-08-11</td></tr>
             <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,147.49 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">12 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
             <tr><td>provider</td><td class="ok">BONDED</td><td class="num">1,000,002.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">41 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
@@ -452,31 +466,22 @@ footer { border-top: 1px solid var(--line); }
 
   <div class="wrap"><div class="rule"></div></div>
 
-  <section id="log">
+  <section id="records">
     <div class="wrap">
-      <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">We write down outages and what we did about them. We do not delete them.</span></div>
-      <p class="log-head">Monitoring runs every 10 minutes and the code is <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">public</a>. No jail and no slashing so far — the entries below are the gaps we saw.</p>
-      <div class="inc">
-        <div class="inc-when">2026-08-12 · 02:00 KST</div>
-        <p class="inc-body">A 9h 29m outage on cosmoshub-4, detected by our own monitoring.</p>
-        <div class="inc-meta"><span><b>CAUSE</b> We were running a self-built arm64 binary while the rest of the network runs the official amd64 release. One transaction metered 254 gas differently, ran out of gas on our node alone, and our application state diverged from the chain.</span><span><b>IMPACT</b> no jail · no slashing</span></div>
-        <a class="inc-more" href="/incidents/2026-08-12-cosmos-hub/">Read the full postmortem →</a>
+      <div class="doors">
+        <a class="door" href="/incidents/">
+          <div class="door-k">LOG</div>
+          <div class="door-t">Every incident, with the cause</div>
+          <p class="door-d">Signing outages, what caused them, and what we changed. Nothing is removed once posted.</p>
+          <span class="door-go">View →</span>
+        </a>
+        <a class="door" href="/guides/">
+          <div class="door-k">GUIDES</div>
+          <div class="door-t">Notes from running the nodes</div>
+          <p class="door-d">What the official documentation does not cover.</p>
+          <span class="door-go">View →</span>
+        </a>
       </div>
-      <p class="log-note">We record outages where signing stopped. If we could not identify a cause we say so, and what goes up here stays up.</p>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="guides">
-    <div class="wrap">
-      <div class="sec-head"><h2>GUIDES</h2><span class="sec-sub">What the official docs do not cover</span></div>
-      <a class="gd" href="/guides/cosmostation-shutdown/">
-        <div class="gd-when">2026-08-16</div>
-        <div class="gd-t">Your stake stays where it is</div>
-        <p class="gd-d">Cosmostation ends its wallet service on 1 September 2026. Watch out for fake migration sites, and do not unbond — your delegation is unaffected and unbonding costs you 21 days of rewards.</p>
-      </a>
-      <p class="log-note">We do not publish general setup guides. If the official docs already say it, we link to them instead.</p>
     </div>
   </section>
 

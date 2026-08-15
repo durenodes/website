@@ -228,3 +228,16 @@ footer { border-top: 1px solid var(--line); }
 .gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
 .gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
 .gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+
+/* 기록물 입구 — 랜딩에서 장애 기록·가이드 목록으로 나가는 두 문. */
+.doors { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+@media (max-width: 720px) { .doors { grid-template-columns: 1fr; } }
+.door { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 22px 22px 20px; text-decoration: none; }
+.door:hover { border-color: var(--brass); }
+.door-k { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--brass); }
+.door-t { margin-top: 12px; font-size: 17px; color: var(--fg); line-height: 1.5; font-weight: 500; }
+.door-d { margin: 9px 0 0; font-size: 13px; color: var(--muted); line-height: 1.8; }
+.door-go { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.door:hover .door-go { color: var(--fg); border-bottom-color: var(--fg); }

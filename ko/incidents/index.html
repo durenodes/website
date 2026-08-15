@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>가이드 | DURE</title>
-<meta name="description" content="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. 공식 문서에 없는 것만 씁니다.">
-<link rel="canonical" href="https://durenodes.com/ko/guides/">
-<link rel="alternate" hreflang="en" href="https://durenodes.com/guides/">
-<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/guides/">
-<link rel="alternate" hreflang="x-default" href="https://durenodes.com/guides/">
+<title>장애 기록 | DURE</title>
+<meta name="description" content="우리 밸리데이터에서 서명이 멈춘 장애 전부입니다. 원인과 시간, 바꾼 것을 함께 적습니다. 기록은 지우지 않습니다.">
+<link rel="canonical" href="https://durenodes.com/ko/incidents/">
+<link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/">
+<link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/">
+<link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DURE">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:url" content="https://durenodes.com/ko/guides/">
-<meta property="og:title" content="가이드 | DURE">
-<meta property="og:description" content="셀레스티아·코스모스 허브 밸리데이터를 운영하며 남긴 기록입니다. 공식 문서에 없는 것만 씁니다.">
+<meta property="og:url" content="https://durenodes.com/ko/incidents/">
+<meta property="og:title" content="장애 기록 | DURE">
+<meta property="og:description" content="우리 밸리데이터에서 서명이 멈춘 장애 전부입니다. 원인과 시간, 바꾼 것을 함께 적습니다. 기록은 지우지 않습니다.">
 <meta property="og:image" content="https://durenodes.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@durenodes">
@@ -285,27 +285,30 @@ footer { border-top: 1px solid var(--line); }
       <a href="/ko/guides/">GUIDES</a>
       <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
     </nav>
-    <a class="lang" href="/guides/" hreflang="en" rel="alternate">English</a>
+    <a class="lang" href="/incidents/" hreflang="en" rel="alternate">English</a>
   </div>
 </header>
 
 <main id="top">
   <div class="hero">
     <div class="wrap">
-      <div class="kicker">가이드</div>
-      <h1>가이드</h1>
-      <p class="lede">공식 문서에 없는 것을 직접 겪었을 때, 또는 기한이 사람들의 돈을 가져갈 때 씁니다.</p>
+      <div class="kicker">장애 기록</div>
+      <h1>장애 기록</h1>
+      <p class="lede">서명이 멈춘 장애 전부와 그 원인, 그리고 바꾼 것입니다. 기록을 지우지 않습니다.</p>
     </div>
   </div>
 
   <section>
     <div class="wrap">
-      <a class="gd" href="/ko/guides/cosmostation-shutdown/">
-        <div class="gd-when">2026-08-16</div>
-        <div class="gd-t">스테이킹은 그대로 남습니다</div>
-        <p class="gd-d">코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.</p>
-      </a>
-      <p class="log-note">일반 설치 가이드는 쓰지 않습니다. 공식 문서에 이미 있는 것은 그쪽을 링크합니다.</p>
+      <p class="log-head">10분 간격으로 감시하고 있고, 그 코드는 <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">공개</a>돼 있습니다. 지금까지 jail·슬래싱은 없었고, 아래는 관측된 공백입니다.</p>
+      <div class="inc">
+        <div class="inc-when">2026-08-12 · 02:00 KST</div>
+        <p class="inc-body">cosmoshub-4 에서 9h 29m 동안 멈췄고, 자체 모니터링으로 감지했습니다.</p>
+        <div class="inc-meta"><span><b>원인</b> 네트워크의 나머지가 공식 amd64 릴리스로 도는데 우리만 자체 빌드한 arm64 바이너리를 쓰고 있었습니다. 한 트랜잭션에서 가스가 254 만큼 다르게 계산돼 우리 노드에서만 실패했고, 앱 상태가 체인과 갈라졌습니다.</span><span><b>영향</b> jail 없음 · 슬래싱 없음</span></div>
+        <a class="inc-more" href="/ko/incidents/2026-08-12-cosmos-hub/">전체 기록 읽기 →</a>
+      </div>
+      <p class="log-note">서명이 멈춘 장애를 기록합니다. 원인을 모르면 모른다고 적고, 여기 올라온 것은 지우지 않습니다.</p>
+
       <p class="pm-back"><a href="/ko/">← durenodes.com 으로</a></p>
     </div>
   </section>

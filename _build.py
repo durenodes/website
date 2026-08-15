@@ -552,6 +552,23 @@ CONTENT = {
                "MISSED = within the last 10,000-block window",
                "RANK = position in the active set",
                "testnet tokens have no value"],
+    door_go="View \u2192",
+    door_log_t="Every incident, with the cause",
+    door_log_d="Signing outages, what caused them, and what we changed. "
+               "Nothing is removed once posted.",
+    door_guides_t="Notes from running the nodes",
+    door_guides_d="What the official documentation does not cover.",
+    log_page=dict(
+        title="Incident log | DURE",
+        h1="Incident log",
+        desc="Every signing outage on our validators, with cause, duration and what changed. "
+             "Entries are never removed.",
+        kicker="INCIDENT LOG",
+        lede="Every outage that stopped us signing, with what caused it and what we changed. "
+             "We do not delete entries.",
+        criteria="",
+        back="\u2190 durenodes.com",
+    ),
     sec_guides="What the official docs do not cover",
     guides=dict(
         title="Guides | DURE",
@@ -653,6 +670,21 @@ CONTENT = {
                "MISSED = 최근 10,000블록 윈도우 기준",
                "RANK = 액티브 셋 내 순위",
                "테스트넷 토큰은 가치가 없습니다"],
+    door_go="보기 \u2192",
+    door_log_t="장애 전부, 원인까지",
+    door_log_d="서명이 멈춘 장애와 그 원인, 그리고 바꾼 것. 올린 뒤에는 지우지 않습니다.",
+    door_guides_t="노드를 돌리며 남긴 기록",
+    door_guides_d="공식 문서에 없는 것들입니다.",
+    log_page=dict(
+        title="장애 기록 | DURE",
+        h1="장애 기록",
+        desc="우리 밸리데이터에서 서명이 멈춘 장애 전부입니다. 원인과 시간, 바꾼 것을 함께 "
+             "적습니다. 기록은 지우지 않습니다.",
+        kicker="장애 기록",
+        lede="서명이 멈춘 장애 전부와 그 원인, 그리고 바꾼 것입니다. 기록을 지우지 않습니다.",
+        criteria="",
+        back="\u2190 durenodes.com 으로",
+    ),
     sec_guides="공식 문서에 없는 것",
     guides=dict(
         title="가이드 | DURE",
@@ -818,14 +850,19 @@ def guide_list(key, home_prefixed=True):
     return "\n".join(out)
 
 
-def guides_index(key):
-    """/guides/ 색인. 가이드가 하나여도 고정 URL 이 있어야 어디서든 링크할 수 있습니다."""
+def index_page(key, kind):
+    """목록 페이지. /guides/ 와 /incidents/ 가 같은 셸을 씁니다.
+
+    랜딩에서 두 섹션을 뺐으므로 여기가 각 기록물의 유일한 입구입니다.
+    """
     c = CONTENT[key]
     css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
-    canonical = SITE + ("/ko" if key == "ko" else "") + "/guides/"
-    alt = ("/ko/guides/" if key == "en" else "/guides/")
+    canonical = SITE + ("/ko" if key == "ko" else "") + f"/{kind}/"
+    alt = (f"/ko/{kind}/" if key == "en" else f"/{kind}/")
     home = "/ko/" if key == "ko" else "/"
-    g = c["guides"]
+    pre = "/ko" if key == "ko" else ""
+    g = c["guides"] if kind == "guides" else c["log_page"]
+    body = guide_list(key) if kind == "guides" else incidents(c, key)
 
     return f'''<!DOCTYPE html>
 <html lang="{c["lang"]}">
@@ -835,9 +872,9 @@ def guides_index(key):
 <title>{g["title"]}</title>
 <meta name="description" content="{g["desc"]}">
 <link rel="canonical" href="{canonical}">
-<link rel="alternate" hreflang="en" href="{SITE}/guides/">
-<link rel="alternate" hreflang="ko" href="{SITE}/ko/guides/">
-<link rel="alternate" hreflang="x-default" href="{SITE}/guides/">
+<link rel="alternate" hreflang="en" href="{SITE}/{kind}/">
+<link rel="alternate" hreflang="ko" href="{SITE}/ko/{kind}/">
+<link rel="alternate" hreflang="x-default" href="{SITE}/{kind}/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
@@ -867,8 +904,8 @@ def guides_index(key):
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="{home}#status">{c["nav"]["status"]}</a>
-      <a href="{home}#log">{c["nav"]["log"]}</a>
-      <a href="{home}#guides">{c["nav"]["guides"]}</a>
+      <a href="{pre}/incidents/">{c["nav"]["log"]}</a>
+      <a href="{pre}/guides/">{c["nav"]["guides"]}</a>
       <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
     </nav>
     <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
@@ -886,8 +923,8 @@ def guides_index(key):
 
   <section>
     <div class="wrap">
-{guide_list(key)}
-      <p class="log-note">{g["criteria"]}</p>
+{body}
+{f'      <p class="log-note">{g["criteria"]}</p>' if g["criteria"] else ""}
       <p class="pm-back"><a href="{home}">{g["back"]}</a></p>
     </div>
   </section>
@@ -951,6 +988,7 @@ def postmortem_html(key, pm, kind="incidents"):
     p = pm[key]
     css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
     path = f"/{kind}/{pm['slug']}/"
+    pre = "/ko" if key == "ko" else ""
     canonical = SITE + ("/ko" if key == "ko" else "") + path
     alt = ("/ko" if key == "en" else "") + path if key == "en" else path
     home = "/ko/" if key == "ko" else "/"
@@ -1000,8 +1038,8 @@ def postmortem_html(key, pm, kind="incidents"):
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="{home}#status">{c["nav"]["status"]}</a>
-      <a href="{home}#log">{c["nav"]["log"]}</a>
-      <a href="{home}#guides">{c["nav"]["guides"]}</a>
+      <a href="{pre}/incidents/">{c["nav"]["log"]}</a>
+      <a href="{pre}/guides/">{c["nav"]["guides"]}</a>
       <a href="{home}#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
     </nav>
     <a class="lang" href="{alt}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
@@ -1054,6 +1092,7 @@ def guide_html(key, g):
 
 def build(key):
     c = CONTENT[key]
+    pre = "/ko" if key == "ko" else ""
     css = (HERE / "_style.css").read_text(encoding="utf-8")
     css = re.sub(r"/\*.*?\*/", "", css, flags=re.S).strip()
     d = DATA
@@ -1126,7 +1165,8 @@ def build(key):
       <a href="#networks">{c["nav"]["networks"]}</a>
       <a href="#services">{c["nav"]["services"]}</a>
       <a href="#status">{c["nav"]["status"]}</a>
-      <a href="#log">{c["nav"]["log"]}</a>
+      <a href="{pre}/incidents/">{c["nav"]["log"]}</a>
+      <a href="{pre}/guides/">{c["nav"]["guides"]}</a>
       <a href="#delegate" class="nav-key">{c["nav"]["delegate"]}</a>
     </nav>
     <a class="lang" href="{c["other_href"]}" hreflang="{c["other"]}" rel="alternate">{c["other_label"]}</a>
@@ -1145,7 +1185,7 @@ def build(key):
         <div class="stat"><div class="stat-n">{len(CHAINS)}</div><div class="stat-l">{c["stat_networks"]}</div></div>
         <div class="stat"><div class="stat-n">{d["slashing"]}</div><div class="stat-l">{c["stat_slashing"]}</div></div>
         <div class="stat"><div class="stat-n">{d["services_live"]}<small> / {d["services_total"]}</small></div><div class="stat-l">{c["stat_services"]}</div></div>
-        <div class="stat"><div class="stat-n"><a href="#log">{d["incidents"]}</a></div><div class="stat-l">{c["stat_incidents"]}</div></div>
+        <div class="stat"><div class="stat-n"><a href="{pre}/incidents/">{d["incidents"]}</a></div><div class="stat-l">{c["stat_incidents"]}</div></div>
       </div>
 
       <div class="cta">
@@ -1201,20 +1241,22 @@ def build(key):
 
   <div class="wrap"><div class="rule"></div></div>
 
-  <section id="log">
+  <section id="records">
     <div class="wrap">
-      <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">{c["sec_log"]}</span></div>
-{incidents(c, key)}
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="guides">
-    <div class="wrap">
-      <div class="sec-head"><h2>GUIDES</h2><span class="sec-sub">{c["sec_guides"]}</span></div>
-{guide_list(key)}
-      <p class="log-note">{c["guides"]["criteria"]}</p>
+      <div class="doors">
+        <a class="door" href="{pre}/incidents/">
+          <div class="door-k">{c["nav"]["log"]}</div>
+          <div class="door-t">{c["door_log_t"]}</div>
+          <p class="door-d">{c["door_log_d"]}</p>
+          <span class="door-go">{c["door_go"]}</span>
+        </a>
+        <a class="door" href="{pre}/guides/">
+          <div class="door-k">{c["nav"]["guides"]}</div>
+          <div class="door-t">{c["door_guides_t"]}</div>
+          <p class="door-d">{c["door_guides_d"]}</p>
+          <span class="door-go">{c["door_go"]}</span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1270,11 +1312,12 @@ def main():
     (HERE / "ko" / "index.html").write_text(build("ko"), encoding="utf-8")
 
     written = []
-    for key in ("en", "ko"):
-        d = HERE / ("ko" if key == "ko" else ".") / "guides"
-        d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(guides_index(key), encoding="utf-8")
-        written.append(str((d / "index.html").relative_to(HERE)))
+    for kind in ("incidents", "guides"):
+        for key in ("en", "ko"):
+            d = HERE / ("ko" if key == "ko" else ".") / kind
+            d.mkdir(parents=True, exist_ok=True)
+            (d / "index.html").write_text(index_page(key, kind), encoding="utf-8")
+            written.append(str((d / "index.html").relative_to(HERE)))
 
     for kind, items in (("incidents", POSTMORTEMS), ("guides", GUIDES)):
         for pm in items:
@@ -1287,6 +1330,17 @@ def main():
 
     (HERE / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
+
+    idx_urls = "\n".join(
+        f"""  <url>
+    <loc>{SITE}{pre}/{kind}/</loc>
+    <lastmod>{last}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/{kind}/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/{kind}/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/{kind}/"/>
+  </url>"""
+        for kind, last in (("incidents", POSTMORTEMS[0]["date"]), ("guides", GUIDES[0]["date"]))
+        for pre in ("", "/ko"))
 
     pm_urls = "\n".join(
         f"""  <url>
@@ -1316,20 +1370,7 @@ def main():
     <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>
   </url>
-  <url>
-    <loc>{SITE}/guides/</loc>
-    <lastmod>{GUIDES[0]["date"]}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/guides/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/guides/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/guides/"/>
-  </url>
-  <url>
-    <loc>{SITE}/ko/guides/</loc>
-    <lastmod>{GUIDES[0]["date"]}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/guides/"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/guides/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/guides/"/>
-  </url>
+{idx_urls}
 {pm_urls}
 </urlset>
 ''', encoding="utf-8")

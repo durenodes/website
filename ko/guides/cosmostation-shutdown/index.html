@@ -251,6 +251,19 @@ footer { border-top: 1px solid var(--line); }
 .gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
 .gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
 .gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+
+
+.doors { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+@media (max-width: 720px) { .doors { grid-template-columns: 1fr; } }
+.door { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 22px 22px 20px; text-decoration: none; }
+.door:hover { border-color: var(--brass); }
+.door-k { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--brass); }
+.door-t { margin-top: 12px; font-size: 17px; color: var(--fg); line-height: 1.5; font-weight: 500; }
+.door-d { margin: 9px 0 0; font-size: 13px; color: var(--muted); line-height: 1.8; }
+.door-go { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.door:hover .door-go { color: var(--fg); border-bottom-color: var(--fg); }
 </style>
 </head>
 <body>
@@ -268,8 +281,8 @@ footer { border-top: 1px solid var(--line); }
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="/ko/#status">STATUS</a>
-      <a href="/ko/#log">LOG</a>
-      <a href="/ko/#guides">GUIDES</a>
+      <a href="/ko/incidents/">LOG</a>
+      <a href="/ko/guides/">GUIDES</a>
       <a href="/ko/#delegate" class="nav-key">DELEGATE</a>
     </nav>
     <a class="lang" href="/guides/cosmostation-shutdown/" hreflang="en" rel="alternate">English</a>

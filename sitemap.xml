@@ -16,6 +16,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/"/>
   </url>
   <url>
+    <loc>https://durenodes.com/incidents/</loc>
+    <lastmod>2026-08-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/"/>
+  </url>
+  <url>
+    <loc>https://durenodes.com/ko/incidents/</loc>
+    <lastmod>2026-08-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/incidents/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://durenodes.com/ko/incidents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://durenodes.com/incidents/"/>
+  </url>
+  <url>
     <loc>https://durenodes.com/guides/</loc>
     <lastmod>2026-08-16</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://durenodes.com/guides/"/>

@@ -287,6 +287,19 @@ footer { border-top: 1px solid var(--line); }
 .gd-when { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; color: var(--brass); }
 .gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
 .gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+
+
+.doors { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+@media (max-width: 720px) { .doors { grid-template-columns: 1fr; } }
+.door { display: block; border: 1px solid var(--line); background: var(--panel);
+  padding: 22px 22px 20px; text-decoration: none; }
+.door:hover { border-color: var(--brass); }
+.door-k { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--brass); }
+.door-t { margin-top: 12px; font-size: 17px; color: var(--fg); line-height: 1.5; font-weight: 500; }
+.door-d { margin: 9px 0 0; font-size: 13px; color: var(--muted); line-height: 1.8; }
+.door-go { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.door:hover .door-go { color: var(--fg); border-bottom-color: var(--fg); }
 </style>
 </head>
 <body>
@@ -306,7 +319,8 @@ footer { border-top: 1px solid var(--line); }
       <a href="#networks">NETWORKS</a>
       <a href="#services">SERVICES</a>
       <a href="#status">STATUS</a>
-      <a href="#log">LOG</a>
+      <a href="/ko/incidents/">LOG</a>
+      <a href="/ko/guides/">GUIDES</a>
       <a href="#delegate" class="nav-key">DELEGATE</a>
     </nav>
     <a class="lang" href="/?lang=en" hreflang="en" rel="alternate">English</a>
@@ -325,7 +339,7 @@ footer { border-top: 1px solid var(--line); }
         <div class="stat"><div class="stat-n">4</div><div class="stat-l">NETWORKS</div></div>
         <div class="stat"><div class="stat-n">0</div><div class="stat-l">SLASHING · JAIL</div></div>
         <div class="stat"><div class="stat-n">0<small> / 10</small></div><div class="stat-l">공개 서비스 · 제공 중</div></div>
-        <div class="stat"><div class="stat-n"><a href="#log">1</a></div><div class="stat-l">기록된 장애</div></div>
+        <div class="stat"><div class="stat-n"><a href="/ko/incidents/">1</a></div><div class="stat-l">기록된 장애</div></div>
       </div>
 
       <div class="cta">
@@ -438,7 +452,7 @@ footer { border-top: 1px solid var(--line); }
             <th class="num">SINCE</th>
           </tr></thead>
           <tbody>
-            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">1,195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">47 / 10,000</td><td class="num">97 / 100</td><td class="num">2026-07-31</td></tr>
+            <tr><td>celestia</td><td class="ok">BONDED</td><td class="num">1,195.12 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">50 / 10,000</td><td class="num">97 / 100</td><td class="num">2026-07-31</td></tr>
             <tr><td>cosmoshub-4</td><td class="ok">BONDED</td><td class="num">340.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">0 / 10,000</td><td class="num">173 / 180</td><td class="num">2026-08-11</td></tr>
             <tr><td>mocha-4</td><td class="ok">BONDED</td><td class="num">500,147.49 TIA</td><td class="num">20.00%<span class="min-badge">MIN</span></td><td class="num">12 / 10,000</td><td class="num">—</td><td class="num">2026-07-31</td></tr>
             <tr><td>provider</td><td class="ok">BONDED</td><td class="num">1,000,002.00 ATOM</td><td class="num">5.00%<span class="min-badge">MIN</span></td><td class="num">41 / 10,000</td><td class="num">—</td><td class="num">2026-08-05</td></tr>
@@ -452,31 +466,22 @@ footer { border-top: 1px solid var(--line); }
 
   <div class="wrap"><div class="rule"></div></div>
 
-  <section id="log">
+  <section id="records">
     <div class="wrap">
-      <div class="sec-head"><h2>INCIDENT LOG</h2><span class="sec-sub">장애와 조치 내역을 그대로 남깁니다. 지우지 않습니다.</span></div>
-      <p class="log-head">10분 간격으로 감시하고 있고, 그 코드는 <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">공개</a>돼 있습니다. 지금까지 jail·슬래싱은 없었고, 아래는 관측된 공백입니다.</p>
-      <div class="inc">
-        <div class="inc-when">2026-08-12 · 02:00 KST</div>
-        <p class="inc-body">cosmoshub-4 에서 9h 29m 동안 멈췄고, 자체 모니터링으로 감지했습니다.</p>
-        <div class="inc-meta"><span><b>원인</b> 네트워크의 나머지가 공식 amd64 릴리스로 도는데 우리만 자체 빌드한 arm64 바이너리를 쓰고 있었습니다. 한 트랜잭션에서 가스가 254 만큼 다르게 계산돼 우리 노드에서만 실패했고, 앱 상태가 체인과 갈라졌습니다.</span><span><b>영향</b> jail 없음 · 슬래싱 없음</span></div>
-        <a class="inc-more" href="/ko/incidents/2026-08-12-cosmos-hub/">전체 기록 읽기 →</a>
+      <div class="doors">
+        <a class="door" href="/ko/incidents/">
+          <div class="door-k">LOG</div>
+          <div class="door-t">장애 전부, 원인까지</div>
+          <p class="door-d">서명이 멈춘 장애와 그 원인, 그리고 바꾼 것. 올린 뒤에는 지우지 않습니다.</p>
+          <span class="door-go">보기 →</span>
+        </a>
+        <a class="door" href="/ko/guides/">
+          <div class="door-k">GUIDES</div>
+          <div class="door-t">노드를 돌리며 남긴 기록</div>
+          <p class="door-d">공식 문서에 없는 것들입니다.</p>
+          <span class="door-go">보기 →</span>
+        </a>
       </div>
-      <p class="log-note">서명이 멈춘 장애를 기록합니다. 원인을 모르면 모른다고 적고, 여기 올라온 것은 지우지 않습니다.</p>
-    </div>
-  </section>
-
-  <div class="wrap"><div class="rule"></div></div>
-
-  <section id="guides">
-    <div class="wrap">
-      <div class="sec-head"><h2>GUIDES</h2><span class="sec-sub">공식 문서에 없는 것</span></div>
-      <a class="gd" href="/ko/guides/cosmostation-shutdown/">
-        <div class="gd-when">2026-08-16</div>
-        <div class="gd-t">스테이킹은 그대로 남습니다</div>
-        <p class="gd-d">코스모스테이션이 2026년 9월 1일 지갑 서비스를 종료합니다. 사칭 사이트를 조심하시고, 위임은 그대로 유지되니 언스테이킹으로 보상을 낭비하지 마세요.</p>
-      </a>
-      <p class="log-note">일반 설치 가이드는 쓰지 않습니다. 공식 문서에 이미 있는 것은 그쪽을 링크합니다.</p>
     </div>
   </section>
 
