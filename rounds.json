@@ -19,8 +19,7 @@
       "valoper": "celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
       "payer": "celestia188d40wvjvlgl27pt3l433pq8vrj4g6249ye36x",
       "explorer_tx": "https://celenium.io/tx/",
-      "rounds": [],
-      "weekly_per_1000": "0.082"
+      "rounds": []
     },
     {
       "id": "cosmoshub-mainnet",
@@ -33,8 +32,7 @@
       "valoper": "cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm",
       "payer": "cosmos18g6vu6qn3qdm2wttwpcyr8638usjw5s3za9mpg",
       "explorer_tx": "https://www.mintscan.io/cosmos/tx/",
-      "rounds": [],
-      "weekly_per_1000": "0.059"
+      "rounds": []
     }
   ]
 }

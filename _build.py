@@ -613,12 +613,8 @@ CONTENT = {
                 "<p>Delegate to us and we return <b>40% of the commission your "
                 "delegation earns</b>, every week. What you get depends on your own "
                 "stake, not on how many others take part.</p>",
-                "<pre>payout = your stake \u00d7 staking APR \u00d7 commission \u00d7 40%</pre>",
-                "{{RATES}}",
-                "<p>Commission is each chain\u2019s network minimum and we are not "
-                "raising it. The figures above follow today\u2019s staking APR, which "
-                "moves. These are small amounts \u2014 this is a record, not a yield "
-                "product. If we stop, we will say why.</p>",
+                "<pre>payout = your stake \u00d7 staking APR \u00d7 commission \u00d7 40%\n"
+                "commission \u2014 20% on Celestia, 5% on Cosmos Hub</pre>",
                 "<p>A round runs <b>Monday to Sunday</b>, with one reading a day. Your "
                 "basis for the round is the <b>lowest</b> of those seven, and payouts "
                 "go out on <b>Sunday</b>.</p>",
@@ -638,8 +634,6 @@ CONTENT = {
     ),
     rebate_tbl=dict(
         head=["ROUND", "WEEK", "COMMISSION", "DISTRIBUTED", "PAID TO", "PROOF"],
-        rate_head=["CHAIN", "COMMISSION", "YOU GET", "MINIMUM"],
-        per="{a} {d} a week per 1,000 {d}",
         empty_t="No rounds settled yet",
         empty_d="The first settlement is 23 August 2026, on both chains. Every round "
                 "appears here with both transaction hashes as soon as it is paid.",
@@ -779,11 +773,8 @@ CONTENT = {
             ("어떻게 계산하나", [
                 "<p>위임해 주시면 그 위임이 만든 <b>커미션의 40%</b>를 매주 돌려드립니다. "
                 "받는 금액은 본인 위임량으로 정해지고 참여자 수와 무관합니다.</p>",
-                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 \u00d7 40%</pre>",
-                "{{RATES}}",
-                "<p>커미션은 각 체인의 네트워크 최소값이고 올리지 않습니다. 위 금액은 현재 "
-                "스테이킹 APR 기준이며 APR 은 계속 움직입니다. 금액은 작습니다 \u2014 수익 "
-                "상품이 아니라 기록입니다. 중단하게 되면 그 이유를 밝힙니다.</p>",
+                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 \u00d7 40%\n"
+                "커미션 \u2014 셀레스티아 20% · 코스모스 허브 5%</pre>",
                 "<p>회차는 <b>월요일부터 일요일까지</b> 이고 하루에 한 번 기록합니다. 그 7일 중 "
                 "<b>가장 낮은 값</b>이 회차 기준이 되고, <b>지급은 일요일</b>에 합니다.</p>",
                 "<p><b>하루라도 빠지면 그 회차는 0입니다.</b> 기록 직전에 위임했다가 직후에 "
@@ -801,8 +792,6 @@ CONTENT = {
     ),
     rebate_tbl=dict(
         head=["회차", "기간", "인출 커미션", "지급액", "수령", "근거"],
-        rate_head=["체인", "커미션", "받는 금액", "최소"],
-        per="1,000 {d} 당 주 {a} {d}",
         empty_t="아직 정산된 회차가 없습니다",
         empty_d="첫 정산은 2026년 8월 23일이고 두 체인 모두 해당합니다. 지급이 끝나는 대로 "
                 "모든 회차가 트랜잭션 해시 두 개와 함께 여기 올라옵니다.",
@@ -1252,23 +1241,6 @@ def _amt(units, ch, places=6):
     return f"{int(units) / 10 ** ch['exponent']:,.{places}f}"
 
 
-def rebate_rates(c):
-    """Per-chain summary. The two chains do not share a rate: Celestia takes
-    20% commission and Cosmos Hub 5%, so one formula with one number would be
-    wrong on one of them."""
-    t = c["rebate_tbl"]
-    rows = "".join(
-        f'<tr><td>{ch["label"]}</td><td>{ch["commission_pct"]}%</td>'
-        f'<td>{t["per"].format(a=ch["weekly_per_1000"], d=ch["denom"])}</td>'
-        f'<td>{_amt(ch["min_delegation"], ch, 0)} {ch["denom"]}</td></tr>'
-        for ch in REBATE["chains"])
-    return (f'      <div class="tbl-wrap">\n        <table>\n'
-            f'          <thead><tr>'
-            + "".join(f"<th>{h}</th>" for h in t["rate_head"]) +
-            f'</tr></thead>\n          <tbody>{rows}</tbody>\n'
-            f'        </table>\n      </div>')
-
-
 def rounds_table(c):
     """The round ledger, one block per chain. Empty until the first settlement,
     and it says so — an empty table is the honest state, not a reason to hide
@@ -1309,8 +1281,7 @@ def rebate_html(key):
     c = CONTENT[key]
     p = dict(c["rebate"])
     p["sections"] = [
-        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c))
-                 .replace("{{RATES}}", rebate_rates(c)) for x in s[1]])
+        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c)) for x in s[1]])
         for s in p["sections"]]
     return postmortem_html(key, {"slug": "rebate", key: p}, kind="rebate",
                            path="/rebate/")
