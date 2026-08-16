@@ -449,6 +449,27 @@ def _first(apis, path):
     raise RuntimeError(f"all endpoints failed: {path} ({last})")
 
 
+def _apr(c):
+    """Delegator gross APR, from the chain rather than from memory.
+
+        annual provisions x (1 - community tax) / bonded tokens
+
+    Both terms move every block, which is why the rebate calculator is rebuilt
+    with the rest of the page instead of shipping a number we typed once.
+    Returns None if either query fails; the calculator then hides itself.
+    """
+    try:
+        ap = float(_first(c["api"], "/cosmos/mint/v1beta1/annual_provisions")
+                   ["annual_provisions"])
+        bonded = float(_first(c["api"], "/cosmos/staking/v1beta1/pool")
+                       ["pool"]["bonded_tokens"])
+        tax = float(_first(c["api"], "/cosmos/distribution/v1beta1/params")
+                    ["params"]["community_tax"])
+        return ap * (1 - tax) / bonded if bonded else None
+    except Exception:  # noqa: BLE001 — APR 실패가 페이지 전체를 막으면 안 된다
+        return None
+
+
 def _one(c):
     v = _first(c["api"], f"/cosmos/staking/v1beta1/validators/{c['valoper']}")["validator"]
     si = _first(c["api"], f"/cosmos/slashing/v1beta1/signing_infos/{c['valcons']}")["val_signing_info"]
@@ -478,6 +499,7 @@ def _one(c):
         status=v["status"].replace("BOND_STATUS_", ""),
         bonded=(v["status"] == "BOND_STATUS_BONDED"),
         jailed=bool(v.get("jailed", False)),
+        apr=_apr(c) if c["key"] in REBATE_KEYS else None,
     )
 
 
@@ -609,6 +631,7 @@ CONTENT = {
               ("MINIMUM", "100 TIA · 100 ATOM"), ("FIRST ROUND", "23 Aug 2026")],
         back="\u2190 durenodes.com",
         sections=[
+            ("Rounds", ["{{ROUNDS}}"]),
             ("How it is worked out", [
                 "<p>Delegate to us and we return <b>40% of the commission your "
                 "delegation earns</b>, every week. What you get depends on your own "
@@ -622,13 +645,7 @@ CONTENT = {
                 "a reading and leaving right after earns zero. Delegate mid-week and "
                 "that round pays nothing either \u2014 you join the round starting the "
                 "following Monday and are paid at the end of it, on the Sunday.</p>",
-            ]),
-            ("Rounds", [
-                "{{ROUNDS}}",
-                "<p>Every round publishes two transactions \u2014 the commission "
-                "withdrawal and the payout \u2014 so the 40% is something you can "
-                "recompute rather than take on trust. The same figures are served as "
-                "JSON at <a href=\"/rounds.json\">/rounds.json</a>.</p>",
+                "{{CALC}}",
             ]),
         ],
     ),
@@ -637,6 +654,14 @@ CONTENT = {
         empty_t="No rounds settled yet",
         empty_d="The first settlement is 23 August 2026, on both chains. Every round "
                 "appears here with both transaction hashes as soon as it is paid.",
+    ),
+    rebate_calc=dict(
+        chain="Chain", amount="Amount delegated",
+        week="A WEEK", month="A MONTH", year="A YEAR",
+        below="Below the {m} minimum, so a round with this much pays nothing.",
+        basis="At {a}% staking APR and {c}% commission, read from the chain when this "
+              "page was built. Both move, so treat this as an estimate.",
+        noscript="This needs JavaScript. The formula above works without it.",
     ),
     log_page=dict(
         title="Incident log | DURE",
@@ -770,6 +795,7 @@ CONTENT = {
               ("최소", "100 TIA · 100 ATOM"), ("첫 회차", "2026-08-23")],
         back="\u2190 durenodes.com",
         sections=[
+            ("회차 기록", ["{{ROUNDS}}"]),
             ("어떻게 계산하나", [
                 "<p>위임해 주시면 그 위임이 만든 <b>커미션의 40%</b>를 매주 돌려드립니다. "
                 "받는 금액은 본인 위임량으로 정해지고 참여자 수와 무관합니다.</p>",
@@ -781,12 +807,7 @@ CONTENT = {
                 "빼면 아무것도 받지 못합니다. 주중에 새로 위임하셔도 그 회차는 0이고, "
                 "다음 월요일에 시작하는 회차부터 대상이 되어 <b>그 주 일요일에 첫 지급</b>을 "
                 "받으십니다.</p>",
-            ]),
-            ("회차 기록", [
-                "{{ROUNDS}}",
-                "<p>회차마다 트랜잭션 두 건을 공개합니다 \u2014 커미션 인출과 지급입니다. "
-                "그래서 40% 는 믿어야 하는 말이 아니라 직접 계산해 볼 수 있는 값입니다. "
-                "같은 수치를 <a href=\"/rounds.json\">/rounds.json</a> 으로도 제공합니다.</p>",
+                "{{CALC}}",
             ]),
         ],
     ),
@@ -795,6 +816,14 @@ CONTENT = {
         empty_t="아직 정산된 회차가 없습니다",
         empty_d="첫 정산은 2026년 8월 23일이고 두 체인 모두 해당합니다. 지급이 끝나는 대로 "
                 "모든 회차가 트랜잭션 해시 두 개와 함께 여기 올라옵니다.",
+    ),
+    rebate_calc=dict(
+        chain="체인", amount="위임 수량",
+        week="주", month="월", year="년",
+        below="{m} 미만이라 이 수량으로는 회차 지급이 없습니다.",
+        basis="스테이킹 APR {a}% · 커미션 {c}% 기준이며, 이 페이지를 만들 때 체인에서 읽은 "
+              "값입니다. 둘 다 계속 움직이므로 예상치로 보세요.",
+        noscript="계산기는 JavaScript 가 필요합니다. 위 공식으로 직접 계산하실 수 있습니다.",
     ),
     log_page=dict(
         title="장애 기록 | DURE",
@@ -1236,9 +1265,81 @@ def guide_html(key, g):
 
 REBATE = json.loads((HERE / "rounds.json").read_text(encoding="utf-8"))
 
+# rounds.json 의 live_key 가 CHAINS 의 key 를 가리킨다. 여기 없는 체인은 APR 을
+# 조회하지 않는다 -- 테스트넷 토큰으로 계산기를 채우면 그 자체가 거짓말이 된다.
+REBATE_KEYS = {ch["live_key"] for ch in REBATE["chains"]}
+
 
 def _amt(units, ch, places=6):
     return f"{int(units) / 10 ** ch['exponent']:,.{places}f}"
+
+
+def rebate_calc(c):
+    """The rebate calculator.
+
+    This is the first executable JavaScript on the site, and it stays the only
+    one: no framework, no fetch, nothing external. The rates are baked in at
+    build time from the same on-chain query the STATUS table uses, so the page
+    is still a static file and the numbers are still ones we read rather than
+    ones we typed.
+
+    If the APR query failed for a chain we leave that chain out entirely rather
+    than guess, and if every chain is missing the calculator does not render.
+    """
+    t = c["rebate_calc"]
+    rows = [ch for ch in REBATE["chains"] if LIVE.get(ch["live_key"], {}).get("apr")]
+    if not rows:
+        return ""
+
+    data = ", ".join(
+        '"{k}":{{apr:{apr:.6f},comm:{comm:.4f},min:{min},d:"{d}"}}'.format(
+            k=ch["live_key"], apr=LIVE[ch["live_key"]]["apr"],
+            comm=float(LIVE[ch["live_key"]]["comm"]) / 100,
+            min=int(ch["min_delegation"]) // 10 ** ch["exponent"], d=ch["denom"])
+        for ch in rows)
+    opts = "".join(
+        f'<option value="{ch["live_key"]}">{ch["label"]} · {ch["denom"]}</option>'
+        for ch in rows)
+
+    return f'''      <div class="calc">
+        <div class="calc-row">
+          <select id="cchain" aria-label="{t["chain"]}">{opts}</select>
+          <input id="camt" type="number" min="0" step="100" value="1000"
+                 inputmode="decimal" aria-label="{t["amount"]}">
+          <span class="calc-unit" id="cunit"></span>
+        </div>
+        <div class="calc-out">
+          <div class="calc-cell"><b id="cwk">—</b><span>{t["week"]}</span></div>
+          <div class="calc-cell"><b id="cmo">—</b><span>{t["month"]}</span></div>
+          <div class="calc-cell"><b id="cyr">—</b><span>{t["year"]}</span></div>
+        </div>
+        <p class="calc-note" id="cnote"></p>
+        <noscript><p class="calc-note">{t["noscript"]}</p></noscript>
+      </div>
+      <script>
+      (function () {{
+        var R = {{{data}}}, SHARE = {REBATE["share_pct"] / 100};
+        var ch = document.getElementById("cchain"), amt = document.getElementById("camt"),
+            unit = document.getElementById("cunit"), note = document.getElementById("cnote"),
+            wk = document.getElementById("cwk"), mo = document.getElementById("cmo"),
+            yr = document.getElementById("cyr");
+        function f(v, d) {{
+          return v.toLocaleString("en-US", {{
+            minimumFractionDigits: v < 1 ? 4 : 2, maximumFractionDigits: 6 }}) + " " + d;
+        }}
+        function run() {{
+          var c = R[ch.value], a = parseFloat(amt.value) || 0, y = a * c.apr * c.comm * SHARE;
+          unit.textContent = c.d;
+          yr.textContent = f(y, c.d); mo.textContent = f(y / 12, c.d);
+          wk.textContent = f(y / 52, c.d);
+          note.textContent = (a > 0 && a < c.min)
+            ? "{t["below"]}".replace("{{m}}", c.min + " " + c.d)
+            : "{t["basis"]}".replace("{{a}}", (c.apr * 100).toFixed(2))
+                            .replace("{{c}}", (c.comm * 100).toFixed(0));
+        }}
+        ch.addEventListener("change", run); amt.addEventListener("input", run); run();
+      }})();
+      </script>'''
 
 
 def rounds_table(c):
@@ -1281,7 +1382,8 @@ def rebate_html(key):
     c = CONTENT[key]
     p = dict(c["rebate"])
     p["sections"] = [
-        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c)) for x in s[1]])
+        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c))
+                 .replace("{{CALC}}", rebate_calc(c)) for x in s[1]])
         for s in p["sections"]]
     return postmortem_html(key, {"slug": "rebate", key: p}, kind="rebate",
                            path="/rebate/")
