@@ -610,11 +610,12 @@ CONTENT = {
         back="\u2190 durenodes.com",
         sections=[
             ("What you get", [
-                "<p>Delegate to us on Celestia mainnet and we return <b>40% of the "
-                "commission your delegation earns</b>, every week. What you get depends "
-                "on your own stake, not on how many others take part \u2014 about "
-                "<b>0.082 TIA a week per 1,000 TIA</b> at today\u2019s rate.</p>",
-                "<p>Our commission is 20%, the network minimum, and we are not raising "
+                "<p>Delegate to us and we return <b>40% of the commission your "
+                "delegation earns</b>, every week. What you get depends on your own "
+                "stake, not on how many others take part.</p>",
+                "{{RATES}}",
+                "<p>Those rates follow today\u2019s staking APR, which moves. Our "
+                "commission is each chain\u2019s network minimum and we are not raising "
                 "it. These are small amounts: this is a record, not a yield product. "
                 "If we stop, we will say why.</p>",
             ]),
@@ -626,9 +627,11 @@ CONTENT = {
                 "JSON at <a href=\"/rounds.json\">/rounds.json</a>.</p>",
             ]),
             ("How it is worked out", [
-                "<pre>payout = your stake \u00d7 staking APR \u00d7 20% commission \u00d7 40%</pre>",
-                "<p>A round runs <b>Monday to Sunday</b>, with one reading a day. Your "
-                "basis for the round is the <b>lowest</b> of those seven.</p>",
+                "<pre>payout = your stake \u00d7 staking APR \u00d7 commission \u00d7 40%</pre>",
+                "<p>Commission is 20% on Celestia and 5% on Cosmos Hub \u2014 each "
+                "chain\u2019s network minimum. A round runs <b>Monday to Sunday</b>, "
+                "with one reading a day, and your basis is the <b>lowest</b> of those "
+                "seven.</p>",
                 "<p><b>Miss a day and the round pays nothing.</b> Delegating just before "
                 "a reading and leaving right after earns zero, and delegating mid-week "
                 "pays from the following Monday.</p>",
@@ -637,9 +640,11 @@ CONTENT = {
     ),
     rebate_tbl=dict(
         head=["ROUND", "WEEK", "COMMISSION", "DISTRIBUTED", "PAID TO", "PROOF"],
+        rate_head=["CHAIN", "COMMISSION", "YOU GET", "MINIMUM"],
+        per="{a} {d} a week per 1,000 {d}",
         empty_t="No rounds settled yet",
-        empty_d="The first settlement is 23 August 2026. Every round appears here with "
-                "both transaction hashes as soon as it is paid.",
+        empty_d="The first settlement is 23 August 2026, on both chains. Every round "
+                "appears here with both transaction hashes as soon as it is paid.",
     ),
     log_page=dict(
         title="Incident log | DURE",
@@ -774,11 +779,12 @@ CONTENT = {
         back="\u2190 durenodes.com",
         sections=[
             ("무엇을 받으시나", [
-                "<p>셀레스티아 메인넷에 위임하시면 <b>그 위임이 만든 커미션의 40%</b>를 매주 "
-                "돌려드립니다. 받는 금액은 본인 위임량으로 정해지고 참여자 수와 무관합니다 \u2014 "
-                "현재 요율로 <b>1,000 TIA 당 주 약 0.082 TIA</b> 입니다.</p>",
-                "<p>저희 커미션은 네트워크 최소값인 20% 이고 올리지 않습니다. 금액은 작습니다. "
-                "수익 상품이 아니라 기록입니다. 중단하게 되면 그 이유를 밝힙니다.</p>",
+                "<p>위임해 주시면 <b>그 위임이 만든 커미션의 40%</b>를 매주 돌려드립니다. "
+                "받는 금액은 본인 위임량으로 정해지고 참여자 수와 무관합니다.</p>",
+                "{{RATES}}",
+                "<p>위 금액은 현재 스테이킹 APR 기준이고 APR 은 계속 움직입니다. 저희 커미션은 "
+                "각 체인의 네트워크 최소값이며 올리지 않습니다. 금액은 작습니다. 수익 상품이 "
+                "아니라 기록입니다. 중단하게 되면 그 이유를 밝힙니다.</p>",
             ]),
             ("회차 기록", [
                 "{{ROUNDS}}",
@@ -787,8 +793,9 @@ CONTENT = {
                 "같은 수치를 <a href=\"/rounds.json\">/rounds.json</a> 으로도 제공합니다.</p>",
             ]),
             ("어떻게 계산하나", [
-                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 20% \u00d7 40%</pre>",
-                "<p>회차는 <b>월요일부터 일요일까지</b> 이고 하루에 한 번 기록합니다. "
+                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 \u00d7 40%</pre>",
+                "<p>커미션은 셀레스티아 20%, 코스모스 허브 5% 입니다 \u2014 각 체인의 네트워크 "
+                "최소값입니다. 회차는 <b>월요일부터 일요일까지</b> 이고 하루에 한 번 기록하며, "
                 "그 7일 중 <b>가장 낮은 값</b>이 회차 기준이 됩니다.</p>",
                 "<p><b>하루라도 빠지면 그 회차는 0입니다.</b> 기록 직전에 위임했다가 직후에 "
                 "빼면 아무것도 받지 못하고, 주중에 새로 위임하시면 다음 월요일부터 지급됩니다.</p>",
@@ -797,9 +804,11 @@ CONTENT = {
     ),
     rebate_tbl=dict(
         head=["회차", "기간", "인출 커미션", "지급액", "수령", "근거"],
+        rate_head=["체인", "커미션", "받는 금액", "최소"],
+        per="1,000 {d} 당 주 {a} {d}",
         empty_t="아직 정산된 회차가 없습니다",
-        empty_d="첫 정산은 2026년 8월 23일입니다. 지급이 끝나는 대로 모든 회차가 트랜잭션 해시 "
-                "두 개와 함께 여기 올라옵니다.",
+        empty_d="첫 정산은 2026년 8월 23일이고 두 체인 모두 해당합니다. 지급이 끝나는 대로 "
+                "모든 회차가 트랜잭션 해시 두 개와 함께 여기 올라옵니다.",
     ),
     log_page=dict(
         title="장애 기록 | DURE",
@@ -1242,35 +1251,60 @@ def guide_html(key, g):
 REBATE = json.loads((HERE / "rounds.json").read_text(encoding="utf-8"))
 
 
-def _tia(units, places=6):
-    return f"{int(units) / 10 ** REBATE['exponent']:,.{places}f}"
+def _amt(units, ch, places=6):
+    return f"{int(units) / 10 ** ch['exponent']:,.{places}f}"
+
+
+def rebate_rates(c):
+    """Per-chain summary. The two chains do not share a rate: Celestia takes
+    20% commission and Cosmos Hub 5%, so one formula with one number would be
+    wrong on one of them."""
+    t = c["rebate_tbl"]
+    rows = "".join(
+        f'<tr><td>{ch["label"]}</td><td>{ch["commission_pct"]}%</td>'
+        f'<td>{t["per"].format(a=ch["weekly_per_1000"], d=ch["denom"])}</td>'
+        f'<td>{_amt(ch["min_delegation"], ch, 0)} {ch["denom"]}</td></tr>'
+        for ch in REBATE["chains"])
+    return (f'      <div class="tbl-wrap">\n        <table>\n'
+            f'          <thead><tr>'
+            + "".join(f"<th>{h}</th>" for h in t["rate_head"]) +
+            f'</tr></thead>\n          <tbody>{rows}</tbody>\n'
+            f'        </table>\n      </div>')
 
 
 def rounds_table(c):
-    """The round ledger. Empty until the first settlement, and it says so —
-    an empty table is the honest state, not a reason to hide the page."""
+    """The round ledger, one block per chain. Empty until the first settlement,
+    and it says so — an empty table is the honest state, not a reason to hide
+    the page."""
     t = c["rebate_tbl"]
-    if not REBATE["rounds"]:
+    if not any(ch["rounds"] for ch in REBATE["chains"]):
         return (f'      <div class="empty">\n'
                 f'        <div class="empty-t">{t["empty_t"]}</div>\n'
                 f'        <p>{t["empty_d"]}</p>\n'
                 f'      </div>')
-    rows = "".join(
-        f'<tr><td>{r["round"]}</td>'
-        f'<td>{r["week"]["start"]} → {r["week"]["end"]}</td>'
-        f'<td>{_tia(r["commission_withdrawn"])}</td>'
-        f'<td>{_tia(r["distributed"])}</td>'
-        f'<td>{r["recipients"]}</td>'
-        f'<td><a href="https://celenium.io/tx/{r["withdraw_tx"]}" target="_blank" '
-        f'rel="noopener">tx</a> · '
-        f'<a href="https://celenium.io/tx/{r["distribute_tx"]}" target="_blank" '
-        f'rel="noopener">tx</a></td></tr>'
-        for r in REBATE["rounds"])
-    return (f'      <div class="tbl-wrap">\n        <table>\n'
+    out = []
+    for ch in REBATE["chains"]:
+        if not ch["rounds"]:
+            continue
+        rows = "".join(
+            f'<tr><td>{r["round"]}</td>'
+            f'<td>{r["week"]["start"]} → {r["week"]["end"]}</td>'
+            f'<td>{_amt(r["commission_withdrawn"], ch)}</td>'
+            f'<td>{_amt(r["distributed"], ch)}</td>'
+            f'<td>{r["recipients"]}</td>'
+            f'<td><a href="{ch["explorer_tx"]}{r["withdraw_tx"]}" target="_blank" '
+            f'rel="noopener">tx</a> · '
+            f'<a href="{ch["explorer_tx"]}{r["distribute_tx"]}" target="_blank" '
+            f'rel="noopener">tx</a></td></tr>'
+            for r in ch["rounds"])
+        out.append(
+            f'      <p class="rb-chain"><b>{ch["label"]}</b> · {ch["denom"]}</p>\n'
+            f'      <div class="tbl-wrap">\n        <table>\n'
             f'          <thead><tr>'
             + "".join(f"<th>{h}</th>" for h in t["head"]) +
             f'</tr></thead>\n          <tbody>{rows}</tbody>\n'
             f'        </table>\n      </div>')
+    return "\n".join(out)
 
 
 def rebate_html(key):
@@ -1278,7 +1312,8 @@ def rebate_html(key):
     c = CONTENT[key]
     p = dict(c["rebate"])
     p["sections"] = [
-        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c)) for x in s[1]])
+        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c))
+                 .replace("{{RATES}}", rebate_rates(c)) for x in s[1]])
         for s in p["sections"]]
     return postmortem_html(key, {"slug": "rebate", key: p}, kind="rebate",
                            path="/rebate/")

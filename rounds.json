@@ -1,23 +1,40 @@
 {
   "program": "DURE Nodes weekly commission rebate",
   "docs": "https://durenodes.com/rebate/",
-  "chain": "celestia",
-  "network": "celestia",
-  "valoper": "celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
-  "payer": "celestia188d40wvjvlgl27pt3l433pq8vrj4g6249ye36x",
-  "denom": "utia",
-  "exponent": 6,
   "share_pct": 40,
-  "min_delegation": "100000000",
-  "min_payout": "1000",
-  "snapshot": "hourly; each day's basis is the earliest snapshot of that day",
   "round": "Monday to Sunday, seven daily bases",
   "basis": "lowest balance across the round; a missing day makes it zero",
   "denominator": "total stake, including self-delegation and any foundation delegation",
-  "excluded_from_payout": [
-    "celestia188d40wvjvlgl27pt3l433pq8vrj4g6249ye36x"
-  ],
   "first_settlement": "2026-08-23",
   "updated": "2026-08-16",
-  "rounds": []
+  "chains": [
+    {
+      "id": "celestia-mainnet",
+      "label": "Celestia",
+      "denom": "TIA",
+      "denom_base": "utia",
+      "exponent": 6,
+      "commission_pct": 20,
+      "min_delegation": "100000000",
+      "valoper": "celestiavaloper188d40wvjvlgl27pt3l433pq8vrj4g624qmmgvq",
+      "payer": "celestia188d40wvjvlgl27pt3l433pq8vrj4g6249ye36x",
+      "explorer_tx": "https://celenium.io/tx/",
+      "rounds": [],
+      "weekly_per_1000": "0.082"
+    },
+    {
+      "id": "cosmoshub-mainnet",
+      "label": "Cosmos Hub",
+      "denom": "ATOM",
+      "denom_base": "uatom",
+      "exponent": 6,
+      "commission_pct": 5,
+      "min_delegation": "100000000",
+      "valoper": "cosmosvaloper18g6vu6qn3qdm2wttwpcyr8638usjw5s38f3wdm",
+      "payer": "cosmos18g6vu6qn3qdm2wttwpcyr8638usjw5s3za9mpg",
+      "explorer_tx": "https://www.mintscan.io/cosmos/tx/",
+      "rounds": [],
+      "weekly_per_1000": "0.059"
+    }
+  ]
 }
