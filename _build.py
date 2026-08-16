@@ -548,7 +548,7 @@ CONTENT = {
           'happen, and charge <b>each chain\'s minimum commission</b>. Everything we open is '
           '<a href="#services">free to use</a>.'),
     nav=dict(home="HOME", networks="NETWORKS", services="SERVICES", status="STATUS",
-             log="LOGS", guides="GUIDES", delegate="DELEGATE"),
+             log="LOGS", guides="GUIDES", rebate="REBATE", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="PUBLIC SERVICES · LIVE",
     stat_incidents="INCIDENTS ON RECORD",
@@ -588,11 +588,83 @@ CONTENT = {
                "RANK = position in the active set",
                "testnet tokens have no value"],
     door_go="View \u2192",
+    door_rebate_t="40% of commission, back every week",
+    door_rebate_d="How your share is worked out, and the transaction hashes for "
+                  "every round that has been paid.",
     door_log_t="Every incident, with the cause",
     door_log_d="Signing outages, what caused them, and what we changed. "
                "Nothing is removed once posted.",
     door_guides_t="Notes from running the nodes",
     door_guides_d="What the official documentation does not cover.",
+    rebate=dict(
+        title="Commission rebate | DURE",
+        h1="Commission rebate",
+        desc="We return 40% of the commission your delegation earns on Celestia mainnet, "
+             "every week. Every round publishes the withdrawal and the payout on chain.",
+        kicker="REBATE",
+        lede="We return 40% of the commission your delegation earns, every week. Each "
+             "round we publish the withdrawal and the payout, so you can recompute the "
+             "figure instead of trusting it.",
+        meta=[("SHARE", "40% of commission"), ("SCHEDULE", "Weekly \u00b7 Sunday"),
+              ("MINIMUM", "100 TIA"), ("FIRST ROUND", "23 Aug 2026")],
+        back="\u2190 durenodes.com",
+        sections=[
+            ("What you get", [
+                "<p>Each wallet is paid <b>40% of the commission its own delegation "
+                "generated</b>. What you get does not depend on how many other people "
+                "join, or on how much anyone else delegated.</p>",
+                "<pre>payout = your stake \u00d7 staking APR \u00d7 20% commission \u00d7 40%</pre>",
+                "<p>At today\u2019s rate that is about <b>0.082 TIA a week per 1,000 TIA</b> "
+                "delegated. Our commission is 20%, the network minimum, and we are not "
+                "raising it.</p>",
+                "<p>Our own self-delegation is excluded from payout, and so is a foundation "
+                "delegation if we ever receive one. That commission stays with the node \u2014 "
+                "and because your share is worked out from your own stake, it never changes "
+                "what you get.</p>",
+            ]),
+            ("How a round is measured", [
+                "<p>We snapshot every delegation <b>once an hour</b>. A day\u2019s basis is the "
+                "earliest snapshot of that day, at 00:00 UTC. The other hours are slack, not "
+                "precision \u2014 if the 00:00 read fails, 01:00 covers the day.</p>",
+                "<p>A round runs <b>Monday to Sunday</b>: seven days, one basis each. Your "
+                "basis for the round is the <b>lowest</b> of those seven.</p>",
+                "<p><b>Miss any of the seven days and the round pays nothing.</b> Delegating "
+                "just before a snapshot and leaving right after earns zero. The price of that "
+                "rule is that delegating mid-week pays nothing until the following Monday.</p>",
+                "<p>The minimum to qualify is <b>100 TIA</b>, measured on that lowest balance. "
+                "If a whole day of snapshots is lost we skip the round and roll it into the "
+                "next one rather than compute it from what happens to be there.</p>",
+            ]),
+            ("Check it yourself", [
+                "<p>Every round publishes two transaction hashes \u2014 the commission "
+                "withdrawal and the payout. Both are on chain, so \u201c40%\u201d is something "
+                "you can recompute rather than a claim you have to accept.</p>",
+                "<p>The same figures are served as JSON at <a href=\"/rounds.json\">"
+                "/rounds.json</a>, so you do not have to scrape this page.</p>",
+                "<p>One thing to watch when you check: the withdrawal carries two amounts. "
+                "<code>withdraw_commission</code> is the commission, and it is the only part "
+                "shared. <code>withdraw_rewards</code> is the staking reward on our own "
+                "self-delegation and is not.</p>",
+            ]),
+            ("Rounds", ["{{ROUNDS}}"]),
+            ("What this is not", [
+                "<p>These are small amounts. This is a record, not a yield product. It scales "
+                "with what you delegate, and the rules do not change.</p>",
+                "<p>We do not quote an APR. Inflation and the bonded ratio move every block, "
+                "so any yield figure printed here would be wrong by the time you read it. "
+                "\u201c40% of commission\u201d stays true.</p>",
+                "<p>We stop, and say why, if we miss two settlements in a row, if a published "
+                "figure ever fails to match what was paid, or if we fall out of the active set "
+                "and there is no commission to share. It will not go quiet.</p>",
+            ]),
+        ],
+    ),
+    rebate_tbl=dict(
+        head=["ROUND", "WEEK", "COMMISSION", "DISTRIBUTED", "PAID TO", "PROOF"],
+        empty_t="No rounds settled yet",
+        empty_d="The first settlement is 23 August 2026. Every round appears here with "
+                "both transaction hashes as soon as it is paid.",
+    ),
     log_page=dict(
         title="Incident log | DURE",
         h1="Incident log",
@@ -642,6 +714,8 @@ CONTENT = {
                  "has been short. Outages happen eventually, and when they do the cause and the fix "
                  "go here. We do not delete them."),
     sec_delegate="Delegation",
+    delegate_rebate="We return 40% of the commission your delegation earns, every week, "
+                    "and publish both transactions for each round.",
     val_min="· NETWORK MINIMUM",
     val_since="SINCE",
     btn_keplr="Delegate with Keplr",
@@ -664,7 +738,7 @@ CONTENT = {
           '올리고, 장애는 생기는 대로 적습니다. 수수료는 <b>각 체인이 허용하는 최소값</b>으로 '
           '받고, 여는 서비스는 <a href="#services">모두 무료</a>입니다.'),
     nav=dict(home="HOME", networks="NETWORKS", services="SERVICES", status="STATUS",
-             log="LOGS", guides="GUIDES", delegate="DELEGATE"),
+             log="LOGS", guides="GUIDES", rebate="REBATE", delegate="DELEGATE"),
     stat_networks="NETWORKS",
     stat_slashing="SLASHING · JAIL", stat_services="공개 서비스 · 제공 중",
     stat_incidents="기록된 장애",
@@ -705,10 +779,76 @@ CONTENT = {
                "RANK = 액티브 셋 내 순위",
                "테스트넷 토큰은 가치가 없습니다"],
     door_go="보기 \u2192",
+    door_rebate_t="커미션의 40%, 매주 돌려드립니다",
+    door_rebate_d="지급액이 어떻게 정해지는지, 그리고 지급이 끝난 회차의 트랜잭션 해시.",
     door_log_t="장애 전부, 원인까지",
     door_log_d="서명이 멈춘 장애와 그 원인, 그리고 바꾼 것. 올린 뒤에는 지우지 않습니다.",
     door_guides_t="노드를 돌리며 남긴 기록",
     door_guides_d="공식 문서에 없는 것들입니다.",
+    rebate=dict(
+        title="커미션 리베이트 | DURE",
+        h1="커미션 리베이트",
+        desc="셀레스티아 메인넷에 위임하시면 그 위임이 만든 커미션의 40%를 매주 돌려드립니다. "
+             "회차마다 인출과 지급 트랜잭션을 함께 공개합니다.",
+        kicker="리베이트",
+        lede="위임이 만든 커미션의 40%를 매주 돌려드립니다. 회차마다 인출 트랜잭션과 지급 "
+             "트랜잭션을 공개하므로, 저희 말을 믿는 대신 직접 계산해 확인하실 수 있습니다.",
+        meta=[("비율", "커미션의 40%"), ("주기", "매주 \u00b7 일요일"),
+              ("최소", "100 TIA"), ("첫 회차", "2026-08-23")],
+        back="\u2190 durenodes.com",
+        sections=[
+            ("무엇을 받으시나", [
+                "<p>각 지갑은 <b>본인 위임이 만든 커미션의 40%</b>를 받습니다. 참여자가 몇 명인지, "
+                "다른 분이 얼마를 위임했는지와 무관합니다.</p>",
+                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 20% \u00d7 40%</pre>",
+                "<p>현재 요율로 <b>1,000 TIA 당 주 약 0.082 TIA</b> 입니다. 저희 커미션은 네트워크 "
+                "최소값인 20% 이고 올리지 않습니다.</p>",
+                "<p>저희 자기위임은 지급 대상이 아니며, 재단 위임을 받게 되어도 마찬가지입니다. "
+                "그 커미션은 노드가 가집니다 \u2014 지급액이 본인 위임량으로만 정해지므로, "
+                "그것이 여러분 몫을 바꾸지 않습니다.</p>",
+            ]),
+            ("회차는 어떻게 세나", [
+                "<p>위임 현황을 <b>한 시간에 한 번</b> 기록합니다. 하루의 기준값은 그 날 가장 이른 "
+                "것, 즉 00:00 UTC(09:00 KST)에 가장 가까운 스냅샷입니다. 나머지 시간대는 정밀도가 "
+                "아니라 여유분입니다 \u2014 00시 조회가 실패해도 01시가 그 날을 메웁니다.</p>",
+                "<p>회차는 <b>월요일부터 일요일까지</b> 이고, 7일 각각에 기준값이 하나씩 있습니다. "
+                "그 중 <b>가장 낮은 값</b>이 회차 기준이 됩니다.</p>",
+                "<p><b>7일 중 하루라도 빠지면 그 회차는 0입니다.</b> 스냅샷 직전에 위임했다가 직후에 "
+                "빼는 방식으로는 아무것도 받지 못합니다. 대신 주중에 새로 위임하시면 다음 월요일까지는 "
+                "지급이 없습니다.</p>",
+                "<p>참가 자격은 그 최저값 기준 <b>100 TIA 이상</b> 입니다. 하루치 스냅샷이 통째로 "
+                "사라지면 남은 것으로 계산하지 않고 그 회차를 건너뛰어 다음 회차에 합산합니다.</p>",
+            ]),
+            ("직접 확인하시는 방법", [
+                "<p>회차마다 트랜잭션 해시 두 개를 공개합니다 \u2014 커미션 인출과 지급입니다. "
+                "둘 다 온체인에 있으므로 \u201c40%\u201d는 받아들여야 하는 주장이 아니라 "
+                "다시 계산해 볼 수 있는 값입니다.</p>",
+                "<p>같은 수치를 <a href=\"/rounds.json\">/rounds.json</a> 으로도 제공합니다. "
+                "이 페이지를 긁을 필요가 없습니다.</p>",
+                "<p>확인하실 때 한 가지 \u2014 인출 트랜잭션에는 금액이 둘 찍힙니다. "
+                "<code>withdraw_commission</code> 이 커미션이고 분배 대상은 이것뿐입니다. "
+                "<code>withdraw_rewards</code> 는 저희 자기위임의 스테이킹 보상이라 해당하지 "
+                "않습니다.</p>",
+            ]),
+            ("회차 기록", ["{{ROUNDS}}"]),
+            ("이건 아닙니다", [
+                "<p>금액은 작습니다. 수익 상품이 아니라 기록입니다. 위임하신 만큼 커지고, "
+                "규칙은 바뀌지 않습니다.</p>",
+                "<p>APR 을 적지 않습니다. 인플레이션과 본딩 비율이 블록마다 움직여서, 여기 적은 "
+                "수익률은 읽으시는 시점에 이미 틀린 값이 됩니다. \u201c커미션의 40%\u201d 는 "
+                "언제나 참입니다.</p>",
+                "<p>정산을 두 번 연속 건너뛰거나, 공개한 수치가 실제 지급과 어긋나거나, 액티브 셋에서 "
+                "밀려나 나눌 커미션이 없어지면 <b>중단하고 그 이유를 밝힙니다.</b> 조용히 사라지지 "
+                "않습니다.</p>",
+            ]),
+        ],
+    ),
+    rebate_tbl=dict(
+        head=["회차", "기간", "인출 커미션", "지급액", "수령", "근거"],
+        empty_t="아직 정산된 회차가 없습니다",
+        empty_d="첫 정산은 2026년 8월 23일입니다. 지급이 끝나는 대로 모든 회차가 트랜잭션 해시 "
+                "두 개와 함께 여기 올라옵니다.",
+    ),
     log_page=dict(
         title="장애 기록 | DURE",
         h1="장애 기록",
@@ -757,6 +897,8 @@ CONTENT = {
                  "짧다는 뜻입니다. 장애는 결국 생기고, 생기면 원인과 조치를 여기에 그대로 "
                  "적습니다. 지우지 않습니다."),
     sec_delegate="위임 안내",
+    delegate_rebate="위임이 만든 커미션의 40%를 매주 돌려드리고, 회차마다 트랜잭션 두 건을 "
+                    "함께 공개합니다.",
     val_min="· 네트워크 최소",
     val_since="SINCE",
     btn_keplr="Keplr로 위임",
@@ -881,6 +1023,7 @@ def nav_html(c, key, landing=False):
         f'<a href="{home}"{here}>{n["home"]}</a>',
         f'<a href="{pre}/incidents/">{n["log"]}</a>',
         f'<a href="{pre}/guides/">{n["guides"]}</a>',
+        f'<a href="{pre}/rebate/">{n["rebate"]}</a>',
     ))
 
 
@@ -1030,16 +1173,17 @@ def delegate_cards(c):
     return "\n".join(out)
 
 
-def postmortem_html(key, pm, kind="incidents"):
+def postmortem_html(key, pm, kind="incidents", path=None):
     """Incident detail page. Same shell as the landing page, only the body differs.
 
-    `kind` lets this serve /incidents/ and /guides/ alike. Duplicating the shell
-    means fixing one side and forgetting the other — the copy has drifted before.
+    `kind` lets this serve /incidents/, /guides/ and /rebate/ alike. Duplicating
+    the shell means fixing one side and forgetting the other — the copy has
+    drifted before. `path` is for pages that are not `<kind>/<slug>/`.
     """
     c = CONTENT[key]
     p = pm[key]
     css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
-    path = f"/{kind}/{pm['slug']}/"
+    path = path or f"/{kind}/{pm['slug']}/"
     pre = "/ko" if key == "ko" else ""
     canonical = SITE + ("/ko" if key == "ko" else "") + path
     alt = ("/ko" if key == "en" else "") + path if key == "en" else path
@@ -1058,9 +1202,9 @@ def postmortem_html(key, pm, kind="incidents"):
 <title>{p["title"]}</title>
 <meta name="description" content="{p["desc"]}">
 <link rel="canonical" href="{canonical}">
-<link rel="alternate" hreflang="en" href="{SITE}/{kind}/{pm["slug"]}/">
-<link rel="alternate" hreflang="ko" href="{SITE}/ko/{kind}/{pm["slug"]}/">
-<link rel="alternate" hreflang="x-default" href="{SITE}/{kind}/{pm["slug"]}/">
+<link rel="alternate" hreflang="en" href="{SITE}{path}">
+<link rel="alternate" hreflang="ko" href="{SITE}/ko{path}">
+<link rel="alternate" hreflang="x-default" href="{SITE}{path}">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/icon-256.png">
 <meta name="theme-color" content="#0D0F0C">
@@ -1137,6 +1281,55 @@ def postmortem_html(key, pm, kind="incidents"):
 def guide_html(key, g):
     """Guide page. Same shell as a postmortem; only the path changes to /guides/."""
     return postmortem_html(key, g, kind="guides")
+
+
+# ── rebate ────────────────────────────────────────────────────────────────────
+# rounds.json is the source. It ships as-is at /rounds.json, so anyone can read
+# the same figures this page is built from without scraping the HTML.
+
+REBATE = json.loads((HERE / "rounds.json").read_text(encoding="utf-8"))
+
+
+def _tia(units, places=6):
+    return f"{int(units) / 10 ** REBATE['exponent']:,.{places}f}"
+
+
+def rounds_table(c):
+    """The round ledger. Empty until the first settlement, and it says so —
+    an empty table is the honest state, not a reason to hide the page."""
+    t = c["rebate_tbl"]
+    if not REBATE["rounds"]:
+        return (f'      <div class="empty">\n'
+                f'        <div class="empty-t">{t["empty_t"]}</div>\n'
+                f'        <p>{t["empty_d"]}</p>\n'
+                f'      </div>')
+    rows = "".join(
+        f'<tr><td>{r["round"]}</td>'
+        f'<td>{r["week"]["start"]} → {r["week"]["end"]}</td>'
+        f'<td>{_tia(r["commission_withdrawn"])}</td>'
+        f'<td>{_tia(r["distributed"])}</td>'
+        f'<td>{r["recipients"]}</td>'
+        f'<td><a href="https://celenium.io/tx/{r["withdraw_tx"]}" target="_blank" '
+        f'rel="noopener">tx</a> · '
+        f'<a href="https://celenium.io/tx/{r["distribute_tx"]}" target="_blank" '
+        f'rel="noopener">tx</a></td></tr>'
+        for r in REBATE["rounds"])
+    return (f'      <div class="tbl-wrap">\n        <table>\n'
+            f'          <thead><tr>'
+            + "".join(f"<th>{h}</th>" for h in t["head"]) +
+            f'</tr></thead>\n          <tbody>{rows}</tbody>\n'
+            f'        </table>\n      </div>')
+
+
+def rebate_html(key):
+    """/rebate/ — the rules, and the ledger of what was actually paid."""
+    c = CONTENT[key]
+    p = dict(c["rebate"])
+    p["sections"] = [
+        (s[0], [x.replace("{{ROUNDS}}", rounds_table(c)) for x in s[1]])
+        for s in p["sections"]]
+    return postmortem_html(key, {"slug": "rebate", key: p}, kind="rebate",
+                           path="/rebate/")
 
 
 def build(key):
@@ -1290,6 +1483,7 @@ def build(key):
     <div class="wrap">
       <div class="sec-head"><h2>DELEGATE</h2><span class="sec-sub">{c["sec_delegate"]}</span></div>
 {delegate_cards(c)}
+      <p class="note">{c["delegate_rebate"]} <a href="{pre}/rebate/">{c["nav"]["rebate"]}</a></p>
     </div>
   </section>
 
@@ -1308,6 +1502,12 @@ def build(key):
           <div class="door-k">{c["nav"]["guides"]}</div>
           <div class="door-t">{c["door_guides_t"]}</div>
           <p class="door-d">{c["door_guides_d"]}</p>
+          <span class="door-go">{c["door_go"]}</span>
+        </a>
+        <a class="door" href="{pre}/rebate/">
+          <div class="door-k">{c["nav"]["rebate"]}</div>
+          <div class="door-t">{c["door_rebate_t"]}</div>
+          <p class="door-d">{c["door_rebate_d"]}</p>
           <span class="door-go">{c["door_go"]}</span>
         </a>
       </div>
@@ -1365,6 +1565,12 @@ def main():
             (d / "index.html").write_text(index_page(key, kind), encoding="utf-8")
             written.append(str((d / "index.html").relative_to(HERE)))
 
+    for key in ("en", "ko"):
+        d = HERE / ("ko" if key == "ko" else ".") / "rebate"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(rebate_html(key), encoding="utf-8")
+        written.append(str((d / "index.html").relative_to(HERE)))
+
     for kind, items in (("incidents", POSTMORTEMS), ("guides", GUIDES)):
         for pm in items:
             for key in ("en", "ko"):
@@ -1385,7 +1591,9 @@ def main():
     <xhtml:link rel="alternate" hreflang="ko" href="{SITE}/ko/{kind}/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/{kind}/"/>
   </url>"""
-        for kind, last in (("incidents", POSTMORTEMS[0]["date"]), ("guides", GUIDES[0]["date"]))
+        for kind, last in (("incidents", POSTMORTEMS[0]["date"]),
+                           ("guides", GUIDES[0]["date"]),
+                           ("rebate", REBATE["updated"]))
         for pre in ("", "/ko"))
 
     pm_urls = "\n".join(
@@ -1421,7 +1629,8 @@ def main():
 </urlset>
 ''', encoding="utf-8")
 
-    for f in ["index.html", "ko/index.html", "robots.txt", "sitemap.xml"] + written:
+    for f in ["index.html", "ko/index.html", "robots.txt", "sitemap.xml",
+              "rounds.json"] + written:
         print(f"  {f:<20} {os.path.getsize(HERE / f):>7,} bytes")
 
     return 0
