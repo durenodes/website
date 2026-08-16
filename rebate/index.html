@@ -309,28 +309,18 @@ footer { border-top: 1px solid var(--line); }
   <section>
     <div class="wrap post">
       <h2>What you get</h2>
-      <p>Each wallet is paid <b>40% of the commission its own delegation generated</b>. What you get does not depend on how many other people join, or on how much anyone else delegated.</p>
-      <pre>payout = your stake × staking APR × 20% commission × 40%</pre>
-      <p>At today’s rate that is about <b>0.082 TIA a week per 1,000 TIA</b> delegated. Our commission is 20%, the network minimum, and we are not raising it.</p>
-      <p>Our own self-delegation is excluded from payout, and so is a foundation delegation if we ever receive one. That commission stays with the node — and because your share is worked out from your own stake, it never changes what you get.</p>
-      <h2>How a round is measured</h2>
-      <p>We snapshot every delegation <b>once an hour</b>. A day’s basis is the earliest snapshot of that day, at 00:00 UTC. The other hours are slack, not precision — if the 00:00 read fails, 01:00 covers the day.</p>
-      <p>A round runs <b>Monday to Sunday</b>: seven days, one basis each. Your basis for the round is the <b>lowest</b> of those seven.</p>
-      <p><b>Miss any of the seven days and the round pays nothing.</b> Delegating just before a snapshot and leaving right after earns zero. The price of that rule is that delegating mid-week pays nothing until the following Monday.</p>
-      <p>The minimum to qualify is <b>100 TIA</b>, measured on that lowest balance. If a whole day of snapshots is lost we skip the round and roll it into the next one rather than compute it from what happens to be there.</p>
-      <h2>Check it yourself</h2>
-      <p>Every round publishes two transaction hashes — the commission withdrawal and the payout. Both are on chain, so “40%” is something you can recompute rather than a claim you have to accept.</p>
-      <p>The same figures are served as JSON at <a href="/rounds.json">/rounds.json</a>, so you do not have to scrape this page.</p>
-      <p>One thing to watch when you check: the withdrawal carries two amounts. <code>withdraw_commission</code> is the commission, and it is the only part shared. <code>withdraw_rewards</code> is the staking reward on our own self-delegation and is not.</p>
+      <p>Delegate to us on Celestia mainnet and we return <b>40% of the commission your delegation earns</b>, every week. What you get depends on your own stake, not on how many others take part — about <b>0.082 TIA a week per 1,000 TIA</b> at today’s rate.</p>
+      <p>Our commission is 20%, the network minimum, and we are not raising it. These are small amounts: this is a record, not a yield product. If we stop, we will say why.</p>
       <h2>Rounds</h2>
             <div class="empty">
         <div class="empty-t">No rounds settled yet</div>
         <p>The first settlement is 23 August 2026. Every round appears here with both transaction hashes as soon as it is paid.</p>
       </div>
-      <h2>What this is not</h2>
-      <p>These are small amounts. This is a record, not a yield product. It scales with what you delegate, and the rules do not change.</p>
-      <p>We do not quote an APR. Inflation and the bonded ratio move every block, so any yield figure printed here would be wrong by the time you read it. “40% of commission” stays true.</p>
-      <p>We stop, and say why, if we miss two settlements in a row, if a published figure ever fails to match what was paid, or if we fall out of the active set and there is no commission to share. It will not go quiet.</p>
+      <p>Every round publishes two transactions — the commission withdrawal and the payout — so the 40% is something you can recompute rather than take on trust. The same figures are served as JSON at <a href="/rounds.json">/rounds.json</a>.</p>
+      <h2>How it is worked out</h2>
+      <pre>payout = your stake × staking APR × 20% commission × 40%</pre>
+      <p>A round runs <b>Monday to Sunday</b>, with one reading a day. Your basis for the round is the <b>lowest</b> of those seven.</p>
+      <p><b>Miss a day and the round pays nothing.</b> Delegating just before a reading and leaving right after earns zero, and delegating mid-week pays from the following Monday.</p>
       <p class="pm-back"><a href="/">← durenodes.com</a></p>
     </div>
   </section>

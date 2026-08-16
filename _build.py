@@ -610,52 +610,28 @@ CONTENT = {
         back="\u2190 durenodes.com",
         sections=[
             ("What you get", [
-                "<p>Each wallet is paid <b>40% of the commission its own delegation "
-                "generated</b>. What you get does not depend on how many other people "
-                "join, or on how much anyone else delegated.</p>",
+                "<p>Delegate to us on Celestia mainnet and we return <b>40% of the "
+                "commission your delegation earns</b>, every week. What you get depends "
+                "on your own stake, not on how many others take part \u2014 about "
+                "<b>0.082 TIA a week per 1,000 TIA</b> at today\u2019s rate.</p>",
+                "<p>Our commission is 20%, the network minimum, and we are not raising "
+                "it. These are small amounts: this is a record, not a yield product. "
+                "If we stop, we will say why.</p>",
+            ]),
+            ("Rounds", [
+                "{{ROUNDS}}",
+                "<p>Every round publishes two transactions \u2014 the commission "
+                "withdrawal and the payout \u2014 so the 40% is something you can "
+                "recompute rather than take on trust. The same figures are served as "
+                "JSON at <a href=\"/rounds.json\">/rounds.json</a>.</p>",
+            ]),
+            ("How it is worked out", [
                 "<pre>payout = your stake \u00d7 staking APR \u00d7 20% commission \u00d7 40%</pre>",
-                "<p>At today\u2019s rate that is about <b>0.082 TIA a week per 1,000 TIA</b> "
-                "delegated. Our commission is 20%, the network minimum, and we are not "
-                "raising it.</p>",
-                "<p>Our own self-delegation is excluded from payout, and so is a foundation "
-                "delegation if we ever receive one. That commission stays with the node \u2014 "
-                "and because your share is worked out from your own stake, it never changes "
-                "what you get.</p>",
-            ]),
-            ("How a round is measured", [
-                "<p>We snapshot every delegation <b>once an hour</b>. A day\u2019s basis is the "
-                "earliest snapshot of that day, at 00:00 UTC. The other hours are slack, not "
-                "precision \u2014 if the 00:00 read fails, 01:00 covers the day.</p>",
-                "<p>A round runs <b>Monday to Sunday</b>: seven days, one basis each. Your "
+                "<p>A round runs <b>Monday to Sunday</b>, with one reading a day. Your "
                 "basis for the round is the <b>lowest</b> of those seven.</p>",
-                "<p><b>Miss any of the seven days and the round pays nothing.</b> Delegating "
-                "just before a snapshot and leaving right after earns zero. The price of that "
-                "rule is that delegating mid-week pays nothing until the following Monday.</p>",
-                "<p>The minimum to qualify is <b>100 TIA</b>, measured on that lowest balance. "
-                "If a whole day of snapshots is lost we skip the round and roll it into the "
-                "next one rather than compute it from what happens to be there.</p>",
-            ]),
-            ("Check it yourself", [
-                "<p>Every round publishes two transaction hashes \u2014 the commission "
-                "withdrawal and the payout. Both are on chain, so \u201c40%\u201d is something "
-                "you can recompute rather than a claim you have to accept.</p>",
-                "<p>The same figures are served as JSON at <a href=\"/rounds.json\">"
-                "/rounds.json</a>, so you do not have to scrape this page.</p>",
-                "<p>One thing to watch when you check: the withdrawal carries two amounts. "
-                "<code>withdraw_commission</code> is the commission, and it is the only part "
-                "shared. <code>withdraw_rewards</code> is the staking reward on our own "
-                "self-delegation and is not.</p>",
-            ]),
-            ("Rounds", ["{{ROUNDS}}"]),
-            ("What this is not", [
-                "<p>These are small amounts. This is a record, not a yield product. It scales "
-                "with what you delegate, and the rules do not change.</p>",
-                "<p>We do not quote an APR. Inflation and the bonded ratio move every block, "
-                "so any yield figure printed here would be wrong by the time you read it. "
-                "\u201c40% of commission\u201d stays true.</p>",
-                "<p>We stop, and say why, if we miss two settlements in a row, if a published "
-                "figure ever fails to match what was paid, or if we fall out of the active set "
-                "and there is no commission to share. It will not go quiet.</p>",
+                "<p><b>Miss a day and the round pays nothing.</b> Delegating just before "
+                "a reading and leaving right after earns zero, and delegating mid-week "
+                "pays from the following Monday.</p>",
             ]),
         ],
     ),
@@ -798,48 +774,24 @@ CONTENT = {
         back="\u2190 durenodes.com",
         sections=[
             ("무엇을 받으시나", [
-                "<p>각 지갑은 <b>본인 위임이 만든 커미션의 40%</b>를 받습니다. 참여자가 몇 명인지, "
-                "다른 분이 얼마를 위임했는지와 무관합니다.</p>",
+                "<p>셀레스티아 메인넷에 위임하시면 <b>그 위임이 만든 커미션의 40%</b>를 매주 "
+                "돌려드립니다. 받는 금액은 본인 위임량으로 정해지고 참여자 수와 무관합니다 \u2014 "
+                "현재 요율로 <b>1,000 TIA 당 주 약 0.082 TIA</b> 입니다.</p>",
+                "<p>저희 커미션은 네트워크 최소값인 20% 이고 올리지 않습니다. 금액은 작습니다. "
+                "수익 상품이 아니라 기록입니다. 중단하게 되면 그 이유를 밝힙니다.</p>",
+            ]),
+            ("회차 기록", [
+                "{{ROUNDS}}",
+                "<p>회차마다 트랜잭션 두 건을 공개합니다 \u2014 커미션 인출과 지급입니다. "
+                "그래서 40% 는 믿어야 하는 말이 아니라 직접 계산해 볼 수 있는 값입니다. "
+                "같은 수치를 <a href=\"/rounds.json\">/rounds.json</a> 으로도 제공합니다.</p>",
+            ]),
+            ("어떻게 계산하나", [
                 "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 20% \u00d7 40%</pre>",
-                "<p>현재 요율로 <b>1,000 TIA 당 주 약 0.082 TIA</b> 입니다. 저희 커미션은 네트워크 "
-                "최소값인 20% 이고 올리지 않습니다.</p>",
-                "<p>저희 자기위임은 지급 대상이 아니며, 재단 위임을 받게 되어도 마찬가지입니다. "
-                "그 커미션은 노드가 가집니다 \u2014 지급액이 본인 위임량으로만 정해지므로, "
-                "그것이 여러분 몫을 바꾸지 않습니다.</p>",
-            ]),
-            ("회차는 어떻게 세나", [
-                "<p>위임 현황을 <b>한 시간에 한 번</b> 기록합니다. 하루의 기준값은 그 날 가장 이른 "
-                "것, 즉 00:00 UTC(09:00 KST)에 가장 가까운 스냅샷입니다. 나머지 시간대는 정밀도가 "
-                "아니라 여유분입니다 \u2014 00시 조회가 실패해도 01시가 그 날을 메웁니다.</p>",
-                "<p>회차는 <b>월요일부터 일요일까지</b> 이고, 7일 각각에 기준값이 하나씩 있습니다. "
-                "그 중 <b>가장 낮은 값</b>이 회차 기준이 됩니다.</p>",
-                "<p><b>7일 중 하루라도 빠지면 그 회차는 0입니다.</b> 스냅샷 직전에 위임했다가 직후에 "
-                "빼는 방식으로는 아무것도 받지 못합니다. 대신 주중에 새로 위임하시면 다음 월요일까지는 "
-                "지급이 없습니다.</p>",
-                "<p>참가 자격은 그 최저값 기준 <b>100 TIA 이상</b> 입니다. 하루치 스냅샷이 통째로 "
-                "사라지면 남은 것으로 계산하지 않고 그 회차를 건너뛰어 다음 회차에 합산합니다.</p>",
-            ]),
-            ("직접 확인하시는 방법", [
-                "<p>회차마다 트랜잭션 해시 두 개를 공개합니다 \u2014 커미션 인출과 지급입니다. "
-                "둘 다 온체인에 있으므로 \u201c40%\u201d는 받아들여야 하는 주장이 아니라 "
-                "다시 계산해 볼 수 있는 값입니다.</p>",
-                "<p>같은 수치를 <a href=\"/rounds.json\">/rounds.json</a> 으로도 제공합니다. "
-                "이 페이지를 긁을 필요가 없습니다.</p>",
-                "<p>확인하실 때 한 가지 \u2014 인출 트랜잭션에는 금액이 둘 찍힙니다. "
-                "<code>withdraw_commission</code> 이 커미션이고 분배 대상은 이것뿐입니다. "
-                "<code>withdraw_rewards</code> 는 저희 자기위임의 스테이킹 보상이라 해당하지 "
-                "않습니다.</p>",
-            ]),
-            ("회차 기록", ["{{ROUNDS}}"]),
-            ("이건 아닙니다", [
-                "<p>금액은 작습니다. 수익 상품이 아니라 기록입니다. 위임하신 만큼 커지고, "
-                "규칙은 바뀌지 않습니다.</p>",
-                "<p>APR 을 적지 않습니다. 인플레이션과 본딩 비율이 블록마다 움직여서, 여기 적은 "
-                "수익률은 읽으시는 시점에 이미 틀린 값이 됩니다. \u201c커미션의 40%\u201d 는 "
-                "언제나 참입니다.</p>",
-                "<p>정산을 두 번 연속 건너뛰거나, 공개한 수치가 실제 지급과 어긋나거나, 액티브 셋에서 "
-                "밀려나 나눌 커미션이 없어지면 <b>중단하고 그 이유를 밝힙니다.</b> 조용히 사라지지 "
-                "않습니다.</p>",
+                "<p>회차는 <b>월요일부터 일요일까지</b> 이고 하루에 한 번 기록합니다. "
+                "그 7일 중 <b>가장 낮은 값</b>이 회차 기준이 됩니다.</p>",
+                "<p><b>하루라도 빠지면 그 회차는 0입니다.</b> 기록 직전에 위임했다가 직후에 "
+                "빼면 아무것도 받지 못하고, 주중에 새로 위임하시면 다음 월요일부터 지급됩니다.</p>",
             ]),
         ],
     ),
