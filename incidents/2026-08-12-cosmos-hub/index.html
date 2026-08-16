@@ -340,7 +340,6 @@ footer { border-top: 1px solid var(--line); }
       <p><b>Mainnet nodes run official release images. No self-built binaries.</b> Where the host architecture differs from the release, we run the official build under emulation — slower, and worth it. A slow node signs late; a wrong node cannot sign at all. Our Celestia nodes were never affected because they had used the official image from the start.</p>
       <p><b>Our monitoring alerted 65 minutes in, then went quiet for six hours.</b> Every rule fired as written — the rules were wrong. Alerting once per condition keeps people from muting notifications, but it meant the loudest moment of the incident was the quietest. Missed blocks went from 689 to 5,989 during that silence.</p>
       <p>So a halted node is now distinguished from one merely missing blocks: compare the rise in missed blocks against how far the chain moved. A ratio at or above 0.9 means we are signing nothing, and it lands in a single poll rather than waiting for a counter to look alarming. That alert repeats every poll for as long as the halt lasts, and a ladder at 25/50/75% of the jail threshold fires alongside it. Every alert now carries the projected jail time.</p>
-      <p>The monitor is public: <a href="https://github.com/durenodes/monitor" rel="noopener" target="_blank">github.com/durenodes/monitor</a>.</p>
       <p class="pm-back"><a href="/">← Back to durenodes.com</a></p>
     </div>
   </section>

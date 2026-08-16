@@ -1,5 +1,6 @@
-/* DURE — 공통 스타일. 각 HTML 의 <style> 에 인라인으로 복사됩니다.
-   빌드 과정이 없으므로 이 파일은 원본 보관용입니다. 수정 시 두 HTML 에 모두 반영하세요. */
+/* DURE — shared styles, inlined into the <style> block of each HTML file.
+   There is no build step for CSS, so this file is the source of record.
+   Any change here has to reach both HTML files. */
 
 :root {
   --bg: #0D0F0C;
@@ -146,7 +147,7 @@ tbody tr:last-child td { border-bottom: 0; }
 
 /* delegate */
 .val-card { border: 1px solid var(--line); background: var(--panel); padding: 14px 16px; margin-bottom: 16px; }
-/* 체인마다 카드 + 버튼 한 벌이 반복됩니다. 벌 사이는 띄우고 마지막은 붙입니다. */
+/* One card + button pair per chain. Space between pairs, none after the last. */
 #delegate .cta { margin-bottom: 30px; }
 #delegate .cta:last-child { margin-bottom: 0; }
 .val-label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--brass); font-weight: 500; margin-bottom: 7px; }
@@ -215,7 +216,7 @@ footer { border-top: 1px solid var(--line); }
 .post a:hover { color: var(--fg); }
 .pm-back { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; }
 
-/* 가이드 카드 — 장애 카드(.inc)와 같은 골격이되 링크 전체가 눌립니다. */
+/* Guide card — same frame as the incident card (.inc), but the whole card is the link. */
 .gd { display: block; border: 1px solid var(--line); background: var(--panel);
   padding: 16px 18px; border-left: 2px solid var(--brass); text-decoration: none; }
 .gd + .gd { margin-top: 1px; }
@@ -224,7 +225,8 @@ footer { border-top: 1px solid var(--line); }
 .gd-t { margin-top: 9px; font-size: 15px; color: var(--fg); line-height: 1.6; font-weight: 500; }
 .gd-d { margin: 8px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; max-width: 72ch; }
 
-/* 기록물 입구 — 랜딩에서 장애 기록·가이드 목록으로 나가는 두 문. */
+/* Archive entrances — the two doors off the landing page, to the incident log
+   and to the guide index. */
 .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
 @media (max-width: 720px) { .doors { grid-template-columns: 1fr; } }
 .door { display: block; border: 1px solid var(--line); background: var(--panel);
@@ -238,12 +240,12 @@ footer { border-top: 1px solid var(--line); }
 .door:hover .door-go { color: var(--fg); border-bottom-color: var(--fg); }
 .nav-here { color: var(--fg); }
 
-/* 좁은 화면에서는 헤더를 두 줄로 편다.
-   브랜드 + 언어 전환 + 메뉴가 한 줄에 들어가지 않아 GUIDES 가 잘리고
-   언어 버튼이 화면 밖으로 밀렸다. 폭을 줄여 맞추면 라벨이 길어질 때마다
-   다시 깨지므로, 줄을 나눠 항상 성립하게 둔다. */
+/* On narrow screens the header wraps onto two rows.
+   Brand + language switch + menu do not fit on one line: GUIDES was cut off and
+   the language button was pushed off screen. Shrinking things to fit breaks again
+   the moment a label gets longer, so we split the rows and it always holds. */
 @media (max-width: 560px) {
-  /* padding 축약을 쓰면 .wrap 의 좌우 여백까지 0 이 된다. 세로만 지정한다. */
+  /* The padding shorthand would zero out .wrap's side margins too. Vertical only. */
   .hdr-in { flex-wrap: wrap; height: auto; padding-top: 9px; padding-bottom: 9px; row-gap: 9px; }
   .brand { order: 1; }
   .lang { order: 2; margin-left: auto; }

@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
 """
-durenodes.com 정적 페이지 생성기.
+Static page generator for durenodes.com.
 
-_style.css 와 아래 CONTENT 를 단일 원본으로 삼아 index.html(EN) 과 ko/index.html(KO) 을
-생성합니다. 배포에는 빌드가 필요 없습니다 — 결과물을 커밋하면 Cloudflare Pages 가 그대로 서빙합니다.
+_style.css and the CONTENT table below are the single source for index.html (EN) and
+ko/index.html (KO). Deployment needs no build step — commit the output and Cloudflare
+Pages serves it as is.
 
     python3 _build.py
 
-수정할 때: 문구는 CONTENT, 스타일은 _style.css. HTML 을 직접 고치지 마세요. 덮어써집니다.
+To make changes: copy lives in CONTENT, styling in _style.css. Do not edit the HTML
+directly; it gets overwritten.
 """
 import os, re, json, pathlib, sys, datetime, urllib.request, concurrent.futures as _cf
 
 HERE = pathlib.Path(__file__).parent
 SITE = "https://durenodes.com"
 
-# ── 실측 데이터 ────────────────────────────────────────────────────────────────
-# 아래 값은 **빌드 시점에 온체인에서 다시 읽어 덮어씁니다** (fetch_onchain 참고).
-# 여기 적힌 것은 조회가 실패했을 때 쓰는 마지막 확인값입니다.
+# ── Measured data ─────────────────────────────────────────────────────────────
+# These values are **re-read from chain at build time and overwritten** (see
+# fetch_onchain). What is written here is the last confirmed value, used only when
+# the query fails.
 #
-# 직접 고치지 마세요. 값을 갱신하려면 `python3 _build.py` 를 실행하면 됩니다.
-# 자동 갱신: .github/workflows/refresh.yml 이 매일 실행합니다.
+# Do not edit by hand. To refresh, run `python3 _build.py`.
+# Automatic refresh: .github/workflows/refresh.yml runs daily.
 DATA = dict(
     as_of="2026-08-12",
     slashing="0",
@@ -29,23 +32,24 @@ DATA = dict(
     github="https://github.com/durenodes",
     x="https://x.com/durenodes",
     telegram="https://t.me/durenodes",
-    monitor="https://github.com/durenodes/monitor",
 )
 
-# ── 온체인 조회 ────────────────────────────────────────────────────────────────
-# 페이지가 "온체인에서 그대로 확인할 수 있는 값만 적는다"고 말하므로,
-# 실제로 그렇게 되도록 빌드 때마다 다시 읽습니다.
+# ── On-chain queries ──────────────────────────────────────────────────────────
+# The page says it only states values that can be checked on chain, so we re-read
+# them on every build to keep that true.
 #
-# 실패해도 빌드는 계속됩니다. 다만 그 경우 위 DATA 의 옛 값이 그대로 나가므로
-# 종료 코드 1 을 돌려주고, 워크플로가 이를 감지해 커밋하지 않습니다.
-# 낡은 값을 새 값인 척 배포하는 것보다 배포를 건너뛰는 편이 낫습니다.
+# A failed query does not stop the build. It does mean the stale DATA above would
+# go out, so we return exit code 1 and the workflow refuses to commit. Skipping a
+# deploy beats shipping old numbers dressed up as fresh ones.
 
-# 체인 하나의 정의가 네트워크 카드·상태표·통계·위임 카드를 **모두** 만듭니다.
-# 예전에는 네 곳을 따로 고쳐야 했고, 그래서 코스모스 허브 메인넷이 어디에도
-# 들어가지 않은 채로 배포돼 있었습니다. 추가할 곳이 하나면 빠뜨릴 수 없습니다.
+# One chain definition builds **all** of it — the network card, the status table,
+# the stats and the delegation card. This used to be four places, which is how
+# Cosmos Hub mainnet ended up deployed without appearing anywhere. One place to
+# add means nothing can be left out.
 #
-#   cap  — 합의에 참여하는 상한. 셀레스티아 100, 코스모스 허브 180 (본딩은 200).
-#          순위가 이 값에 가까우면 밀려날 위험이 있다는 뜻이라 그대로 보여줍니다.
+#   cap  — the ceiling on the active set: 100 on Celestia, 180 on Cosmos Hub
+#          (200 bonded). A rank close to this means we risk falling out of the
+#          set, so we show it as is.
 CHAINS = [
     dict(key="tia", cid="celestia", label="Celestia", tick="TIA", denom="TIA",
          kind="mainnet", window=10000, since="2026-07-31", cap=100, rank=True,
@@ -80,8 +84,9 @@ CHAINS = [
          valcons="cosmosvalcons1xzr5nr4pwhvupwx32z3s8s77znrtqrq4z2jsaq"),
 ]
 
-# 장애 기록. **지우지 않습니다.** 새 항목은 위에 붙입니다.
-# 원인을 모르면 모른다고 적습니다 — 빈 칸이나 그럴듯한 추정으로 채우지 마세요.
+# Incident log. **Nothing gets deleted.** New entries go on top.
+# If the cause is unknown, say so — do not leave it blank or fill it with a
+# plausible-sounding guess.
 INCIDENTS = [
     dict(id="2026-08-12-hub", date="2026-08-12", time="02:00 KST",
          chain="cosmoshub-4", dur="9h 29m", kind="outage", cause="arch", jailed=False, slashed=False),
@@ -180,9 +185,6 @@ POSTMORTEMS = [dict(
                 "for a counter to look alarming. That alert repeats every poll for as long as the "
                 "halt lasts, and a ladder at 25/50/75% of the jail threshold fires alongside it. "
                 "Every alert now carries the projected jail time.</p>",
-                "<p>The monitor is public: "
-                "<a href=\"https://github.com/durenodes/monitor\" rel=\"noopener\" target=\"_blank\">"
-                "github.com/durenodes/monitor</a>.</p>",
             ]),
         ],
         back="← Back to durenodes.com",
@@ -269,9 +271,6 @@ POSTMORTEMS = [dict(
                 "입니다. 카운터가 위협적으로 보일 때까지 기다리지 않고 <b>한 번의 폴링으로</b> "
                 "판정됩니다. 이 알림은 정지가 이어지는 동안 매 폴링마다 반복되고, jail 임계의 "
                 "25/50/75% 사다리가 함께 울립니다. 모든 알림에 예상 jail 시각이 붙습니다.</p>",
-                "<p>감시기는 공개돼 있습니다: "
-                "<a href=\"https://github.com/durenodes/monitor\" rel=\"noopener\" target=\"_blank\">"
-                "github.com/durenodes/monitor</a>.</p>",
             ]),
         ],
         back="← durenodes.com 으로",
@@ -279,8 +278,9 @@ POSTMORTEMS = [dict(
 )]
 
 
-# 가이드는 포스트모템과 같은 셸을 씁니다. 별도 저장소·서브도메인을 만들지 않는 이유는
-# 쪼개면 방치되기 때문입니다. 기준: 공식 문서에 없고, 우리가 밸리데이터라서 말할 수 있는 것.
+# Guides use the same shell as the postmortems. No separate repo or subdomain —
+# split off, they get abandoned. The bar: not covered by the official docs, and
+# something we can say because we run validators.
 GUIDES = [dict(
     slug="cosmostation-shutdown",
     date="2026-08-16",
@@ -439,14 +439,14 @@ def _get(url, timeout=12):
 
 
 def _first(apis, path):
-    """엔드포인트를 순서대로 시도합니다. 하나가 죽어도 빌드가 멈추지 않게."""
+    """Try the endpoints in order, so one dead host does not stop the build."""
     last = None
     for base in apis:
         try:
             return _get(base + path)
-        except Exception as e:      # noqa: BLE001 — 어떤 실패든 다음 엔드포인트로
+        except Exception as e:      # noqa: BLE001 — any failure moves to the next endpoint
             last = e
-    raise RuntimeError(f"모든 엔드포인트 실패: {path} ({last})")
+    raise RuntimeError(f"all endpoints failed: {path} ({last})")
 
 
 def _one(c):
@@ -456,9 +456,9 @@ def _one(c):
 
     rank = None
     if c["rank"]:
-        # 본딩된 밸리데이터를 스테이크 순으로 정렬해 우리 자리를 찾습니다.
-        # 코스모스 허브는 본딩 200 곳 중 상위 180 곳만 합의에 참여하므로,
-        # 분모는 본딩 수가 아니라 cap 입니다.
+        # Sort bonded validators by stake to find our position. On Cosmos Hub only
+        # the top 180 of 200 bonded validators take part in consensus, so the
+        # denominator is cap, not the bonded count.
         vs = _first(c["api"], "/cosmos/staking/v1beta1/validators"
                               "?pagination.limit=500&status=BOND_STATUS_BONDED")["validators"]
         vs.sort(key=lambda x: int(x["tokens"]), reverse=True)
@@ -485,12 +485,12 @@ LIVE: dict[str, dict] = {}
 
 
 def fetch_onchain():
-    """LIVE 를 온체인 현재값으로 채웁니다. 성공하면 True."""
+    """Fill LIVE with current on-chain values. Returns True on success."""
     try:
         with _cf.ThreadPoolExecutor(len(CHAINS)) as ex:
             got = dict(ex.map(_one, CHAINS))
     except Exception as e:          # noqa: BLE001
-        print(f"  온체인 조회 실패: {e}", file=sys.stderr)
+        print(f"  on-chain query failed: {e}", file=sys.stderr)
         return False
 
     LIVE.update(got)
@@ -499,23 +499,25 @@ def fetch_onchain():
     DATA["testnets"] = str(sum(1 for c in CHAINS if c["kind"] == "testnet"))
     DATA["incidents"] = str(len(INCIDENTS))
 
-    print("  온체인 조회 완료")
+    print("  on-chain query complete")
     for c in CHAINS:
         r = got[c["key"]]
         pos = f" · {r['rank']}/{c['cap']}" if r["rank"] else ""
-        print(f"    {c['cid']:<20} {r['stake']:>14} {c['denom']} · 커미션 {r['comm']}%"
-              f" · 미스 {r['missed']:,}/{r['window']:,} · {r['status']}{pos}")
+        print(f"    {c['cid']:<20} {r['stake']:>14} {c['denom']} · commission {r['comm']}%"
+              f" · missed {r['missed']:,}/{r['window']:,} · {r['status']}{pos}")
         if not r["bonded"] or r["jailed"]:
-            print(f"      경고: BONDED 가 아닙니다 (jailed={r['jailed']})", file=sys.stderr)
-        # 합의 셋 하위 5 자리 안으로 들어오면 빌드 로그에 남깁니다.
-        # 밀려나면 보상이 끊기는데 missed 로는 잡히지 않습니다.
+            print(f"      warning: not BONDED (jailed={r['jailed']})", file=sys.stderr)
+        # Log it at build time when we land in the bottom 5 of the active set.
+        # Falling out cuts rewards off, and missed blocks will not catch it.
         if r["rank"] and c["cap"] and r["rank"] > c["cap"] - 5:
-            print(f"      경고: 합의 셋 하위 {r['rank']}/{c['cap']} — 밀려날 수 있습니다", file=sys.stderr)
+            print(f"      warning: bottom of the active set at {r['rank']}/{c['cap']}"
+                  " — we could be pushed out", file=sys.stderr)
 
-    # 가동률은 **페이지에 싣지 않습니다.** missed_blocks_counter 는 누적이 아니라
-    # 최근 10,000블록(약 7.6시간) 롤링 윈도라, 이걸 "가동률"로 내걸면
-    # 방문자는 전체 기간 수치로 읽고 값은 하루에도 크게 출렁입니다.
-    # 대신 STATUS 표에 "미스 / 윈도" 를 그대로 적어 해석의 여지를 없앴습니다.
+    # Uptime is **not put on the page.** missed_blocks_counter is not cumulative; it
+    # is a rolling window over the last 10,000 blocks (~7.6 hours). Billing that as
+    # "uptime" would have visitors read it as a lifetime figure while the number
+    # swings hard within a single day. The STATUS table shows "missed / window"
+    # instead, which leaves nothing to misread.
     return True
 
 
@@ -616,9 +618,8 @@ CONTENT = {
         back="\u2190 durenodes.com",
     ),
     sec_log="We write down outages and what we did about them. We do not delete them.",
-    log_head=("Monitoring runs every 10 minutes and the code is "
-              '<a href="{monitor}" rel="noopener" target="_blank">public</a>. '
-              "No jail and no slashing so far — the entries below are the gaps we saw."),
+    log_head=("Monitoring runs every 10 minutes. No jail and no slashing so far — "
+              "the entries below are the gaps we saw."),
     log_cause="CAUSE",
     log_impact="IMPACT",
     log_none="no jail · no slashing",
@@ -732,9 +733,8 @@ CONTENT = {
         back="\u2190 durenodes.com 으로",
     ),
     sec_log="장애와 조치 내역을 그대로 남깁니다. 지우지 않습니다.",
-    log_head=("10분 간격으로 감시하고 있고, 그 코드는 "
-              '<a href="{monitor}" rel="noopener" target="_blank">공개</a>돼 있습니다. '
-              "지금까지 jail·슬래싱은 없었고, 아래는 관측된 공백입니다."),
+    log_head=("10분 간격으로 감시하고 있습니다. 지금까지 jail·슬래싱은 없었고, "
+              "아래는 관측된 공백입니다."),
     log_cause="원인",
     log_impact="영향",
     log_none="jail 없음 · 슬래싱 없음",
@@ -838,14 +838,15 @@ def table_rows(c):
 
 
 def incidents(c, key):
-    """장애 기록. 서명이 멈춘 건은 카드로, 그 아래는 한 줄로. 어느 쪽도 지우지 않습니다."""
+    """Incident log. Signing stoppages get a card, everything else a single line.
+    Neither kind is ever deleted."""
     if not INCIDENTS:
         return (f'      <div class="empty">\n'
                 f'        <div class="empty-t">{c["log_empty"]}</div>\n'
                 f'        <p>{c["log_empty_p"]}</p>\n'
                 f'      </div>')
     slugs = {p["slug"].split("-", 3)[-1]: p["slug"] for p in POSTMORTEMS}
-    items = [f'      <p class="log-head">{c["log_head"].format(monitor=DATA["monitor"])}</p>']
+    items = [f'      <p class="log-head">{c["log_head"]}</p>']
     for i in INCIDENTS:
         pm = next((p for p in POSTMORTEMS if p["date"] == i["date"]), None)
         more = ""
@@ -866,10 +867,11 @@ def incidents(c, key):
 
 
 def nav_html(c, key, landing=False):
-    """헤더 네비게이션. 랜딩·목록·상세가 **같은 것**을 씁니다.
+    """Header navigation. The landing page, the indexes and the detail pages all
+    use **the same one**.
 
-    랜딩에서는 앵커만 쓰고(부드러운 스크롤), 다른 페이지에서는 랜딩 경로를 붙여
-    어디서든 여섯 항목 모두로 이동됩니다.
+    On the landing page it uses bare anchors (smooth scrolling); elsewhere the
+    landing path is prefixed so every item is reachable from anywhere.
     """
     pre = "/ko" if key == "ko" else ""
     home = pre + "/"
@@ -883,9 +885,11 @@ def nav_html(c, key, landing=False):
 
 
 def guide_list(key, home_prefixed=True):
-    """가이드 목록. 랜딩 섹션과 /guides/ 색인이 **같은 함수**를 씁니다.
+    """Guide list. The landing section and the /guides/ index use **the same
+    function**.
 
-    두 곳에 손으로 적으면 반드시 갈라집니다 — `todo.md` 가 그 사고를 이미 기록하고 있습니다.
+    Written out by hand in two places, they drift apart — it has already happened
+    once here.
     """
     pre = "/ko" if key == "ko" else ""
     out = []
@@ -901,9 +905,10 @@ def guide_list(key, home_prefixed=True):
 
 
 def index_page(key, kind):
-    """목록 페이지. /guides/ 와 /incidents/ 가 같은 셸을 씁니다.
+    """Index page. /guides/ and /incidents/ share one shell.
 
-    랜딩에서 두 섹션을 뺐으므로 여기가 각 기록물의 유일한 입구입니다.
+    Both sections were taken off the landing page, so this is the only way in to
+    either archive.
     """
     c = CONTENT[key]
     css = re.sub(r"/\*.*?\*/", "", (HERE / "_style.css").read_text(encoding="utf-8"), flags=re.S).strip()
@@ -1026,10 +1031,10 @@ def delegate_cards(c):
 
 
 def postmortem_html(key, pm, kind="incidents"):
-    """장애 기록 상세 페이지. 랜딩과 같은 셸을 쓰되 본문만 다릅니다.
+    """Incident detail page. Same shell as the landing page, only the body differs.
 
-    `kind` 로 /incidents/ 와 /guides/ 를 함께 처리합니다. 셸을 복제하면 한쪽만 고치는
-    일이 생깁니다 — 실제로 문구가 갈라진 적이 있습니다.
+    `kind` lets this serve /incidents/ and /guides/ alike. Duplicating the shell
+    means fixing one side and forgetting the other — the copy has drifted before.
     """
     c = CONTENT[key]
     p = pm[key]
@@ -1130,7 +1135,7 @@ def postmortem_html(key, pm, kind="incidents"):
 
 
 def guide_html(key, g):
-    """가이드 페이지. 포스트모템과 같은 셸이고 경로만 /guides/ 입니다."""
+    """Guide page. Same shell as a postmortem; only the path changes to /guides/."""
     return postmortem_html(key, g, kind="guides")
 
 
@@ -1330,21 +1335,22 @@ def build(key):
 
 
 def main():
-    # --skip-fetch: 문구·스타일만 고칠 때. 네트워크 없이 기존 DATA 로 생성합니다.
+    # --skip-fetch: for copy and style edits. Generates from the existing DATA
+    # without touching the network.
     skip = "--skip-fetch" in sys.argv
     if skip:
         print(
-            f"  ⚠ --skip-fetch — 수치가 {DATA['as_of']} 기준으로 고정됩니다.\n"
-            "    페이지의 'as of' 표기도 그 날짜로 남으므로 표시 자체는 정직하지만,\n"
-            "    이 상태로 커밋하면 낡은 값이 배포됩니다.\n"
-            "    커밋 전에 네트워크를 연결하고 `python3 _build.py` 를 다시 실행하세요.",
+            f"  ⚠ --skip-fetch — the numbers stay pinned to {DATA['as_of']}.\n"
+            "    The page's 'as of' line keeps that date too, so the display is honest,\n"
+            "    but committing in this state deploys stale values.\n"
+            "    Get on the network and run `python3 _build.py` again before committing.",
             file=sys.stderr)
 
     if not skip and not fetch_onchain():
-        # 조회에 실패했으면 **아무것도 쓰지 않고** 끝냅니다.
-        # 여기서 생성하면 옛 값이 새로 쓰인 것처럼 파일에 남아,
-        # 다음 커밋에 낡은 수치가 그대로 배포됩니다.
-        print("  생성을 건너뜁니다. 기존 파일은 그대로 둡니다.", file=sys.stderr)
+        # The query failed, so **write nothing** and stop. Generating here would
+        # leave old values in the files looking freshly written, and the next
+        # commit would deploy stale numbers.
+        print("  skipping generation. Existing files are left alone.", file=sys.stderr)
         return 1
 
     (HERE / "index.html").write_text(build("en"), encoding="utf-8")
