@@ -606,18 +606,26 @@ CONTENT = {
              "round we publish the withdrawal and the payout, so you can recompute the "
              "figure instead of trusting it.",
         meta=[("SHARE", "40% of commission"), ("SCHEDULE", "Weekly \u00b7 Sunday"),
-              ("MINIMUM", "100 TIA"), ("FIRST ROUND", "23 Aug 2026")],
+              ("MINIMUM", "100 TIA · 100 ATOM"), ("FIRST ROUND", "23 Aug 2026")],
         back="\u2190 durenodes.com",
         sections=[
-            ("What you get", [
+            ("How it is worked out", [
                 "<p>Delegate to us and we return <b>40% of the commission your "
                 "delegation earns</b>, every week. What you get depends on your own "
                 "stake, not on how many others take part.</p>",
+                "<pre>payout = your stake \u00d7 staking APR \u00d7 commission \u00d7 40%</pre>",
                 "{{RATES}}",
-                "<p>Those rates follow today\u2019s staking APR, which moves. Our "
-                "commission is each chain\u2019s network minimum and we are not raising "
-                "it. These are small amounts: this is a record, not a yield product. "
-                "If we stop, we will say why.</p>",
+                "<p>Commission is each chain\u2019s network minimum and we are not "
+                "raising it. The figures above follow today\u2019s staking APR, which "
+                "moves. These are small amounts \u2014 this is a record, not a yield "
+                "product. If we stop, we will say why.</p>",
+                "<p>A round runs <b>Monday to Sunday</b>, with one reading a day. Your "
+                "basis for the round is the <b>lowest</b> of those seven, and payouts "
+                "go out on <b>Sunday</b>.</p>",
+                "<p><b>Miss a day and the round pays nothing.</b> Delegating just before "
+                "a reading and leaving right after earns zero. Delegate mid-week and "
+                "that round pays nothing either \u2014 you join the round starting the "
+                "following Monday and are paid at the end of it, on the Sunday.</p>",
             ]),
             ("Rounds", [
                 "{{ROUNDS}}",
@@ -625,16 +633,6 @@ CONTENT = {
                 "withdrawal and the payout \u2014 so the 40% is something you can "
                 "recompute rather than take on trust. The same figures are served as "
                 "JSON at <a href=\"/rounds.json\">/rounds.json</a>.</p>",
-            ]),
-            ("How it is worked out", [
-                "<pre>payout = your stake \u00d7 staking APR \u00d7 commission \u00d7 40%</pre>",
-                "<p>Commission is 20% on Celestia and 5% on Cosmos Hub \u2014 each "
-                "chain\u2019s network minimum. A round runs <b>Monday to Sunday</b>, "
-                "with one reading a day, and your basis is the <b>lowest</b> of those "
-                "seven.</p>",
-                "<p><b>Miss a day and the round pays nothing.</b> Delegating just before "
-                "a reading and leaving right after earns zero, and delegating mid-week "
-                "pays from the following Monday.</p>",
             ]),
         ],
     ),
@@ -775,30 +773,29 @@ CONTENT = {
         lede="위임이 만든 커미션의 40%를 매주 돌려드립니다. 회차마다 인출 트랜잭션과 지급 "
              "트랜잭션을 공개하므로, 저희 말을 믿는 대신 직접 계산해 확인하실 수 있습니다.",
         meta=[("비율", "커미션의 40%"), ("주기", "매주 \u00b7 일요일"),
-              ("최소", "100 TIA"), ("첫 회차", "2026-08-23")],
+              ("최소", "100 TIA · 100 ATOM"), ("첫 회차", "2026-08-23")],
         back="\u2190 durenodes.com",
         sections=[
-            ("무엇을 받으시나", [
-                "<p>위임해 주시면 <b>그 위임이 만든 커미션의 40%</b>를 매주 돌려드립니다. "
+            ("어떻게 계산하나", [
+                "<p>위임해 주시면 그 위임이 만든 <b>커미션의 40%</b>를 매주 돌려드립니다. "
                 "받는 금액은 본인 위임량으로 정해지고 참여자 수와 무관합니다.</p>",
+                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 \u00d7 40%</pre>",
                 "{{RATES}}",
-                "<p>위 금액은 현재 스테이킹 APR 기준이고 APR 은 계속 움직입니다. 저희 커미션은 "
-                "각 체인의 네트워크 최소값이며 올리지 않습니다. 금액은 작습니다. 수익 상품이 "
-                "아니라 기록입니다. 중단하게 되면 그 이유를 밝힙니다.</p>",
+                "<p>커미션은 각 체인의 네트워크 최소값이고 올리지 않습니다. 위 금액은 현재 "
+                "스테이킹 APR 기준이며 APR 은 계속 움직입니다. 금액은 작습니다 \u2014 수익 "
+                "상품이 아니라 기록입니다. 중단하게 되면 그 이유를 밝힙니다.</p>",
+                "<p>회차는 <b>월요일부터 일요일까지</b> 이고 하루에 한 번 기록합니다. 그 7일 중 "
+                "<b>가장 낮은 값</b>이 회차 기준이 되고, <b>지급은 일요일</b>에 합니다.</p>",
+                "<p><b>하루라도 빠지면 그 회차는 0입니다.</b> 기록 직전에 위임했다가 직후에 "
+                "빼면 아무것도 받지 못합니다. 주중에 새로 위임하셔도 그 회차는 0이고, "
+                "다음 월요일에 시작하는 회차부터 대상이 되어 <b>그 주 일요일에 첫 지급</b>을 "
+                "받으십니다.</p>",
             ]),
             ("회차 기록", [
                 "{{ROUNDS}}",
                 "<p>회차마다 트랜잭션 두 건을 공개합니다 \u2014 커미션 인출과 지급입니다. "
                 "그래서 40% 는 믿어야 하는 말이 아니라 직접 계산해 볼 수 있는 값입니다. "
                 "같은 수치를 <a href=\"/rounds.json\">/rounds.json</a> 으로도 제공합니다.</p>",
-            ]),
-            ("어떻게 계산하나", [
-                "<pre>지급액 = 위임량 \u00d7 스테이킹 APR \u00d7 커미션 \u00d7 40%</pre>",
-                "<p>커미션은 셀레스티아 20%, 코스모스 허브 5% 입니다 \u2014 각 체인의 네트워크 "
-                "최소값입니다. 회차는 <b>월요일부터 일요일까지</b> 이고 하루에 한 번 기록하며, "
-                "그 7일 중 <b>가장 낮은 값</b>이 회차 기준이 됩니다.</p>",
-                "<p><b>하루라도 빠지면 그 회차는 0입니다.</b> 기록 직전에 위임했다가 직후에 "
-                "빼면 아무것도 받지 못하고, 주중에 새로 위임하시면 다음 월요일부터 지급됩니다.</p>",
             ]),
         ],
     ),

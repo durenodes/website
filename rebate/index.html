@@ -307,31 +307,30 @@ footer { border-top: 1px solid var(--line); }
       <div class="kicker">REBATE</div>
       <h1>Commission rebate</h1>
       <p class="lede">We return 40% of the commission your delegation earns, every week. Each round we publish the withdrawal and the payout, so you can recompute the figure instead of trusting it.</p>
-      <div class="pm-meta"><div class="pm-m"><b>SHARE</b><span>40% of commission</span></div><div class="pm-m"><b>SCHEDULE</b><span>Weekly · Sunday</span></div><div class="pm-m"><b>MINIMUM</b><span>100 TIA</span></div><div class="pm-m"><b>FIRST ROUND</b><span>23 Aug 2026</span></div></div>
+      <div class="pm-meta"><div class="pm-m"><b>SHARE</b><span>40% of commission</span></div><div class="pm-m"><b>SCHEDULE</b><span>Weekly · Sunday</span></div><div class="pm-m"><b>MINIMUM</b><span>100 TIA · 100 ATOM</span></div><div class="pm-m"><b>FIRST ROUND</b><span>23 Aug 2026</span></div></div>
     </div>
   </div>
 
   <section>
     <div class="wrap post">
-      <h2>What you get</h2>
+      <h2>How it is worked out</h2>
       <p>Delegate to us and we return <b>40% of the commission your delegation earns</b>, every week. What you get depends on your own stake, not on how many others take part.</p>
+      <pre>payout = your stake × staking APR × commission × 40%</pre>
             <div class="tbl-wrap">
         <table>
           <thead><tr><th>CHAIN</th><th>COMMISSION</th><th>YOU GET</th><th>MINIMUM</th></tr></thead>
           <tbody><tr><td>Celestia</td><td>20%</td><td>0.082 TIA a week per 1,000 TIA</td><td>100 TIA</td></tr><tr><td>Cosmos Hub</td><td>5%</td><td>0.059 ATOM a week per 1,000 ATOM</td><td>100 ATOM</td></tr></tbody>
         </table>
       </div>
-      <p>Those rates follow today’s staking APR, which moves. Our commission is each chain’s network minimum and we are not raising it. These are small amounts: this is a record, not a yield product. If we stop, we will say why.</p>
+      <p>Commission is each chain’s network minimum and we are not raising it. The figures above follow today’s staking APR, which moves. These are small amounts — this is a record, not a yield product. If we stop, we will say why.</p>
+      <p>A round runs <b>Monday to Sunday</b>, with one reading a day. Your basis for the round is the <b>lowest</b> of those seven, and payouts go out on <b>Sunday</b>.</p>
+      <p><b>Miss a day and the round pays nothing.</b> Delegating just before a reading and leaving right after earns zero. Delegate mid-week and that round pays nothing either — you join the round starting the following Monday and are paid at the end of it, on the Sunday.</p>
       <h2>Rounds</h2>
             <div class="empty">
         <div class="empty-t">No rounds settled yet</div>
         <p>The first settlement is 23 August 2026, on both chains. Every round appears here with both transaction hashes as soon as it is paid.</p>
       </div>
       <p>Every round publishes two transactions — the commission withdrawal and the payout — so the 40% is something you can recompute rather than take on trust. The same figures are served as JSON at <a href="/rounds.json">/rounds.json</a>.</p>
-      <h2>How it is worked out</h2>
-      <pre>payout = your stake × staking APR × commission × 40%</pre>
-      <p>Commission is 20% on Celestia and 5% on Cosmos Hub — each chain’s network minimum. A round runs <b>Monday to Sunday</b>, with one reading a day, and your basis is the <b>lowest</b> of those seven.</p>
-      <p><b>Miss a day and the round pays nothing.</b> Delegating just before a reading and leaving right after earns zero, and delegating mid-week pays from the following Monday.</p>
       <p class="pm-back"><a href="/">← durenodes.com</a></p>
     </div>
   </section>
