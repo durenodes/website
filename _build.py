@@ -1306,7 +1306,6 @@ def rebate_calc(c):
           <select id="cchain" aria-label="{t["chain"]}">{opts}</select>
           <input id="camt" type="number" min="0" step="100" value="1000"
                  inputmode="decimal" aria-label="{t["amount"]}">
-          <span class="calc-unit" id="cunit"></span>
         </div>
         <div class="calc-out">
           <div class="calc-cell"><b id="cwk">—</b><span>{t["week"]}</span></div>
@@ -1320,7 +1319,7 @@ def rebate_calc(c):
       (function () {{
         var R = {{{data}}}, SHARE = {REBATE["share_pct"] / 100};
         var ch = document.getElementById("cchain"), amt = document.getElementById("camt"),
-            unit = document.getElementById("cunit"), note = document.getElementById("cnote"),
+            note = document.getElementById("cnote"),
             wk = document.getElementById("cwk"), mo = document.getElementById("cmo"),
             yr = document.getElementById("cyr");
         function f(v, d) {{
@@ -1329,7 +1328,6 @@ def rebate_calc(c):
         }}
         function run() {{
           var c = R[ch.value], a = parseFloat(amt.value) || 0, y = a * c.apr * c.comm * SHARE;
-          unit.textContent = c.d;
           yr.textContent = f(y, c.d); mo.textContent = f(y / 12, c.d);
           wk.textContent = f(y / 52, c.d);
           note.textContent = (a > 0 && a < c.min)

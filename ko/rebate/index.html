@@ -279,16 +279,14 @@ footer { border-top: 1px solid var(--line); }
 
 
 .calc { border: 1px solid var(--line); background: var(--panel); margin: 26px 0 0; }
-.calc-row { display: flex; gap: 1px; background: var(--line); border-bottom: 1px solid var(--line); }
+.calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--line); border-bottom: 1px solid var(--line); }
 .calc-row select, .calc-row input {
   font-family: var(--mono); font-size: 13px; color: var(--fg); background: var(--panel-2);
   border: 0; padding: 13px 14px; min-width: 0; -webkit-appearance: none; appearance: none;
   border-radius: 0; }
-.calc-row select { flex: 1 1 auto; }
-.calc-row input { flex: 1 1 auto; text-align: right; font-variant-numeric: tabular-nums; }
+.calc-row input { text-align: right; font-variant-numeric: tabular-nums; }
 .calc-row select:focus, .calc-row input:focus { outline: 1px solid var(--brass); outline-offset: -1px; }
-.calc-unit { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted);
-  background: var(--panel-2); padding: 13px 14px 0 0; }
 .calc-out { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1px; background: var(--line); }
 .calc-cell { background: var(--panel); padding: 15px 14px; }
 .calc-cell b { display: block; font-family: var(--mono); font-size: 14px; font-weight: 600;
@@ -299,7 +297,12 @@ footer { border-top: 1px solid var(--line); }
   padding: 13px 14px; border-top: 1px solid var(--line); }
 @media (max-width: 460px) {
   .calc-out { grid-template-columns: 1fr; }
-  .calc-row { flex-wrap: wrap; }
+  
+  .calc-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 400px) {
+  
+  .nav { gap: 10px; font-size: 10px; }
 }
 </style>
 </head>
@@ -354,7 +357,6 @@ footer { border-top: 1px solid var(--line); }
           <select id="cchain" aria-label="체인"><option value="tia">Celestia · TIA</option><option value="hub">Cosmos Hub · ATOM</option></select>
           <input id="camt" type="number" min="0" step="100" value="1000"
                  inputmode="decimal" aria-label="위임 수량">
-          <span class="calc-unit" id="cunit"></span>
         </div>
         <div class="calc-out">
           <div class="calc-cell"><b id="cwk">—</b><span>주</span></div>
@@ -366,9 +368,9 @@ footer { border-top: 1px solid var(--line); }
       </div>
       <script>
       (function () {
-        var R = {"tia":{apr:0.053787,comm:0.2000,min:100,d:"TIA"}, "hub":{apr:0.154033,comm:0.0500,min:100,d:"ATOM"}}, SHARE = 0.4;
+        var R = {"tia":{apr:0.053787,comm:0.2000,min:100,d:"TIA"}, "hub":{apr:0.154034,comm:0.0500,min:100,d:"ATOM"}}, SHARE = 0.4;
         var ch = document.getElementById("cchain"), amt = document.getElementById("camt"),
-            unit = document.getElementById("cunit"), note = document.getElementById("cnote"),
+            note = document.getElementById("cnote"),
             wk = document.getElementById("cwk"), mo = document.getElementById("cmo"),
             yr = document.getElementById("cyr");
         function f(v, d) {
@@ -377,7 +379,6 @@ footer { border-top: 1px solid var(--line); }
         }
         function run() {
           var c = R[ch.value], a = parseFloat(amt.value) || 0, y = a * c.apr * c.comm * SHARE;
-          unit.textContent = c.d;
           yr.textContent = f(y, c.d); mo.textContent = f(y / 12, c.d);
           wk.textContent = f(y / 52, c.d);
           note.textContent = (a > 0 && a < c.min)
